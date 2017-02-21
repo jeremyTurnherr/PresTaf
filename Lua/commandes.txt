@@ -1,0 +1,1 @@
+javac -cp .;luajava... prog.java #pareil pour la commande java
