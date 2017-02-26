@@ -21,6 +21,8 @@ function run(pp)
 
   pp:Wowie()
   pp:Wowie_parameter(1)
+  pp:Wowie_inc(1)
+  pp:Wowie_inc(1)
 
 end
 

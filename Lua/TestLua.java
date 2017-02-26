@@ -29,7 +29,7 @@ public class TestLua{
 	}
 	
 	
-	public static void main(String[] argv){
+	public static void maintoc(String[] argv){//lua normal
 		LuaState luaState = LuaStateFactory.newLuaState();
         luaState.openLibs();
         try {
@@ -39,6 +39,18 @@ public class TestLua{
             e.printStackTrace();
         }
         luaState.LdoFile("TestLua.lua");
+	}
+	
+	public static void main(String[] argv){//avec prestaf
+		LuaState luaState = LuaStateFactory.newLuaState();
+        luaState.openLibs();
+        try {
+            luaState.pushObjectValue(new javaaa());
+            luaState.setGlobal("prestaf");
+        } catch (LuaException e) {
+            e.printStackTrace();
+        }
+        luaState.LdoFile("TestLuaPrestaf.lua");
 	}
 	
 }
