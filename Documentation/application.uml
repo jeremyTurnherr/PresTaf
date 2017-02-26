@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>application</OriginalElement>
+  <nodes>
+    <node x="0.0" y="469.0">application.Term</node>
+    <node x="205.0" y="81.0">application.Presburger</node>
+    <node x="201.84722222222223" y="393.0">application.PresburgerMain</node>
+    <node x="68.72222222222223" y="0.0">application.PresburgerMonteurYaccVal</node>
+    <node x="64.57407407407408" y="231.0">application.PresburgerMonteurYacc</node>
+    <node x="191.34722222222223" y="312.0">application.PresburgerAnalyser</node>
+    <node x="0.0" y="115.5">application.PresburgerMonteurFlex</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="application.PresburgerMonteurFlex" target="application.PresburgerMonteurYacc">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="application.PresburgerAnalyser" target="application.PresburgerMonteurYacc">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="application.PresburgerMonteurYacc" target="application.Presburger">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="application.PresburgerMonteurYacc" target="application.PresburgerMonteurYaccVal">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="application.PresburgerMain" target="application.PresburgerAnalyser">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="application.PresburgerAnalyser" target="application.Presburger">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="application.PresburgerMonteurYacc" target="application.PresburgerMonteurFlex">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="application.PresburgerMonteurFlex" target="application.PresburgerMonteurYaccVal">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="506.5" y="274.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Inner Classes</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
