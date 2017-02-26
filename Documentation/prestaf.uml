@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>prestaf</OriginalElement>
+  <nodes>
+    <node x="1059.0" y="121.0">prestaf.NotMarkedAutomaton</node>
+    <node x="2362.0" y="121.0">prestaf.LinearConstraintMarkedAutomaton</node>
+    <node x="271.0" y="278.0">prestaf.DoubleDirectCache</node>
+    <node x="0.0" y="506.0">prestaf.NPF</node>
+    <node x="829.0" y="121.0">prestaf.ForallExistsMarkedAutomaton</node>
+    <node x="164.0" y="197.0">prestaf.Cache</node>
+    <node x="352.0" y="430.0">prestaf.BorderArc</node>
+    <node x="1245.0" y="121.0">prestaf.OrMarkedAutomaton</node>
+    <node x="1163.89592760181" y="-69.50226244343892">prestaf.MarkedAutomaton</node>
+    <node x="2125.0" y="121.0">prestaf.ForallExists2MarkedAutomaton</node>
+    <node x="491.0" y="430.0">prestaf.ArcStack</node>
+    <node x="1871.0" y="121.0">prestaf.AddVariableSetMarkedAutomaton</node>
+    <node x="493.0" y="354.0">prestaf.OutputAutomaton</node>
+    <node x="0.0" y="354.0">prestaf.MarkedAutomatonCanonical</node>
+    <node x="147.0" y="278.0">prestaf.DirectCache</node>
+    <node x="755.1085972850678" y="608.0995475113123">prestaf.SccStack</node>
+    <node x="1623.0" y="121.0">prestaf.ForallExistsSetMarkedAutomaton</node>
+    <node x="197.0" y="121.0">prestaf.AddVariableMarkedAutomaton</node>
+    <node x="622.0" y="121.0">prestaf.MarkedSharedAutomaton</node>
+    <node x="0.0" y="430.0">prestaf.SharedAutomaton</node>
+    <node x="0.0" y="278.0">prestaf.CompleteCache</node>
+    <node x="1425.0" y="121.0">prestaf.ImplyMarkedAutomaton</node>
+    <node x="248.0" y="354.0">prestaf.MinimalAutomatonHopcroft</node>
+    <node x="433.0" y="121.0">prestaf.AndMarkedAutomaton</node>
+    <node x="188.0" y="430.0">prestaf.PresTafSystem</node>
+    <node x="0.0" y="121.0">prestaf.EquivMarkedAutomaton</node>
+    <node x="463.0" y="197.0">prestaf.OutputAutomatonMinimization</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="prestaf.SccStack" target="prestaf.BorderArc">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.NPF" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.EquivMarkedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="88.5" y="51.0" />
+      <point x="1167.0416666666667" y="51.0" />
+      <point x="-66.45833333333326" y="15.5" />
+    </edge>
+    <edge source="prestaf.BorderArc" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.DirectCache" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.DoubleDirectCache" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.AddVariableSetMarkedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="1988.0" y="71.0" />
+      <point x="1275.7916666666667" y="71.0" />
+      <point x="42.29166666666674" y="15.5" />
+    </edge>
+    <edge source="prestaf.SharedAutomaton" target="prestaf.OutputAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.ImplyMarkedAutomaton" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.DirectCache" target="prestaf.Cache">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="prestaf.PresTafSystem" target="prestaf.DoubleDirectCache">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.AndMarkedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="517.5" y="71.0" />
+      <point x="1191.2083333333333" y="71.0" />
+      <point x="-42.29166666666674" y="15.5" />
+    </edge>
+    <edge source="prestaf.MarkedAutomatonCanonical" target="prestaf.SccStack">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.SccStack" target="prestaf.OutputAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.MarkedAutomatonCanonical" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.DoubleDirectCache" target="prestaf.Cache">
+      <point x="0.0" y="-15.5" />
+      <point x="344.5" y="253.0" />
+      <point x="222.33333333333331" y="253.0" />
+      <point x="23.333333333333314" y="15.5" />
+    </edge>
+    <edge source="prestaf.MarkedAutomatonCanonical" target="prestaf.ArcStack">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.OrMarkedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="1325.0" y="101.0" />
+      <point x="1239.5416666666667" y="101.0" />
+      <point x="6.0416666666667425" y="15.5" />
+    </edge>
+    <edge source="prestaf.MarkedSharedAutomaton" target="prestaf.OutputAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.OutputAutomatonMinimization" target="prestaf.OutputAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.SccStack" target="prestaf.SharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.NotMarkedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="1142.0" y="101.0" />
+      <point x="1227.4583333333333" y="101.0" />
+      <point x="-6.0416666666667425" y="15.5" />
+    </edge>
+    <edge source="prestaf.ForallExistsMarkedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="934.0" y="91.0" />
+      <point x="1215.375" y="91.0" />
+      <point x="-18.125" y="15.5" />
+    </edge>
+    <edge source="prestaf.DirectCache" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.MinimalAutomatonHopcroft" target="prestaf.OutputAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.OrMarkedAutomaton" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.EquivMarkedAutomaton" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.SharedAutomaton" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.AddVariableMarkedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="305.0" y="61.0" />
+      <point x="1179.125" y="61.0" />
+      <point x="-54.375" y="15.5" />
+    </edge>
+    <edge source="prestaf.MarkedSharedAutomaton" target="prestaf.SharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.SccStack" target="prestaf.OutputAutomatonMinimization">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.MarkedSharedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="715.5" y="81.0" />
+      <point x="1203.2916666666667" y="81.0" />
+      <point x="-30.208333333333258" y="15.5" />
+    </edge>
+    <edge source="prestaf.NotMarkedAutomaton" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.SccStack" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.ForallExists2MarkedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="2233.5" y="61.0" />
+      <point x="1287.875" y="61.0" />
+      <point x="54.375" y="15.5" />
+    </edge>
+    <edge source="prestaf.NPF" target="prestaf.LinearConstraintMarkedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.CompleteCache" target="prestaf.Cache">
+      <point x="0.0" y="-15.5" />
+      <point x="63.5" y="253.0" />
+      <point x="175.66666666666666" y="253.0" />
+      <point x="-23.333333333333343" y="15.5" />
+    </edge>
+    <edge source="prestaf.SccStack" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.ForallExists2MarkedAutomaton" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.ImplyMarkedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="1514.0" y="91.0" />
+      <point x="1251.625" y="91.0" />
+      <point x="18.125" y="15.5" />
+    </edge>
+    <edge source="prestaf.DoubleDirectCache" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.ForallExistsSetMarkedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="1737.0" y="81.0" />
+      <point x="1263.7083333333335" y="81.0" />
+      <point x="30.208333333333485" y="15.5" />
+    </edge>
+    <edge source="prestaf.ForallExistsSetMarkedAutomaton" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.ForallExistsMarkedAutomaton" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.OutputAutomatonMinimization" target="prestaf.MinimalAutomatonHopcroft">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.PresTafSystem" target="prestaf.CompleteCache">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.AndMarkedAutomaton" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.AddVariableSetMarkedAutomaton" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.MarkedSharedAutomaton" target="prestaf.MarkedAutomatonCanonical">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.PresTafSystem" target="prestaf.DirectCache">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.AddVariableMarkedAutomaton" target="prestaf.MarkedSharedAutomaton">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.LinearConstraintMarkedAutomaton" target="prestaf.MarkedAutomaton">
+      <point x="0.0" y="-15.5" />
+      <point x="2483.0" y="51.0" />
+      <point x="1299.9583333333335" y="51.0" />
+      <point x="66.45833333333348" y="15.5" />
+    </edge>
+    <edge source="prestaf.MarkedAutomatonCanonical" target="prestaf.Cache">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="prestaf.MarkedAutomatonCanonical" target="prestaf.CompleteCache">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6906249999999999" x="843.5746606334842" y="268.50000000000006" />
+  <SelectedNodes>
+    <node>prestaf.MarkedAutomaton</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
