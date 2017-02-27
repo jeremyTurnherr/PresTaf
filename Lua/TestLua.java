@@ -50,6 +50,7 @@ public class TestLua{
         } catch (LuaException e) {
             e.printStackTrace();
         }
+        System.out.println("---------");
         luaState.LdoFile("TestLuaPrestaf.lua");
 	}
 	

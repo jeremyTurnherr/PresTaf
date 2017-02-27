@@ -22,7 +22,10 @@ class javaaa{
 		System.out.println("wowwwwwww "+x);
 	}
 	
-	public void execPrestaf(String[] args){
-		PresburgerMain.main(args);
+	public void execPrestaf(String args){
+		String[] params=new String[2];
+		params[0]="";
+		params[1]=args;
+		PresburgerMain.main(params);
 	} 
 }
