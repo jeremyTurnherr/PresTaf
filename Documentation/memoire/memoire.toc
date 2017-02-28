@@ -1,0 +1,10 @@
+\select@language {french}
+\contentsline {section}{\numberline {1}R\'esum\'e du projet}{2}{section.1}
+\contentsline {section}{\numberline {2}Domaine}{2}{section.2}
+\contentsline {section}{\numberline {3}Analyse de PresTaf}{2}{section.3}
+\contentsline {section}{\numberline {4}Besoins non fonctionnels}{2}{section.4}
+\contentsline {section}{\numberline {5}Besoins fonctionnels}{2}{section.5}
+\contentsline {section}{\numberline {6}Prototypes et tests pr\'eparatoires}{2}{section.6}
+\contentsline {section}{\numberline {7}Planning}{2}{section.7}
+\contentsline {section}{\numberline {8}Bibliographie}{2}{section.8}
+\contentsline {section}{\numberline {A}Premi\`ere annexe}{2}{appendix.A}
