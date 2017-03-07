@@ -37,8 +37,7 @@
 \newtheorem{axiom}[theorem]{Axiom}
 \newtheorem{case}[theorem]{Case}
 \newtheorem{claim}[theorem]{Claim}
-\newtheorem{conclusion}[theorem]{Conclusion}
-\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conclusion}[theorem]{Conclusion}\newtheorem{condition}[theorem]{Condition}
 \newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{criterion}[theorem]{Criterion}
@@ -72,18 +71,47 @@ R\'esum\'e
 
 \section{Domaine}
 
+Math\'ematiques, Logique, Th\'eorie des langages, Th\'eorie des graphes.
+
 \section{Analyse de PresTaf}
+
+PresTaf est programme cod\'e par Couvreur, qui prend des formules de Presburger en entr\'ees et les r\'esous. Les automates g\'en\'er\'es sont d\'eterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire il faut utiliser l'algorithme d'Hopcroft. La o\`u M.Couvreur avait fait une impl\'ementation intelligence de l'algorithme, mais elle malgr\'e son temps d'execution tr\`es performant, il n'est pas facile a lire, et l'impl\'ementation est assez vieille.
 
 \section{Besoins non fonctionnels}
 
+\begin{itemize}
+\item Compr\'ehension des formules de Presburger
+\item Compr\'ehension des formules monadiques / lash
+\item Th\'eorie des langages, compr\'ehension des automates
+\end{itemize}
+
 \section{Besoins fonctionnels}
+
+\begin{itemize}
+\item Interfa\c{c}age en Lua pour permettre une utilisation simple de PresTaf.
+\item Algorithme de minimisation d'automate.
+\item Revision g\'en\'eral de PresTaf
+\end{itemize}
 
 \section{Prototypes et tests pr\'eparatoires}
 
+\begin{itemize}
+  \item JavaLua
+  \item Impl\'ementation Python de l'algorithme de Blum (variante de l'algorithme d'Hopcroft)
+\end{itemize}
+
+
 \section{Planning}
 
+\begin{enumerate}
+\item Impl\'emation de l'algorithme de Blum.
+\item R\'evision du code PresTaf.
+\item Iterfa\c{c}age en Lua.
+\item R\'edaction du m\'emoire interm\'ediaire
+\end{enumerate}
+
 \begin{thebibliography}{9}                                                                                                %
-\bibitem {KarelRektorys}Rektorys, K., \textit{Variational methods in Mathematics,
+beg\bibitem {KarelRektorys}Rektorys, K., \textit{Variational methods in Mathematics,
 Science and Engineering}, D. Reidel Publishing Company,
 Dordrecht-Hollanf/Boston-U.S.A., 2th edition, 1975
 
