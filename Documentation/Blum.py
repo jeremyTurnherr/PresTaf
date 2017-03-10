@@ -1,18 +1,154 @@
 
 
-def exists_transitions_between_classes(classes,transitions):
-	"""fonction qui teste si il y a des transitions entre une classe et une liste de classe"""
+class Dt:
+	"""contient une liste doublement chainee"""
+	def __init__(self,l1):
+		self.ls=set([l1])
+
+
+class ListeDoubleChainee:
+	"""liste d'etats de Qi qui lorsqu'on applique 'l' arrive dans Qj"""
+	class Maillon:
+		def __init__(self,prec,suiv,tete,q):
+			self.prec=prec
+			self.suiv=suiv
+			self.tete=tete
+			self.q=q
+		
+		def addEnd(self,maillon):
+			if self.suiv==None:
+				maillon.prec=self
+				self.suiv=maillon
+			else:
+				self.suiv.addEnd(maillon)
+				
+		def __repr__(self):
+			res="--("+str(self.q)+")"
+			if self.suiv:
+				res+=str(self.suiv)
+			
+			return res
+		
+	def __init__(self,i,symb,j):
+		self.taille=0#S(i,a,j)
+		self.deb=None
+		self.symb=symb
+		self.i=i
+		self.j=j
+		
+	def add(self,etat):
+		if self.taille==0:
+			self.deb=self.Maillon(None,None,self,etat)
+		else:
+			self.deb.addEnd(self.Maillon(None,None,self,etat))
+		self.taille+=1
 	
-	for i in range(len(classes)):
+	def __repr__(self):
+		res="{i "+str(self.i)+",a "+str(self.symb)+",j "+str(self.j)+"} "
+		
+		return res+str(self.deb)
+			
+		
+	@staticmethod
+	def generateDeb(listeclasses,alphabet,transitions):
+		"""premiere generation des L(i,a,j)"""
+		res=[]
+		for i in range(1,len(listeclasses)):
+			for j in range(len(listeclasses)):
+				for symb in alphabet:
+					temp=ListeDoubleChainee(i,symb,j)
+					for t in transitions:
+						if t[0]==symb and t[1] in listeclasses[i] and t[2] in listeclasses[j]:
+							temp.add(t[2])
+					res.append(temp)
+		return res
+			
+		
+		
+class Delta:
+	"""prend un etat p et une lettre et pointe vers le suivant"""
+	def __init__(self,nblettres,nbetats):
+		self.nblettres=nblettres
+		self.nbetats=nbetats
+		self.mat=[[None for n in range(nblettres)] for n2 in range(nbetats)]
+		
+	
+class DeltaMoinsUn:
+	"""prend lettre et q et retourne un pointeur sur l'ensemble des etats precedents"""
+	def __init__(self,nblettres,nbetats):
+		self.nblettres=nblettres
+		self.nbetats=nbetats
+		self.mat=[[None for n in range(nbetats)] for n2 in range(nblettres)]
+		
+class DeltaPrime:
+	"""liste des classes d'etats"""
+	class DeltaMaillon:
+		def __init__(self,prec,suiv,lchaine):
+			self.prec=prec
+			self.suiv=suiv
+			self.listeChainee=lchaine
+			
+	def __init__(self,K):
+		self.Kself=None#représente sa pos dans K
+		self.l=None
+		K.addDeltaPrime(self)
+		
+	def addListe(self,lchaine):
+		self.l=lchaine
+		
+	def __repr__(self):
+		return "-> "+str(self.l)
+	
+		
+class Ksetashdey:
+	"""l'ensemble des delta prime de longueur >=2"""
+	def __init__(self):
+		self.K=[]
+		
+	def addDeltaPrime(self,dprime):
+		dprime.Kself=len(self.K)
+		self.K.append(dprime)
+		
+	def removeDeltaPrime(self,id):
+		self.K[id]=None
+		
+	def __repr__(self):
+		res="------"
+		for dp in self.K:
+			if dp:
+				res+="\n"+str(dp)
+				res+="\n------"
+		return res
+	
+	@staticmethod
+	def generate(automata):
+		res=Ksetashdey()
+		ll=ListeDoubleChainee.generateDeb([set(),automata.F.copy(),automata.Q-automata.F],automata.A,automata.T)
+		for l in ll:
+			dp=DeltaPrime(res)
+			dp.addListe(l)
+		return res
+
+
+def not_exists_transitions_between_classes(classes,transitions,alphabet,t):
+	"""fonction qui teste si il n'y a pas de transitions entre une classe et une liste de classe"""
+
+	for i in range(1,t):
 		classe=classes[i]
-		autres_classes=[classes[j] for j in range(len(classes)) if j!=i]
-		for autre in autres_classes:
-			for transition in transitions:
-				if (transition[1] in classe and transition[2] in autre) or (transition[1] in autre and transition[2] in classe):#si il existe une transition d'une classe vers une autre
-					return True
+		for autre,j in [(classes[j],j) for j in range(t)]:
+			
+			
+			for symb in alphabet:
+				res=True
+				for transition in transitions:
+					if (transition[0]==symb):
+						if (transition[1] in classe):
+							res=res and transition[2] not in autre#or (transition[1] in autre and transition[2] in classe):#si il existe une transition d'une classe vers une autre
+				if res:
+					return i,j,symb
 		
 
-	return False
+	return None
 	
 def find_classes_indices(Q,transitions,t):
 	"""trouve les indices i, j1 et j2 du texte, pas trouvé de noms pour cette fonction"""
@@ -55,17 +191,26 @@ class Automata:
 		
 	def minimisation(self):
 		"""retourne un Automate minimum en utilisant l'algo Blum"""
-		t=2
 		Q=[set(),self.F.copy(),self.Q-self.F]
-		i=1
-		while exists_transitions_between_classes(Q,self.T):
-			i,j1,j2,symbol=find_classes_indices(Q,self.T,t)
-			if len([trans for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j1]])<=len([trans for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j2]]):
-				Q.append(set([trans[2] for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j1]]))
-			else:
-				Q.append(set([trans[2] for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j2]]))
-			Q[i]=Q[i]-Q[t]
-			t+=1
+		K=Ksetashdey.generate(self)
+		print(K)
+		input()
+		t=2
+		#~ i=1
+		first=not_exists_transitions_between_classes(Q,self.T,self.A,t)
+		while first:
+			print(Q,first)
+			#~ i,j1,j2,symbol=find_classes_indices(Q,self.T,t)
+			#~ if len([trans for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j1]])<=len([trans for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j2]]):
+				#~ Q.append(set([trans[2] for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j1]]))
+			#~ else:
+				#~ Q.append(set([trans[2] for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j2]]))
+			#~ Q[i]=Q[i]-Q[t]
+			#~ t+=1
+			i,j,symb=first
+			
+			first=not_exists_transitions_between_classes(Q,self.T,self.A,t)
+			
 					
 		print("terminé")
 		print(Q)
@@ -78,7 +223,7 @@ class Automata:
 
 
 def main():
-	a=Automata(set([0,1,2,3,4]),set(["a","b"]),set([("a",0,1),("a",1,2),("b",1,0),("b",2,3),("a",3,4),("a",4,3)]),0,set([2]))
+	a=Automata(set([0,1,2,3,4]),set([0,1]),set([(0,0,1),(0,1,2),(1,1,0),(1,2,3),(0,3,4),(0,4,3)]),0,set([4]))
 	print(a.minimisation())
 
 main()
