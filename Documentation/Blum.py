@@ -8,7 +8,7 @@ def exists_transitions_between_classes(classes,transitions):
 		autres_classes=[classes[j] for j in range(len(classes)) if j!=i]
 		for autre in autres_classes:
 			for transition in transitions:
-				if (transition[1] in classe and transition[2] in autre) or (transition[1] in classe and transition[2] in autre):#si il existe une transition d'une classe vers une autre
+				if (transition[1] in classe and transition[2] in autre) or (transition[1] in autre and transition[2] in classe):#si il existe une transition d'une classe vers une autre
 					return True
 		
 
@@ -33,7 +33,7 @@ def find_classes_indices(Q,transitions,t):
 								resj2=j2
 								symb=trans[0]
 
-								
+					print(resj1,resj2)		
 					if resj1 and resj2:
 						return i,resj1,resj2,symb
 							
@@ -69,13 +69,16 @@ class Automata:
 					
 		print("terminé")
 		print(Q)
-		#~ return Automata(Q[1:],self.A.copy(),,self.init,)
+		
+		T=set([(car,s1,s2) for (car,st1,st2) in self.T for s1 in range(len(Q)) for s2 in range(len(Q)) if (s1!=s2 and st1 in Q[s1] and st2 in Q[s2])])
+		Q=set([x for x in range(len(Q[1:]))])
+		return Automata(Q[1:],self.A.copy(),T,self.init,self.F.copy())
 
 
 
 
 def main():
-	a=Automata(set([0,1,2]),set(["a","b"]),set([("a",0,1),("a",1,2)]),0,set([2]))
+	a=Automata(set([0,1,2,3,4]),set(["a","b"]),set([("a",0,1),("a",1,2),("b",1,0),("b",2,3),("a",3,4),("a",4,3)]),0,set([2]))
 	print(a.minimisation())
 
 main()
