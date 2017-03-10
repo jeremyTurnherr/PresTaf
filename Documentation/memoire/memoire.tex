@@ -30,6 +30,7 @@
 \usepackage{graphicx}
 \usepackage[francais]{babel}
 \usepackage{hyperref}
+\usepackage[utf8]{inputenc}
 %-------------------------------------------
 \newtheorem{theorem}{Theorem}
 \newtheorem{acknowledgement}[theorem]{Acknowledgement}
@@ -71,7 +72,7 @@ R\'esum\'e
 
 \section{Domaine}
 
-Math\'ematiques, Logique, Th\'eorie des langages, Th\'eorie des graphes.
+Mathématiques, Logique, Théorie des langages, Théorie des graphes.
 
 \section{Analyse de PresTaf}
 
@@ -79,19 +80,31 @@ PresTaf est programme cod\'e par Couvreur, qui prend des formules de Presburger 
 
 \section{Besoins non fonctionnels}
 
+\subsection{Machines visées}
+
+\subsection{Efficacité}
+
 \begin{itemize}
-\item Compr\'ehension des formules de Presburger
-\item Compr\'ehension des formules monadiques / lash
-\item Th\'eorie des langages, compr\'ehension des automates
+  \item Compr\'ehension des formules de Presburger
+  \item Compr\'ehension des formules monadiques / lash
+  \item Th\'eorie des langages, compr\'ehension des automates
 \end{itemize}
 
 \section{Besoins fonctionnels}
 
-\begin{itemize}
-\item Interfa\c{c}age en Lua pour permettre une utilisation simple de PresTaf.
-\item Algorithme de minimisation d'automate.
-\item Revision g\'en\'eral de PresTaf
-\end{itemize}
+\subsection{Interfaçage en Lua}
+
+\paragraph{Priorité :} 5
+
+\subsection{Base -2}
+
+%\subsection{Automatiser la sortie}
+
+\subsection{Logique monadique}
+
+\subsection{Minimisation d'automate}
+
+\paragraph{Priorité :} 5
 
 \section{Prototypes et tests pr\'eparatoires}
 
