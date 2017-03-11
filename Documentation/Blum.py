@@ -21,6 +21,10 @@ class ListeDoubleChainee:
 				self.suiv=maillon
 			else:
 				self.suiv.addEnd(maillon)
+		
+		def addBeginning(self,maillon):
+			self.prec=maillon
+			maillon.suiv=self
 				
 		def __repr__(self):
 			res="--("+str(self.q)+")"
@@ -37,11 +41,14 @@ class ListeDoubleChainee:
 		self.j=j
 		
 	def add(self,etat):
+		temp=self.Maillon(None,None,self,etat)
 		if self.taille==0:
-			self.deb=self.Maillon(None,None,self,etat)
+			self.deb=temp
 		else:
-			self.deb.addEnd(self.Maillon(None,None,self,etat))
+			self.deb.addBeginning(temp)
+			self.deb=temp
 		self.taille+=1
+		return temp
 	
 	def __repr__(self):
 		res="{i "+str(self.i)+",a "+str(self.symb)+",j "+str(self.j)+"} "
@@ -72,13 +79,56 @@ class Delta:
 		self.nbetats=nbetats
 		self.mat=[[None for n in range(nblettres)] for n2 in range(nbetats)]
 		
+	def __repr__(self):
+		res=""
+		for i in self.mat:
+			res+="|"
+			for y in i:
+				if y:
+					res+=str(y.q)
+				else:
+					res+=str(y)
+				res+="|"
+			res+="\n-------------------\n"
+			
+		return res
+		
+	@staticmethod
+	def generateWithEtatAndLchaine(automata):
+		res=Delta(len(automata.A),len(automata.Q))
+		for t in automata.T:
+			res.mat[t[1]][t[0]]=t[2]
+		return res
+		
+		
 	
 class DeltaMoinsUn:
 	"""prend lettre et q et retourne un pointeur sur l'ensemble des etats precedents"""
-	def __init__(self,nblettres,nbetats):
+	def __init__(self,nbetats,nblettres):
 		self.nblettres=nblettres
 		self.nbetats=nbetats
-		self.mat=[[None for n in range(nbetats)] for n2 in range(nblettres)]
+		self.mat=[[[] for n in range(nbetats)] for n2 in range(nblettres)]
+		
+	def __repr__(self):
+		res=""
+		for i in self.mat:
+			res+="|"
+			for y in i:
+				#~ if y:
+					#~ res+=str(y.q)
+				#~ else:
+				res+=str(y)
+				res+="|"
+			res+="\n-------------------\n"
+			
+		return res
+		
+	@staticmethod
+	def generateWithEtat(automata):
+		res=Delta(len(automata.Q),len(automata.A))
+		for t in automata.T:
+			res.mat[t[0]][t[1]]
+		return res
 		
 class DeltaPrime:
 	"""liste des classes d'etats"""
@@ -121,13 +171,44 @@ class Ksetashdey:
 		return res
 	
 	@staticmethod
-	def generate(automata):
-		res=Ksetashdey()
-		ll=ListeDoubleChainee.generateDeb([set(),automata.F.copy(),automata.Q-automata.F],automata.A,automata.T)
-		for l in ll:
-			dp=DeltaPrime(res)
-			dp.addListe(l)
-		return res
+	def generateAll(automata):
+		classes=[set(),automata.F.copy(),automata.Q-automata.F]
+		resK=Ksetashdey()
+		resDelta=Delta(len(automata.A),len(automata.Q))
+		resDeltaMoinsUn=DeltaMoinsUn(len(automata.Q),len(automata.A))
+		reslchaine=[[[ListeDoubleChainee(x,y,z) for x in range(3)] for y in automata.A] for z in range(3)]
+		
+		for t in automata.T:
+			t1f=1
+			t2f=1
+			if automata.TabFinal[t[1]]:
+				t1f=2
+			if automata.TabFinal[t[2]]:
+				t2f=2
+			
+			resDelta.mat[t[1]][t[0]]=reslchaine[t2f][t[0]][t1f].add(t[1])
+			resDeltaMoinsUn.mat[t[0]][t[2]].append(t[1])
+		print("------------------------------------")
+		print(resDelta)
+		print("------------------------------------")
+		for i in reslchaine:
+			for y in i:
+				for z in y:
+					if z.deb:
+						print(z)
+		print("------------------------------------")
+		print(resDeltaMoinsUn)
+
+		#~ ll=ListeDoubleChainee.generateDeb([set(),automata.F.copy(),automata.Q-automata.F],automata.A,automata.T)
+		for l in reslchaine:
+			for y in l:
+				for z in y:
+					
+					dp=DeltaPrime(resK)
+					dp.addListe(z)
+		input()
+		return resK,resDelta,reslchaine,resDeltaMoinsUn
+		
 
 
 def not_exists_transitions_between_classes(classes,transitions,alphabet,t):
@@ -187,12 +268,18 @@ class Automata:
 		self.T=T#liste des transitions (caractere de transition, etat depart, etat arrivé)
 		self.init=init#etat initial
 		self.F=F#etats finaux
+		self.TabFinal=[False for n in Q]
+		
+		for q in F:
+			self.TabFinal[q]=True
+			
+		#~ print(self.TabFinal)
 		
 		
 	def minimisation(self):
 		"""retourne un Automate minimum en utilisant l'algo Blum"""
 		Q=[set(),self.F.copy(),self.Q-self.F]
-		K=Ksetashdey.generate(self)
+		K,_,_,_=Ksetashdey.generateAll(self)
 		print(K)
 		input()
 		t=2
