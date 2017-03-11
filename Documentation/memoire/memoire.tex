@@ -31,6 +31,8 @@
 \usepackage[francais]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{tikz}
+\usetikzlibrary{calc,arrows,automata}
+\usepackage{tkz-graph}
 \usepackage{cite}
 \usepackage{listings}
 \usepackage{xcolor}
@@ -41,7 +43,8 @@
 	citecolor={blue!100},     
 	urlcolor={blue!80} 
 }
-\usepackage{glossaries}
+\usepackage[toc,section=section]{glossaries}
+\usepackage{url}
 \makeglossaries
 %-------------------------------------------
 \newtheorem{theorem}{Theorem}
@@ -92,6 +95,11 @@
 	aussi connu sous le nom de \emph{Monadic Second Order} ou \emph{MSO}, est notamment utilisé dans un autre programme de M.Couvreur : VeriTaf. VeriTaf permet de vérifier des formules CTL (Computation Tree Logic) et des forumules LTL (Linear Temporal Logic)
 }
 
+%--------------------------------------------------------------------%
+%         POUR DEFINIR DES ENTRÉES DU GLOSSAIRE LE FAIRE ICI         %
+%              POUR LES ACRONYMES C'EST AU MÊME ENDROIT              %
+%--------------------------------------------------------------------%
+
 
 \begin{document}
 
@@ -108,7 +116,11 @@
 
 % \end{abstract}
 
+\clearpage
+
 \tableofcontents
+
+\cleardoublepage
 
 \section{Résumé du projet}
 
@@ -123,6 +135,7 @@ Dans un second temps nous chercherons à intégrer de nouvelles logiques telle q
 \subsection{Arithmétique de Presburger}
 
 L'\gls{presburger} à été introduite par Moj\.{z}esz Presburger en 1929. Cette arithmétique du premier ordre dispose de deux constante 0 et 1 ainsi qu'un symbole binaire +. Ce langage est limité aux entiers naturels et est défini par les lois suivante :
+
 \begin{enumerate}
     \item $\forall x, \neg(0 = x + 1)$
     \item $\forall x, \forall y, x + 1 = y + 1 \rightarrow x = y $
@@ -142,17 +155,27 @@ Les automates que nous utilisons sont générés à partir de la formule de Pres
 
 \subsection{PresTaf}
 
-PresTaf permettrait d'avoir une représentation visuel, sous forme d'automates, d'une formule de Presburger ou monadique. En d'autres termes l'utilisateur rentrerait sa formule, et PresTaf lui fournira l'automate solution de sa formule. Ce programme pourrait notamment être utilisé par les étudiant de l'université.
+PresTaf permet d'avoir une représentation visuel, sous forme d'automates, d'une formule de Presburger. En d'autres termes l'utilisateur rentre sa formule, et PresTaf lui fournit l'automate solution de sa formule. Ce programme pourrait notamment être utilisé par les étudiant de l'université.
 
 \section{Analyse de PresTaf}
 
-PresTaf est programme codé par Couvreur, qui prend des formules de Presburger en entrées et les résous. Les automates générés sont déterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire il faut utiliser l'algorithme d'Hopcroft. La où M.Couvreur avait fait une implémentation intelligence de l'algorithme, mais elle malgré son temps d'execution très performant, il n'est pas facile à lire, et l'implémentation est assez vieille.
+PresTaf est programme codé par M. Jean-Michel Couvreur, qui prend des formules de Presburger en entrées et les résout à l'aide d'automates minimaux. Tout d'abord il génère des automates déterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire PresTaf utilise un algorithme d'Hopcroft modifié. L'ensemble des transitions menant de l'état initial vers un état final est solution de la formule. En outre si l'état final est l'état \emph{zero} alors il n'y aucune solution et si l'état final est l'état \emph{one} alors la formule est une tautologie.\\\par
+
+Mona\\\par
+
+Lash\cite{lash} est une bibliothèque C qui résout des formules de Presburger, mais la différence avec PresTaf est qu'il fonctionne sur des automates infini. Cette différence induit une importante baisse de performante. En effet PresTaf pour les mêmes formules était bien plus rapide à s'executer que Lash\cite{DBLP:conf/wia/Couvreur04}\\\par
+
+Büchi\\\par
+
+L'algorithme d'Hopcroft est un algorithme de minimisation d'automate fini et deterministe.\\\par
+
+Blum
 
 \section{Besoins fonctionnels}
 
 \paragraph{Nom :} Transformation de formules arithmétiques de Presburger
 
-\paragraph{Description :} Ensemble des fonctions qui prennent en entrée une formule arithmétique et retourne l'automate acceptant cette formule.
+\paragraph{Description :} Ensemble de fonctions qui prennent en entrée une formule arithmétique et retourne l'automate acceptant cette formule.
 
 \paragraph{Justification :} Besoin initial.
 
@@ -192,7 +215,7 @@ PresTaf est programme codé par Couvreur, qui prend des formules de Presburger e
 
 \paragraph{Nom :} Logique monadique du second ordre
 
-\paragraph{Description :}
+\paragraph{Description :} Il s'agit d'une logique du second ordre, c'est-à-dire qu'un prédicat peut avoir en argument un autre prédicat, mais celui-ci ne peut pas avoir un troisième prédicat en argument (arité un). De plus dans le cadre de la logique monadique du second ordre les quantificateurs ne peuvent être utilisé que pour les variables des prédicats du premier ordre (de type Presburger par exemple).
 
 \paragraph{Justification :}
 
@@ -202,7 +225,7 @@ PresTaf est programme codé par Couvreur, qui prend des formules de Presburger e
 
 \paragraph{Nom :} Machine visée
 
-\paragraph{Description :}
+\paragraph{Description :} Windows, MacOS, Linux
 
 \paragraph{Justification :}
 
@@ -210,7 +233,7 @@ PresTaf est programme codé par Couvreur, qui prend des formules de Presburger e
 
 \rule{\linewidth}{1pt}
 
-\paragraph{Nom :} Optimisation
+\paragraph{Nom :} Optimisation (de PresTaf ou d'un nouveau code ?)
 
 \paragraph{Description :}
 
@@ -220,7 +243,9 @@ PresTaf est programme codé par Couvreur, qui prend des formules de Presburger e
 
 \section{Prototypes et tests préparatoires}
 
-Implémentation de l'algorithme de Blum en python
+\subsection{Blum}
+
+Implémentation de l'algorithme de Blum en Python.
 
 \begin{lstlisting}
 
@@ -228,14 +253,66 @@ Implémentation de l'algorithme de Blum en python
 
 % Fournir les automates test -> voir à faire un automate minimal et un automate non minimal
 
-\begin{tikzpicture}
+Voici un exemple que nous avons testé avec l'automate initial et l'objectif.
+
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.5cm,
+                    semithick]
+
+\node[circle,draw]           (A) at (2.25, 7.5) {$q_0$};
+\node[circle,draw]           (B) at (2.25, 6)   {$q_1$};
+\node[circle,draw]           (C) at (1.5, 4.5)  {$q_2$};
+\node[circle,draw]           (D) at (3, 4.5)    {$q_3$};
+\node[circle,draw]           (E) at (1.5, 3)    {$q_4$};
+\node[circle,draw]           (F) at (3, 3)      {$q_5$};
+\node[circle,draw]           (G) at (0, 1.5)    {$q_6$};
+\node[circle,draw,accepting] (H) at (1.5, 1.5)  {$q_7$};
+\node[circle,draw,accepting] (I) at (3, 1.5)    {$q_8$};
+\node[circle,draw]           (J) at (4.5, 1.5)  {$q_9$};
+\node[circle,draw,accepting] (K) at (0, 0)      {$q_{10}$};
+\node[circle,draw,accepting] (L) at (4.5, 0)    {$q_{11}$};
+
+\node at (6, 3.75) {$\Longrightarrow$};
+
+\node[circle,draw]           (M) at (7.5, 1.5)       {$q_4$};
+\node[circle,draw,accepting] (N) at (9, 0)           {$q_5$};
+\node[circle,draw]           (O) at (9, 3)           {$q_3$};
+\node[circle,draw]           (P) [above of=O]        {$q_2$};
+\node[circle,draw]           (Q) [above of=P]        {$q_1$};
+\node[circle,draw]           (R) [above of=Q]        {$q_0$};
+
+\node at (2.25, 9) {Automate initial};
+\node at (9, 9) {Automate minimal};
+
+\path[->] (A) edge [right] node{0} (B)
+(B) edge [bend right] node[above]{1} (C)
+(B) edge [bend left] node[above]{0} (D)
+(C) edge [left] node{0} (E)
+(D) edge [right] node{0} (F)
+(E) edge [bend right] node[above]{1} (G)
+(E) edge [right] node{0} (H)
+(F) edge [bend left] node[above]{1} (J)
+(F) edge [left] node{0} (I)
+(G) edge [left] node{0} (K)
+(J) edge [right] node{0} (L)
+(2.25, 8.5) edge (A)
+(9, 8.5) edge (R)
+(R) edge[right] node{0} (Q)
+(Q) edge[bend right] node[left]{1} (P)
+(Q) edge[bend left] node[right]{0} (P)
+(P) edge[left] node{0} (O)
+(O) edge[left] node{0} (N)
+(O) edge[bend right] node[left]{1} (M)
+(M) edge[bend right] node[left]{0} (N);
 
 \end{tikzpicture}
 
 % Test LuaJava
 
+\subsection{LuaJava}
 
 \section{Planning}
+
+% Reunions : 10/02, 15/02, 28/02, 07/03
 
 \begin{enumerate}
 \item Implémation de l'algorithme de Blum.
@@ -244,11 +321,11 @@ Implémentation de l'algorithme de Blum en python
 \item Rédaction du mémoire intermédiaire
 \end{enumerate}
 
-\bibliography{biblio}{}
-\bibliographystyle{plain}
-
 
 \appendix
+
+\bibliography{biblio}{}
+\bibliographystyle{plain}
 
 \printglossaries
 
