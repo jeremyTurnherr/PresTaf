@@ -3,3 +3,7 @@
 *.out
 *.toc
 *.tps
+*.glg
+*.glo
+*.gls
+*.ist

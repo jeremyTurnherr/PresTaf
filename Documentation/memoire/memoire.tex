@@ -29,8 +29,20 @@
 \usepackage{amssymb}%
 \usepackage{graphicx}
 \usepackage[francais]{babel}
-\usepackage{hyperref}
 \usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{cite}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{     
+	colorlinks,     
+	linkcolor={red!80},     
+	citecolor={blue!100},     
+	urlcolor={blue!80} 
+}
+\usepackage{glossaries}
+\makeglossaries
 %-------------------------------------------
 \newtheorem{theorem}{Theorem}
 \newtheorem{acknowledgement}[theorem]{Acknowledgement}
@@ -54,95 +66,192 @@
 \newtheorem{summary}[theorem]{Summary}
 \newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
 
+%--------------------------------------------------------------------%
+%         POUR DEFINIR DES ENTRÉES DU GLOSSAIRE LE FAIRE ICI         %
+%              POUR LES ACRONYMES C'EST AU MÊME ENDROIT              %
+%--------------------------------------------------------------------%
+
+\longnewglossaryentry{presburger}{
+	name=Arithmétique de Presburger
+}
+{
+	L'arithmétique de Presburger à été introduite par Moj\.{z}esz Presburger en 1929. Cette arithmétique du premier ordre dispose de deux constante 0 et 1 ainsi qu'un symbole binaire +. Ce langage est limité aux entiers naturels et est défini par les lois suivante :
+	\begin{enumerate}
+		\item $\forall x, \neg(0 = x + 1)$
+		\item $\forall x, \forall y, x + 1 = y + 1 \rightarrow x = y $
+		\item $\forall x, x + 0 = x$
+		\item $\forall x, \forall y, x + (y + 1) = (x + y) + 1$
+		\item $\forall P(x, y_1, \ldots, y_n) \in$ Formule du premier ordre, 
+		$\forall y_1 \ldots \forall y_n [(P(0, y_1, \ldots,y_n) \vee \forall x(P(x, y_1, \ldots, y_n) \rightarrow P(x + 1, y_1, \ldots, y_n))) \rightarrow \forall y P(y, y_1, \ldots, y_n)]$
+	\end{enumerate}
+}
+
+\longnewglossaryentry{monadique}{
+	name=Logique monadique du second ordre
+} {
+	aussi connu sous le nom de \emph{Monadic Second Order} ou \emph{MSO}, est notamment utilisé dans un autre programme de M.Couvreur : VeriTaf. VeriTaf permet de vérifier des formules CTL (Computation Tree Logic) et des forumules LTL (Linear Temporal Logic)
+}
+
+
 \begin{document}
 
-\title{M\'emoire interm\'ediaire PresTaf}
-\author{Bourgeois Adrien, Marbois Bryce, Roque Maxime, Turhneer J\'er\'emy\thanks{Si l'on veut faire des annotations.}
-\\Universit\'e UFR Coll\'egium des Sciences et Technique d'Orl\'eans-la-Source}
+\title{Mémoire intermédiaire PresTaf}
+
+
+% Ajouter M.Couvreur ?
+\author{Bourgeois Adrien, Marbois Bryce, Roque Maxime, Turnherr Jérémy%\thanks{Si l'on veut faire des annotations.}
+\\Université UFR Collégium des Sciences et Technique d'Orléans-la-Source}
 \date{\today}
 \maketitle
 
-\begin{abstract}
-R\'esum\'e
-\end{abstract}
+% \begin{abstract}
+
+% \end{abstract}
 
 \tableofcontents
 
-\section{R\'esum\'e du projet}
+\section{Résumé du projet}
+
+Notre projet s'inscrit dans la mis-à-jour de PresTaf, logiciel d'analyse de formules logique et de leur transformation en automate minimal. Nous intervenons ici dans la création d'un interfaçage \href{https://fr.wikipedia.org/wiki/Lua}{Lua}, ainsi qu'une reprise du code source PresTaf pour donner une version plus optimisé, plus claire et propre.\\\par
+
+Dans un second temps nous chercherons à intégrer de nouvelles logiques telle que la logique monadique ou encore l'interprétation des formules de Presburger en base -2.
 
 \section{Domaine}
 
-Mathématiques, Logique, Théorie des langages, Théorie des graphes.
+% Que dire
+
+\subsection{Arithmétique de Presburger}
+
+L'\gls{presburger} à été introduite par Moj\.{z}esz Presburger en 1929. Cette arithmétique du premier ordre dispose de deux constante 0 et 1 ainsi qu'un symbole binaire +. Ce langage est limité aux entiers naturels et est défini par les lois suivante :
+\begin{enumerate}
+    \item $\forall x, \neg(0 = x + 1)$
+    \item $\forall x, \forall y, x + 1 = y + 1 \rightarrow x = y $
+    \item $\forall x, x + 0 = x$
+    \item $\forall x, \forall y, x + (y + 1) = (x + y) + 1$
+    \item $\forall P(x, y_1, \ldots, y_n) \in$ Formule du premier ordre, 
+    $\forall y_1 \ldots \forall y_n [(P(0, y_1, \ldots,y_n) \vee \forall x(P(x, y_1, \ldots, y_n) \rightarrow P(x + 1, y_1, \ldots, y_n))) \rightarrow \forall y P(y, y_1, \ldots, y_n)]$
+\end{enumerate}
+
+\subsection{Logique monadique du second ordre}
+
+La \gls{monadique}, aussi connu sous le nom de \emph{Monadic Second Order} ou \emph{MSO}, est notamment utilisé dans un autre programme de M.Couvreur : VeriTaf. VeriTaf permet de vérifier des formules CTL (Computation Tree Logic) et des forumules LTL (Linear Temporal Logic)
+
+\subsection{Automates et minimisation}
+
+Les automates que nous utilisons sont générés à partir de la formule de Presburger ou la formule monadique passée en entrée. Cet automate est fini et deterministe. Cependant ils ne sont pas minimaux, pour se faire il faut appliquer l'algorithme d'Hopcroft\cite{hopcroft1971n}. Nous implémenteront une variante de cet algorithme, l'algorithme de Blum\cite{blum1996nlogn}. La difficulté de cet algorithme n'est pas son implémentation qui elle est très simple mais la structure de données.
+
+\subsection{PresTaf}
+
+PresTaf permettrait d'avoir une représentation visuel, sous forme d'automates, d'une formule de Presburger ou monadique. En d'autres termes l'utilisateur rentrerait sa formule, et PresTaf lui fournira l'automate solution de sa formule. Ce programme pourrait notamment être utilisé par les étudiant de l'université.
 
 \section{Analyse de PresTaf}
 
-PresTaf est programme cod\'e par Couvreur, qui prend des formules de Presburger en entr\'ees et les r\'esous. Les automates g\'en\'er\'es sont d\'eterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire il faut utiliser l'algorithme d'Hopcroft. La o\`u M.Couvreur avait fait une impl\'ementation intelligence de l'algorithme, mais elle malgr\'e son temps d'execution tr\`es performant, il n'est pas facile a lire, et l'impl\'ementation est assez vieille.
-
-\section{Besoins non fonctionnels}
-
-\subsection{Machines visées}
-
-\subsection{Efficacité}
-
-\begin{itemize}
-  \item Compr\'ehension des formules de Presburger
-  \item Compr\'ehension des formules monadiques / lash
-  \item Th\'eorie des langages, compr\'ehension des automates
-\end{itemize}
+PresTaf est programme codé par Couvreur, qui prend des formules de Presburger en entrées et les résous. Les automates générés sont déterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire il faut utiliser l'algorithme d'Hopcroft. La où M.Couvreur avait fait une implémentation intelligence de l'algorithme, mais elle malgré son temps d'execution très performant, il n'est pas facile à lire, et l'implémentation est assez vieille.
 
 \section{Besoins fonctionnels}
 
-\subsection{Interfaçage en Lua}
+\paragraph{Nom :} Transformation de formules arithmétiques de Presburger
 
-\paragraph{Priorité :} 5
+\paragraph{Description :} Ensemble des fonctions qui prennent en entrée une formule arithmétique et retourne l'automate acceptant cette formule.
 
-\subsection{Base -2}
+\paragraph{Justification :} Besoin initial.
 
-%\subsection{Automatiser la sortie}
+\paragraph{Priorité :} 1\\
 
-\subsection{Logique monadique}
+\rule{\linewidth}{1pt}
 
-\subsection{Minimisation d'automate}
+\paragraph{Nom :} Minimisation d'automate (Blum)
 
-\paragraph{Priorité :} 5
+\paragraph{Description :} Ensemble de fonctions qui prennent un automate (fini, complet) et déterministe en entrée et retourne l'automate minimal équivalent.
 
-\section{Prototypes et tests pr\'eparatoires}
+\paragraph{Justification :} Besoin initial.
 
-\begin{itemize}
-  \item JavaLua
-  \item Impl\'ementation Python de l'algorithme de Blum (variante de l'algorithme d'Hopcroft)
-\end{itemize}
+\paragraph{Priorité :} 1\\
+
+\rule{\linewidth}{1pt}
+
+\paragraph{Nom :} Interfaçage Lua
+
+\paragraph{Description :} Permet le codage des automates en Lua, ainsi que l'utilisation de chaque fonction qui seront ensuite exécutés en Java.
+
+\paragraph{Justification :} Le lua est un langage de script simple à prendre en main et qui permet facilement d'écrire des automates et d'utiliser des fonctions.
+
+\paragraph{Priorité :} 2\\
+
+\rule{\linewidth}{1pt}
+
+\paragraph{Nom :} Acceptation de formules en base -2
+
+\paragraph{Description :} La base -2 est défini par : $ \sum\limits_{i=0}^n (-2)^i * k_i$. Par exemple $2_{decimal} = 0 * (-2)^0 + 1 * (-2)^1 \Rightarrow 2_{decimal} = -2_{base - 2}$. Pour déterminer un nombre en base -2, il suffit de determiner son écriture binaire et ensuite d'appliqué le calcule base -2. Si l'on a le nombre $10110010_{binaire}$ alors on aura en base -2 : $0 * (-2)^0 + 1 * (-2)^1 + 0 * (-2)^2 + 0 * (-2)^3 + 1 * (-2)^4 + 1 * (-2)^5 + 0 * (-2)^6 + 1 * (-2)^7 = -146_{base - 2}$
+
+\paragraph{Justification :}
+
+\paragraph{Priorité :} 3\\
+
+\rule{\linewidth}{1pt}
+
+\paragraph{Nom :} Logique monadique du second ordre
+
+\paragraph{Description :}
+
+\paragraph{Justification :}
+
+\paragraph{Priorité :} 3
+
+\section{Besoins non fonctionnels}
+
+\paragraph{Nom :} Machine visée
+
+\paragraph{Description :}
+
+\paragraph{Justification :}
+
+\paragraph{Priorité :} 1\\
+
+\rule{\linewidth}{1pt}
+
+\paragraph{Nom :} Optimisation
+
+\paragraph{Description :}
+
+\paragraph{Justification :}
+
+\paragraph{Priorité :} 1
+
+\section{Prototypes et tests préparatoires}
+
+Implémentation de l'algorithme de Blum en python
+
+\begin{lstlisting}
+
+\end{lstlisting}
+
+% Fournir les automates test -> voir à faire un automate minimal et un automate non minimal
+
+\begin{tikzpicture}
+
+\end{tikzpicture}
+
+% Test LuaJava
 
 
 \section{Planning}
 
 \begin{enumerate}
-\item Impl\'emation de l'algorithme de Blum.
-\item R\'evision du code PresTaf.
-\item Iterfa\c{c}age en Lua.
-\item R\'edaction du m\'emoire interm\'ediaire
+\item Implémation de l'algorithme de Blum.
+\item Révision du code PresTaf.
+\item Iterfaçage en Lua.
+\item Rédaction du mémoire intermédiaire
 \end{enumerate}
 
-\begin{thebibliography}{9}                                                                                                %
-beg\bibitem {KarelRektorys}Rektorys, K., \textit{Variational methods in Mathematics,
-Science and Engineering}, D. Reidel Publishing Company,
-Dordrecht-Hollanf/Boston-U.S.A., 2th edition, 1975
-
-\bibitem {Bertoti97} \textsc{Bert\'{o}ti, E.}:\ \textit{On mixed variational formulation
-of linear elasticity using nonsymmetric stresses and displacements}, International
-Journal for Numerical Methods in Engineering., \textbf{42}, (1997), 561-578.
-
-\bibitem {Szeidl2001} \textsc{Szeidl, G.}:\ \textit{Boundary integral equations for
-plane problems in terms of stress functions of order one}, Journal of Computational and
-Applied Mechanics, \textbf{2}(2), (2001), 237-261.
-
-\bibitem {Carlson67}  \textsc{Carlson D. E.}:\ \textit{On G\"{u}nther's stress functions
-for couple stresses}, Quart. Appl. Math., \textbf{25}, (1967), 139-146.
-\end{thebibliography}
+\bibliography{biblio}{}
+\bibliographystyle{plain}
 
 
 \appendix
 
-\section{Premi\`ere annexe}
+\printglossaries
+
+% \section{Premi\`ere annexe}
 
 \end{document}

@@ -1,0 +1,4 @@
+pdflatex memoire.tex
+makeglossaries memoire.glo
+pdflatex memoire.tex
+
