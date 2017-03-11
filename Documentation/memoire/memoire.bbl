@@ -1,0 +1,25 @@
+\begin{thebibliography}{1}
+
+\bibitem{blum1996nlogn}
+Norbert Blum.
+\newblock An o(nlogn) implementation of the standard method for minimizing
+  n-state finite automata.
+\newblock {\em Information Processing Letters}, 57(2):65--69, 1996.
+
+\bibitem{lash}
+Bernard Boigelot.
+\newblock \href{https://goo.gl/k9kT1L}{Lash toolset}.
+
+\bibitem{DBLP:conf/wia/Couvreur04}
+Jean{-}Michel Couvreur.
+\newblock A bdd-like implementation of an automata package.
+\newblock In {\em Implementation and Application of Automata, 9th International
+  Conference, {CIAA} 2004, Kingston, Canada, July 22-24, 2004, Revised Selected
+  Papers}, pages 310--311, 2004.
+
+\bibitem{hopcroft1971n}
+John Hopcroft.
+\newblock An/n log n algorithm for minimizing states in kf in ite automaton.
+\newblock 1971.
+
+\end{thebibliography}
