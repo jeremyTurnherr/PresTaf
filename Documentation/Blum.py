@@ -1,4 +1,5 @@
 
+from random import *
 
 class Dt:
 	"""contient une liste doublement chainee"""
@@ -54,6 +55,12 @@ class ListeDoubleChainee:
 		res="{i "+str(self.i)+",a "+str(self.symb)+",j "+str(self.j)+"} "
 		
 		return res+str(self.deb)
+		
+	def __cmp__(self,o):
+		return self.taille-o.taille
+		
+	def get_len(self):
+		return self.taille
 			
 		
 	@staticmethod
@@ -138,29 +145,108 @@ class DeltaPrime:
 			self.suiv=suiv
 			self.listeChainee=lchaine
 			
-	def __init__(self,K):
+		def addEnd(self,maillon):
+			if self.suiv==None:
+				maillon.prec=self
+				self.suiv=maillon
+			else:
+				self.suiv.addEnd(maillon)
+		
+		def addBeginning(self,maillon,d):
+			self.prec=maillon
+			maillon.suiv=self
+			d.suiv=maillon
+			
+		def remove(self,lchaine):
+			if self.listeChainee==lchaine:
+				self.prec.suiv=self.suiv
+				if self.suiv!=None:
+					self.suiv.prec=self.prec
+				
+			else:
+				if self.suiv:
+					self.suiv.remove(lchaine)
+				
+		def __repr__(self):
+			res="<<"+str(self.listeChainee)+">>"
+			
+			
+			return res
+			
+	def __init__(self,i,a,K):
+		self.i=i
+		self.symb=a
 		self.Kself=None#représente sa pos dans K
-		self.l=None
-		K.addDeltaPrime(self)
+		self.suiv=None#premier elem
+		
+		self.isAdded=False
+		
+		self.taille=0
+		
+	def __contains__(self,o):
+		temp=self.suiv
+		while temp!=None:
+			if temp.listeChainee==o:
+				return True
+			temp=temp.suiv
+		return False
+		
 		
 	def addListe(self,lchaine):
-		self.l=lchaine
+		"""tente d'ajouter la liste, retourne si ça a reussi (si len>=2"""
+		
+		maillon=self.DeltaMaillon(None,None,lchaine)
+		if self.suiv==None:
+			self.suiv=maillon
+		else:
+			self.suiv.addBeginning(maillon,self)
+		self.taille+=1
+		
+	def removeListe(self,lchaine,K):
+		"""retire la chaine, s'enleve de K si il devient trop petit"""
+		self.suiv.remove(lchaine)
+		self.taille-=1
+		if self.taille<2:
+			K.removeDeltaPrime(self.Kself)
+		
+	def can_be_added(self):
+		return not self.isAdded and self.taille>=2
+		
+	def add_to_K(self,K):
+		K.addDeltaPrime(self)
+		self.isAdded=True
+		
+	def get_2_random_lists(self):
+		"""prend les deux premieres"""
+		return self.suiv,self.suiv.suiv
+		
 		
 	def __repr__(self):
-		return "-> "+str(self.l)
+		res="{i "+str(self.i)+",a "+str(self.symb)+"}> "
+		temp=self.suiv
+		while temp:
+			res+=str(temp)+"+"
+			temp=temp.suiv
+		return res
 	
 		
 class Ksetashdey:
 	"""l'ensemble des delta prime de longueur >=2"""
 	def __init__(self):
 		self.K=[]
+		self.indicesdispos=[]
 		
 	def addDeltaPrime(self,dprime):
 		dprime.Kself=len(self.K)
 		self.K.append(dprime)
+		self.indicesdispos.append(dprime.Kself)
 		
 	def removeDeltaPrime(self,id):
 		self.K[id]=None
+		self.indicesdispos.remove(id)
+		
+	def get_random_delta(self):
+		return self.K[choice(self.indicesdispos)]
 		
 	def __repr__(self):
 		res="------"
@@ -169,6 +255,8 @@ class Ksetashdey:
 				res+="\n"+str(dp)
 				res+="\n------"
 		return res
+		
+	
 	
 	@staticmethod
 	def generateAll(automata):
@@ -177,6 +265,7 @@ class Ksetashdey:
 		resDelta=Delta(len(automata.A),len(automata.Q))
 		resDeltaMoinsUn=DeltaMoinsUn(len(automata.Q),len(automata.A))
 		reslchaine=[[[ListeDoubleChainee(x,y,z) for x in range(3)] for y in automata.A] for z in range(3)]
+		resdeltaprime=[[DeltaPrime(i,a,resK) for a in automata.A] for i in automata.Q]
 		
 		for t in automata.T:
 			t1f=1
@@ -186,7 +275,12 @@ class Ksetashdey:
 			if automata.TabFinal[t[2]]:
 				t2f=2
 			
-			resDelta.mat[t[1]][t[0]]=reslchaine[t2f][t[0]][t1f].add(t[1])
+			mtemp=reslchaine[t2f][t[0]][t1f].add(t[1])
+			if reslchaine[t2f][t[0]][t1f] not in resdeltaprime[t1f][t[0]]:
+				resdeltaprime[t1f][t[0]].addListe(reslchaine[t2f][t[0]][t1f])
+				if resdeltaprime[t1f][t[0]].can_be_added():
+					resdeltaprime[t1f][t[0]].add_to_K(resK)
+			resDelta.mat[t[1]][t[0]]=mtemp
 			resDeltaMoinsUn.mat[t[0]][t[2]].append(t[1])
 		print("------------------------------------")
 		print(resDelta)
@@ -198,14 +292,15 @@ class Ksetashdey:
 						print(z)
 		print("------------------------------------")
 		print(resDeltaMoinsUn)
+		print("------------------------------------KKKKK")
+		print(resK)
 
 		#~ ll=ListeDoubleChainee.generateDeb([set(),automata.F.copy(),automata.Q-automata.F],automata.A,automata.T)
-		for l in reslchaine:
-			for y in l:
-				for z in y:
+		#~ for l in reslchaine:
+			#~ for y in l:
+				#~ for z in y:
+					#~ resK.addListeChaine(z)
 					
-					dp=DeltaPrime(resK)
-					dp.addListe(z)
 		input()
 		return resK,resDelta,reslchaine,resDeltaMoinsUn
 		
@@ -279,14 +374,32 @@ class Automata:
 	def minimisation(self):
 		"""retourne un Automate minimum en utilisant l'algo Blum"""
 		Q=[set(),self.F.copy(),self.Q-self.F]
-		K,_,_,_=Ksetashdey.generateAll(self)
-		print(K)
-		input()
+		K,delta,chaine,deltamoinsun=Ksetashdey.generateAll(self)
+		
 		t=2
 		#~ i=1
 		first=not_exists_transitions_between_classes(Q,self.T,self.A,t)
 		while first:
-			print(Q,first)
+			#~ print(Q,first)
+			print(K)
+			input("1")
+			
+			dptemp=K.get_random_delta()
+			l1,l2=dptemp.get_2_random_lists()
+			l1,l2=l1.listeChainee,l2.listeChainee
+			print(l1,l2)
+			input("2")
+			if l1.taille>l2.taille:
+				choix=l2
+			else:
+				choix=l1
+			print(choix)
+			
+			input("3")
+			choix.i=t+1
+			dptemp.removeListe(choix,K)
+			
+			
 			#~ i,j1,j2,symbol=find_classes_indices(Q,self.T,t)
 			#~ if len([trans for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j1]])<=len([trans for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j2]]):
 				#~ Q.append(set([trans[2] for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j1]]))
@@ -310,7 +423,7 @@ class Automata:
 
 
 def main():
-	a=Automata(set([0,1,2,3,4]),set([0,1]),set([(0,0,1),(0,1,2),(1,1,0),(1,2,3),(0,3,4),(0,4,3)]),0,set([4]))
+	a=Automata(set([0,1,2,3,4]),set([0,1]),set([(0,0,1),(1,0,3),(0,1,2),(1,1,0),(1,2,3),(0,3,4),(0,4,3)]),0,set([4]))
 	print(a.minimisation())
 
 main()
