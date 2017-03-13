@@ -1,1 +1,24 @@
 placez vous dans le répertoire memoire et faites : ./compil
+
+
+
+Nous avons analysé l'algorithme de Monsieur Norbert Blum qui est une version de l'algorithme d'hopcroft (minimisation nlog n )
+basée sur une structure de donnée. Initialement l'algorithme divise les états en deux classes, les finaux et les non-finaux.
+Nous avons ensuite une structure L(i,a,j) avec i une classe, a une lettre, et j une classe atteinte en passant par a a partir de i.
+L(i,a,j) contient une liste de maillons et la taille de cette liste. Chaque maillon contient un état de la classe i 
+validant le tuple (i,a,j), et un pointeur vers la liste.
+Un tableau Delta à doubles entrées contient en fonction d'un état et d'une lettre le pointeur vers le maillon contenant cet état
+dans la liste L(i,a,j) correspondante. L'automate en entrée est censé être déterministe, p appartient donc une seule fois à un
+couple (i,a), on peut donc facilement retrouver l'état d'arrivé en passant par le pointeur sur la la tête de la liste.
+Un tableau Delta-1 à doubles entrées contient en fonction d'un état et d'une lettre la liste des prédécesseurs de cet état 
+par cette lettre.
+Ce tableau sert à accéder plus rapidement aux prédécésseurs ( l'algorithme est basé sur le principe de regarder les prédécésseurs,
+d'un état au lieu ...)
+
+Une liste DeltaPrime(k,b) contient les L(i,a,j) respectant k=i et a=b. 
+Un ensemble K contient toutes les listes DeltaPrime de tailles égales ou supérieures à 2, plus concrétement, on a directement accès
+aux couples (classe, lettre) qui dirigent vers différentes classe, c'est à dire les classes qu'il faut diviser.
+
+On a donc plus qu'à sélectionner une liste delta-1 content dans K, sélectionner deux objets L1(i,a,j1) et L2(i,a,j2) 
+de cette liste, prendre le plus petit (pour avoir un temps nlog(n)) grâce a taille contenue dans L(i,a,j), renommer le i et t+1
+et mettre a jour DeltaPrime et K en conséquent.
