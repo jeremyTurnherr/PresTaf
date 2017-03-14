@@ -100,6 +100,7 @@
 %              POUR LES ACRONYMES C'EST AU MÊME ENDROIT              %
 %--------------------------------------------------------------------%
 
+\usepackage{algorithm2e}
 
 \begin{document}
 
@@ -247,9 +248,12 @@ Blum
 
 Implémentation de l'algorithme de Blum en Python.
 
-\begin{lstlisting}
-
-\end{lstlisting}
+\begin{algorithm}
+  \SetKwInOut{Input}{entrée}
+  \SetKwInOut{Output}{sortie}
+  \Input{Soit $M = (Q, \Sigma, \delta, q_0, F)$ un automate fini et deterministe}
+  \Output{L'automate minimal $ M' = (Q', \Sigma', \delta', q_0', F') $ equivalent à $M$}
+\end{algorithm}
 
 % Fournir les automates test -> voir à faire un automate minimal et un automate non minimal
 
