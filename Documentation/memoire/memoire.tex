@@ -125,54 +125,45 @@
 
 \section{Résumé du projet}
 
-Notre projet s'inscrit dans la mis-à-jour de PresTaf, logiciel d'analyse de formules logique et de leur transformation en automate minimal. Nous intervenons ici dans la création d'un interfaçage \href{https://fr.wikipedia.org/wiki/Lua}{Lua}, ainsi qu'une reprise du code source PresTaf pour donner une version plus optimisé, plus claire et propre.\\\par
+Notre projet s'inscrit dans la mis-à-jour de PresTaf, logiciel d'analyse de formules logique et de leur transformation en automate minimal. Nous intervenons ici dans la création d'un interfaçage Lua, ainsi qu'une reprise du code source PresTaf pour donner une version plus optimisé, plus claire et propre.\\\par
 
 Dans un second temps nous chercherons à intégrer de nouvelles logiques telle que la logique monadique ou encore l'interprétation des formules de Presburger en base -2.
 
 \section{Domaine}
 
-% Que dire
+Le logiciel sur lequel on s'appuie pour notre travail de départ est PresTaf implementant en Java la logique \gls{presburger}\cite{ginsburg1966semigroups}. Il existe des logiciels concurrent travaillant avec d'autres logiques telle que la \gls{monadique}\cite{KlaEtAl:Mona} avec des logiciel comme Mona\cite{monamanual2001}, ou la logique arithmétique de Presburger et les d'autre logiques sur les mots infini avec Lash\cite{lash}
 
-\subsection{Arithmétique de Presburger}
-
-L'\textbf{\gls{presburger}} à été introduite par Moj\.{z}esz Presburger en 1929. Cette arithmétique du premier ordre dispose de deux constante 0 et 1 ainsi qu'un symbole binaire +. Ce langage est limité aux entiers naturels et est défini par les lois suivante :
-
-\begin{enumerate}
-    \item $\forall x, \neg(0 = x + 1)$
-    \item $\forall x, \forall y, x + 1 = y + 1 \rightarrow x = y $
-    \item $\forall x, x + 0 = x$
-    \item $\forall x, \forall y, x + (y + 1) = (x + y) + 1$
-    \item $\forall P(x, y_1, \ldots, y_n) \in$ Formule du premier ordre, 
-    $\forall y_1 \ldots \forall y_n [(P(0, y_1, \ldots,y_n) \vee \forall x(P(x, y_1, \ldots, y_n) \rightarrow P(x + 1, y_1, \ldots, y_n))) \rightarrow \forall y P(y, y_1, \ldots, y_n)]$
-\end{enumerate}
-
-\subsection{Logique monadique du second ordre}
-
-La \textbf{\gls{monadique}}, aussi connu sous le nom de \emph{Monadic Second Order} ou \emph{MSO}, est notamment utilisé dans un autre programme de M.Couvreur : VeriTaf. VeriTaf permet de vérifier des formules CTL (Computation Tree Logic) et des forumules LTL (Linear Temporal Logic)
-
-\subsection{Automates et minimisation}
-
-Les automates que nous utilisons sont générés à partir de la formule de Presburger ou la formule monadique passée en entrée. Cet automate est fini et deterministe. Cependant ils ne sont pas minimaux, pour se faire il faut appliquer l'algorithme d'Hopcroft\cite{hopcroft1971n}. Nous implémenteront une variante de cet algorithme, l'algorithme de Blum\cite{blum1996nlogn}. La difficulté de cet algorithme n'est pas son implémentation qui elle est très simple mais la structure de données.
-
-\subsection{PresTaf}
-
-PresTaf permet d'avoir une représentation visuel, sous forme d'automates, d'une formule de Presburger. En d'autres termes l'utilisateur rentre sa formule, et PresTaf lui fournit l'automate solution de sa formule. Ce programme pourrait notamment être utilisé par les étudiant de l'université.
-
-\section{Analyse de PresTaf}
+\section{Analyse de l'existant}
 
 PresTaf est programme codé par M. Jean-Michel Couvreur, qui prend des formules de Presburger en entrées et les résout à l'aide d'automates minimaux. Tout d'abord il génère des automates déterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire PresTaf utilise un algorithme d'Hopcroft modifié. L'ensemble des transitions menant de l'état initial vers un état final est solution de la formule. En outre si l'état final est l'état \emph{zero} alors il n'y aucune solution et si l'état final est l'état \emph{one} alors la formule est une tautologie.\\\par
 
-Mona\\\par
+Mona, est une bibliothèque C qui résout des formules monadique. La où PresTaf n'implémente à ce jour que la logique arithmétique de Presburger, la logique monadique pourrait être implémenter dans le futur\\\par
 
 Lash\cite{lash} est une bibliothèque C qui résout des formules de Presburger, mais la différence avec PresTaf est qu'il fonctionne sur des automates infini. Cette différence induit une importante baisse de performante. En effet PresTaf pour les mêmes formules était bien plus rapide à s'executer que Lash\cite{DBLP:conf/wia/Couvreur04}\\\par
 
-Büchi\\\par
-
-L'algorithme d'Hopcroft est un algorithme de minimisation d'automate fini et deterministe.\\\par
-
-Blum
-
 \section{Besoins fonctionnels}
+
+\subsection{Prototype papier}
+
+Le prototype qui suit serait un fichier Lua qui se servirait de la logique $MaLogique$.
+
+\begin{lstlisting}[mathescape=true]
+logique = require("MaLogique") // Choix de la logique
+x = logique.var('X') // Declaration d'une variable
+y = logique.var('Y')
+f = (x $\vee$ y) $\wedge$ x $\wedge$ $\neg$ y
+auto = automate(f) // Pour obtenir l'automate de la formule
+todot(auto, "res.dot") // Pour exporter l'automate vers le fichier res.dot
+// Soient des automates bAuto cAuto
+// Permet d'avoir des intersections et unions d'automates.
+resAuto = bAuto $\cap$ auto $\cup$ cAuto
+\end{lstlisting}
+
+Pour lancer ce fichier Lua il faudrait passer par un fichier jar que l'on appellera $prestaf.jar$. Pour lancer le jar et le fichier lua il faudrait faire la commande suivante :
+
+\begin{lstlisting}[mathescape=true]
+java -jar prestaf.jar fichier.lua
+\end{lstlisting}
 
 \paragraph{Nom :} Transformation de formules arithmétiques de Presburger
 
@@ -248,6 +239,8 @@ Blum
 
 Implémentation de l'algorithme de Blum en Python.
 
+<<<<<<< HEAD
+=======
 \begin{algorithm}
   \SetKwInOut{Input}{entrée}
   \SetKwInOut{Output}{sortie}
@@ -255,6 +248,7 @@ Implémentation de l'algorithme de Blum en Python.
   \Output{L'automate minimal $ M' = (Q', \Sigma', \delta', q_0', F') $ equivalent à $M$}
 \end{algorithm}
 
+>>>>>>> 7ddc772a4c38bccd176ca9295fbd7fe082810a75
 % Fournir les automates test -> voir à faire un automate minimal et un automate non minimal
 
 Voici un exemple que nous avons testé avec l'automate initial et l'objectif.
