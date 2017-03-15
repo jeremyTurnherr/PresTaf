@@ -43,7 +43,7 @@
 	citecolor={black},     
 	urlcolor={black} 
 }
-\usepackage[toc,section=section]{glossaries}
+\usepackage[toc,section=section,nonumberlist]{glossaries}
 \usepackage{url}
 \makeglossaries
 %-------------------------------------------
@@ -105,8 +105,6 @@
 
 \title{Mémoire intermédiaire PresTaf}
 
-
-% Ajouter M.Couvreur ?
 \author{Bourgeois Adrien, Marbois Bryce, Roque Maxime, Turnherr Jérémy%\thanks{Si l'on veut faire des annotations.}
 \\Université UFR Collégium des Sciences et Technique d'Orléans-la-Source}
 \date{\today}
@@ -199,7 +197,7 @@ Le fichier f.dot ressemblerai à :
 
 \subsection{Fonctions}
 
-La priorité des fonctions varie de 1 à 5, du plus important au moins important.
+La priorité des fonctions varie de 1 à 5, du plus important au moins important,sachant que la priorité 5 correspond à une fonctionnalité optionnelle.
 
 \subsubsection{Bilbiothèque d'automate générique}
 
@@ -279,15 +277,11 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \paragraph{Justification :} Il serait intéressant de permettre à l'utilisateur d'utiliser cette bilbiothèque avec diverses bases, surtout la base -2.
 
-\paragraph{Priorité :} 3
+\paragraph{Priorité :} 5
 
 \section{Prototypes et tests préparatoires}
 
 \subsection{Blum}
-
-Implémentation de l'algorithme de Blum en Python.
-
-% Fournir les automates test -> voir à faire un automate minimal et un automate non minimal
 
 Voici un exemple que nous avons testé avec l'automate initial et l'objectif.
 
@@ -427,11 +421,11 @@ Voici un exemple que nous avons testé avec l'automate initial et l'objectif.
 
 \appendix
 
+\printglossaries
+
 \bibliography{biblio}{}
 \addcontentsline{toc}{section}{Références}
 \bibliographystyle{plain}
-
-\printglossaries
 
 % \section{Premi\`ere annexe}
 
