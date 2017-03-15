@@ -164,13 +164,48 @@ Pour lancer ce fichier Lua il faudrait passer par un fichier jar que l'on appell
 java -jar prestaf.jar fichier.lua
 \end{lstlisting}
 
+En sortie l'utilisateur aurait un fichier dot, par exemple, si l'utilisateur se sert comme logique de l'arithmétique de Presburger et que dans son fichier lua il écrit le code suivant :
+
+\begin{lstlisting}[mathescape=true, frame=single]
+pres = require("Presburger")
+x = pres.var('X')
+y = pres.var('Y')
+f = x == y + 1
+todot(f, "f.dot")
+\end{lstlisting}
+
+Le fichier f.dot ressemblerai à :
+
+\begin{tikzpicture}
+\node[circle,draw]           (A) at (0.75, 6)  {$q_0$};
+\node[circle,draw]           (B) at (0, 4.5)   {$q_1$};
+\node[circle,draw,accepting] (C) at (1.5, 4.5) {$q_2$};
+\node[circle,draw,accepting] (D) at (2, 3)     {$q_3$};
+\node[circle,draw]           (E) at (2, 1.5)   {$q_4$};
+\node[circle,draw,accepting] (F) at (0.75, 0)  {$zero$};
+
+\path[->] (0.75, 7) edge (A)
+(A) edge [bend right] node[above]{0} (B)
+(B) edge [bend right] node[right]{1} (A)
+(A) edge [bend left] node[right]{1} (C)
+(B) edge [bend right] node[right]{0} (F)
+(C) edge [bend right] node[right]{1} (F)
+(C) edge [bend right] node[right]{0} (D)
+(D) edge [bend right] node[right]{0} (C)
+(D) edge [bend right] node[right]{1} (E)
+(E) edge [bend right] node[right]{1} (D)
+(E) edge [bend left] node[right]{0} (F);
+\end{tikzpicture}
+
 \subsection{Fonctions}
 
-\subsubsection{Transformation de formules arithmétiques de Presburger}
+La priorité des fonctions varie de 1 à 5, du plus important au moins important.
 
-\paragraph{Description :} Ensemble de fonctions qui prennent en entrée une formule arithmétique et retourne l'automate acceptant cette formule.
+\subsubsection{Bilbiothèque d'automate générique}
 
-\paragraph{Justification :} Besoin initial.
+\paragraph{Description :} La bibliothèque PresTaf est générique et doit accepter toutes sortes d'automates.
+
+\paragraph{Justification :} L'utilisateur aura la possibilité d'implémenter ses propres logiques, la bibliothèque doit donc accepter toutes logiques. En effet PresTaf sera une bibliothèque d'automate, permettant de minimiser un automate, de faire des interesections, des unions, etc. Il ne faut donc pas que PresTaf soit ciblé sur Presburger, mona ou une quelconque autre logique.
 
 \paragraph{Priorité :} 1\\
 
@@ -196,33 +231,11 @@ java -jar prestaf.jar fichier.lua
 
 \rule{\linewidth}{1pt}
 
-\subsubsection{Acceptation de formules en base -2}
-
-\paragraph{Description :} La base -2 est défini par : $ \sum\limits_{i=0}^n (-2)^i * k_i$. Par exemple $2_{decimal} = 0 * (-2)^0 + 1 * (-2)^1 \Rightarrow 2_{decimal} = -2_{base - 2}$. Pour déterminer un nombre en base -2, il suffit de determiner son écriture binaire et ensuite d'appliqué le calcule base -2. Si l'on a le nombre $10110010_{binaire}$ alors on aura en base -2 : $0 * (-2)^0 + 1 * (-2)^1 + 0 * (-2)^2 + 0 * (-2)^3 + 1 * (-2)^4 + 1 * (-2)^5 + 0 * (-2)^6 + 1 * (-2)^7 = -146_{base - 2}$
-
-\paragraph{Justification :}
-
-\paragraph{Priorité :} 3\\
-
-\rule{\linewidth}{1pt}
-
-\paragraph{Nom :} Logique monadique du second ordre
-
-\paragraph{Description :} Il s'agit d'une logique du second ordre, c'est-à-dire qu'un prédicat peut avoir en argument un autre prédicat, mais celui-ci ne peut pas avoir un troisième prédicat en argument (arité un). De plus dans le cadre de la logique monadique du second ordre les quantificateurs ne peuvent être utilisé que pour les variables des prédicats du premier ordre (de type Presburger par exemple).
-
-\paragraph{Justification :}
-
-\paragraph{Priorité :} 3
-
-\section{Besoins non fonctionnels}
-
-\subsection{Fonctions}
-
-\subsubsection{Machine visée}
+\subsubsection{Portabilité du code}
 
 \paragraph{Description :} Windows, MacOS, Linux
 
-\paragraph{Justification :}
+\paragraph{Justification :} Comme java est un langage portable executé via la Java Virutal Machine (JVM), et que LuaJava est executé via java il embarque sa propre machine viturel, en théorie le code sera donc portable sur tous les systèmes d'exploitation. En dehors de la portabilité du code, Windows MacOs et Linux sont les principaux systèmes d'exploitation il est donc important d'avoir un code portable pour chaque machine pour facilité l'accès
 
 \paragraph{Priorité :} 1\\
 
@@ -230,11 +243,43 @@ java -jar prestaf.jar fichier.lua
 
 \subsubsection{Optimisation}
 
-\paragraph{Description :}
+\paragraph{Description :} La bilbiothèque d'automate PresTaf doit être rapide à s'exécutée.
 
-\paragraph{Justification :}
+\paragraph{Justification :} L'utilisateur n'aura pas le temps d'attendre quelques dizaines de minutes à attendre que son automate soit généré. Il voudra obtenir son résultat rapidement.
 
-\paragraph{Priorité :} 1
+\paragraph{Priorité :} 5
+
+\section{Besoins non fonctionnels}
+
+\subsection{Fonctions}
+
+\subsubsection{Transformation de formules arithmétiques de Presburger}
+
+\paragraph{Description :} Ensemble de fonctions qui prennent en entrée une formule arithmétique et retourne l'automate acceptant cette formule.
+
+\paragraph{Justification :} La bilbiothèque PresTaf n'implémentera pas d'elle-même une logique. Ainsi l'implémentation de la logique de Presburger en script Lua, permettra de fournir une démo à l'utilisateur. Il aurait un aperçu des bonnes pratiques à avoir, les méthodes qui se doit d'implémenter, et des fonctionnalités présentes.
+
+\paragraph{Priorité :} 1\\
+
+\rule{\linewidth}{1pt}
+
+\subsubsection{Logique monadique du second ordre}
+
+\paragraph{Description :} Il s'agit d'une logique du second ordre, c'est-à-dire qu'un prédicat peut avoir en argument un autre prédicat, mais celui-ci ne peut pas avoir un troisième prédicat en argument (arité un). De plus dans le cadre de la logique monadique du second ordre les quantificateurs ne peuvent être utilisé que pour les variables des prédicats du premier ordre (de type Presburger par exemple).
+
+\paragraph{Justification :} La logique de Presburger est moins complète que la logique Monadique, puisque la logique Monadique propose une notion de successeur, donc en implémentant la logique Monadique dans une autre bibliothèque Lua, on fournirai d'avantage de démo à l'utilisateur.
+
+\paragraph{Priorité :} 3\\
+
+\rule{\linewidth}{1pt}
+
+\subsubsection{Acceptation de formules en base -2}
+
+\paragraph{Description :} La base -2 est défini par : $ \sum\limits_{i=0}^n (-2)^i * k_i$. Par exemple $2_{decimal} = 0 * (-2)^0 + 1 * (-2)^1 \Rightarrow 2_{decimal} = -2_{base - 2}$. Pour déterminer un nombre en base -2, il suffit de determiner son écriture binaire et ensuite d'appliqué le calcule base -2. Si l'on a le nombre $10110010_{binaire}$ alors on aura en base -2 : $0 * (-2)^0 + 1 * (-2)^1 + 0 * (-2)^2 + 0 * (-2)^3 + 1 * (-2)^4 + 1 * (-2)^5 + 0 * (-2)^6 + 1 * (-2)^7 = -146_{base - 2}$
+
+\paragraph{Justification :} Il serait intéressant de permettre à l'utilisateur d'utiliser cette bilbiothèque avec diverses bases, surtout la base -2.
+
+\paragraph{Priorité :} 3
 
 \section{Prototypes et tests préparatoires}
 
@@ -297,25 +342,93 @@ Voici un exemple que nous avons testé avec l'automate initial et l'objectif.
 
 \end{tikzpicture}
 
-% Test LuaJava
-
-\subsection{LuaJava}
-
 \section{Planning}
 
-% Reunions : 10/02, 15/02, 28/02, 07/03
+\begin{tikzpicture}
 
-\begin{enumerate}
-\item Implémation de l'algorithme de Blum.
-\item Révision du code PresTaf.
-\item Iterfaçage en Lua.
-\item Rédaction du mémoire intermédiaire
-\end{enumerate}
+%--------------------------------------------------------------------%
+%               POUR TOUT CE QUI EST ELIPSE C'EST ICI                %
+%--------------------------------------------------------------------%
 
+\draw[fill=gray,rounded corners, gray] (4.375, 5) circle [x radius = 0.625, y radius = 0.1];
+\draw[fill=gray,rounded corners, gray] (2.625, 5) circle [x radius = 1.125, y radius = 0.1];
+\draw[fill=gray,rounded corners, gray] (1.125, 5) circle [x radius = 0.375, y radius = 0.1];
+\draw[fill=red,rounded corners, red] (7, 5) circle [x radius = 2, y radius = 0.2];
+\draw[fill=blue,rounded corners, blue] (10.25, 5) circle [x radius = 1.5, y radius = 0.2];
+\draw[fill=gray,rounded corners, gray] (7.75, 5) circle [x radius = 1.75, y radius = 0.1];
+
+\node (x) at (1.125, 6.5) {Documentation};
+\node (y) at (2.625, 6) {LuaJava};
+\node (z) at (4.375, 6.5) {Blum};
+\node (t) at (7, 6) {PresTaf};
+\node (u) at (7.75, 6.5) {Presburger};
+\node (v) at (10.25, 6) {Mémoire};
+
+\draw (1.125, 5.1) -- (x);
+\draw (2.625, 5.1) to[bend left] (y);
+\draw (4.375, 5.1) to[bend left] (z);
+
+\draw[red] (7, 5.2) -- (t);
+\draw (7.75, 5.1) -- (u);
+\draw[blue] (10.25, 5.2) -- (v);
+
+
+\draw[->, thick] (-1, 5) -- (12, 5);
+% \foreach \x in {1,...,11} {
+% 	\draw[thick](\x, 4.85) -- (\x, 5.15);
+% 	\draw(\x - 0.25, 4.9) -- (\x - 0.25, 5.1);
+% 	\draw(\x - 0.5, 4.9) -- (\x - 0.5, 5.1);
+% 	\draw(\x - 0.75, 4.9) -- (\x - 0.75, 5.1);
+% }
+% \draw(11.25, 4.9) -- (11.25, 5.1);
+% \draw(11.5, 4.9) -- (11.5, 5.1);
+
+\foreach \x in {0,3,6,9}
+	\draw[thick](\x, 4.8) -- (\x, 5.2);
+
+\node[anchor=east] (A) at (0.75, 5.5) {Réunion (R)};
+\node at (0.75, 4.75) {10};
+
+\node (B) at (1.5, 5.5) {R};
+\node at (1.5, 4.75) {15};
+
+\node (C) at (2.75, 5.5) {R};
+\node at (2.75, 4.75) {28};
+
+\node (D) at (3.75, 5.5) {R};
+\node at (3.75, 4.75) {07};
+
+\node (E) at (4.5, 5.5) {R};
+\node at (4.5, 4.75) {14};
+
+\node (a) at (0.75, 5) {};
+\node (b) at (1.5, 5) {};
+\node (c) at (2.75, 5) {};
+\node (d) at (3.75, 5) {};
+\node (e) at (4.5, 5) {};
+
+\node[rotate=45, anchor=east] at(0, 4.5) {Février};
+\node[rotate=45, anchor=east] at(3, 4.5) {Mars};
+\node[rotate=45, anchor=east] at(6, 4.5) {Avril};
+\node[rotate=45, anchor=east] at(9, 4.5) {Mai};
+
+\draw (0.75, 5)  to[bend right] (A);
+\draw (1.5, 5) -- (B);
+\draw (2.75, 5) -- (C);
+\draw (3.75, 5) -- (D);
+\draw (4.5, 5) -- (E);
+
+\foreach \x in {a,b,c,d,e}
+	\fill(\x) circle[radius=2pt];
+
+
+
+\end{tikzpicture}
 
 \appendix
 
 \bibliography{biblio}{}
+\addcontentsline{toc}{section}{Références}
 \bibliographystyle{plain}
 
 \printglossaries
