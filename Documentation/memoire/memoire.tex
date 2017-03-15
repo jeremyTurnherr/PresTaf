@@ -78,7 +78,7 @@
 	name=Arithmétique de Presburger
 }
 {
-	L'arithmétique de Presburger à été introduite par Moj\.{z}esz Presburger en 1929. Cette arithmétique du premier ordre dispose de deux constante 0 et 1 ainsi qu'un symbole binaire +. Ce langage est limité aux entiers naturels et est défini par les lois suivante :
+	L'arithmétique de Presburger à été introduite par Moj\.{z}esz Presburger en 1929. Cette arithmétique du premier ordre dispose de deux constantes 0 et 1 ainsi qu'un symbole binaire +. Ce langage est limité aux entiers naturels et est défini par les lois suivantes :
 	\begin{enumerate}
 		\item $\forall x, \neg(0 = x + 1)$
 		\item $\forall x, \forall y, x + 1 = y + 1 \rightarrow x = y $
@@ -92,7 +92,7 @@
 \longnewglossaryentry{monadique}{
 	name=Logique monadique du second ordre
 } {
-	aussi connu sous le nom de \emph{Monadic Second Order} ou \emph{MSO}, est notamment utilisé dans un autre programme de M.Couvreur : VeriTaf. VeriTaf permet de vérifier des formules CTL (Computation Tree Logic) et des forumules LTL (Linear Temporal Logic)
+	aussi connu sous le nom de \emph{Monadic Second Order} ou \emph{MSO}, est notamment utilisé dans un autre programme de M.Couvreur : VeriTaf. VeriTaf permet de vérifier des formules CTL (Computation Tree Logic) et des formules LTL (Linear Temporal Logic)
 }
 
 %--------------------------------------------------------------------%
@@ -122,21 +122,21 @@
 
 \section{Résumé du projet}
 
-Notre projet s'inscrit dans la mis-à-jour de PresTaf, logiciel d'analyse de formules logique et de leur transformation en automate minimal. Nous intervenons ici dans la création d'un interfaçage Lua, ainsi qu'une reprise du code source PresTaf pour donner une version plus optimisé, plus claire et propre.\\\par
+Notre projet s'inscrit dans la mis-à-jour de PresTaf, logiciel d'analyse de formules logique et de leur transformation en automate minimal. Nous intervenons ici dans la création d'un interfaçage Lua, ainsi qu'une reprise du code source PresTaf pour donner une version plus optimisée, plus claire et propre.\\\par
 
 Dans un second temps nous chercherons à intégrer de nouvelles logiques telle que la logique monadique ou encore l'interprétation des formules de Presburger en base -2.
 
 \section{Domaine}
 
-Le logiciel sur lequel on s'appuie pour notre travail de départ est PresTaf implementant en Java la logique \gls{presburger}\cite{ginsburg1966semigroups}. Il existe des logiciels concurrent travaillant avec d'autres logiques telle que la \gls{monadique}\cite{KlaEtAl:Mona} avec des logiciel comme Mona\cite{monamanual2001}, ou la logique arithmétique de Presburger et les d'autre logiques sur les mots infini avec Lash\cite{lash}
+Le logiciel sur lequel on s'appuie pour notre travail de départ est PresTaf implémentant en Java la logique \gls{presburger}\cite{ginsburg1966semigroups}. Il existe des logiciels concurrents travaillant avec d'autres logiques telle que la \gls{monadique}\cite{KlaEtAl:Mona} avec des logiciel comme Mona\cite{monamanual2001}, ou la logique arithmétique de Presburger et d'autres logiques sur les mots infinis avec Lash\cite{lash}
 
 \section{Analyse de l'existant}
 
-PresTaf est programme codé par M. Jean-Michel Couvreur, qui prend des formules de Presburger en entrées et les résout à l'aide d'automates minimaux. Tout d'abord il génère des automates déterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire PresTaf utilise un algorithme d'Hopcroft modifié. L'ensemble des transitions menant de l'état initial vers un état final est solution de la formule. En outre si l'état final est l'état \emph{zero} alors il n'y aucune solution et si l'état final est l'état \emph{one} alors la formule est une tautologie.\\\par
+PresTaf est un programme codé par M. Jean-Michel Couvreur, qui prend des formules de Presburger en entrées et les résout à l'aide d'automates minimaux. Tout d'abord il génère des automates déterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire PresTaf utilise un algorithme d'Hopcroft modifié. L'ensemble des transitions menant de l'état initial vers un état final est solution de la formule. En outre si l'état final est l'état \emph{zero} alors il n'y a aucune solution et si l'état final est l'état \emph{one} alors la formule est une tautologie.\\\par
 
-Mona, est une bibliothèque C qui résout des formules monadique. La où PresTaf n'implémente à ce jour que la logique arithmétique de Presburger, la logique monadique pourrait être implémenter dans le futur\\\par
+Mona, est une bibliothèque C qui résout des formules monadiques. La où PresTaf n'implémente à ce jour que la logique arithmétique de Presburger, la logique monadique pourrait être implémentée dans le futur.\\\par
 
-Lash\cite{lash} est une bibliothèque C qui résout des formules de Presburger, mais la différence avec PresTaf est qu'il fonctionne sur des automates infini. Cette différence induit une importante baisse de performante. En effet PresTaf pour les mêmes formules était bien plus rapide à s'executer que Lash\cite{DBLP:conf/wia/Couvreur04}\\\par
+Lash\cite{lash} est une bibliothèque C qui résout des formules de Presburger, mais la différence avec PresTaf est qu'elle fonctionne sur des automates infinis. Cette différence induit une importante baisse de performance. En effet PresTaf pour les mêmes formules était bien plus rapides à s'executer que Lash.\cite{DBLP:conf/wia/Couvreur04}\\\par
 
 \section{Besoins fonctionnels}
 
@@ -172,7 +172,7 @@ f = x == y + 1
 todot(f, "f.dot")
 \end{lstlisting}
 
-Le fichier f.dot ressemblerai à :
+Le fichier f.dot ressemblerait à :
 
 \begin{tikzpicture}
 \node[circle,draw]           (A) at (0.75, 6)  {$q_0$};
@@ -197,13 +197,13 @@ Le fichier f.dot ressemblerai à :
 
 \subsection{Fonctions}
 
-La priorité des fonctions varie de 1 à 5, du plus important au moins important,sachant que la priorité 5 correspond à une fonctionnalité optionnelle.
+La priorité des fonctions varie de 1 à 5, du plus important au moins important, sachant que la priorité 5 correspond à une fonctionnalité optionnelle.
 
 \subsubsection{Bilbiothèque d'automate générique}
 
 \paragraph{Description :} La bibliothèque PresTaf est générique et doit accepter toutes sortes d'automates.
 
-\paragraph{Justification :} L'utilisateur aura la possibilité d'implémenter ses propres logiques, la bibliothèque doit donc accepter toutes logiques. En effet PresTaf sera une bibliothèque d'automate, permettant de minimiser un automate, de faire des interesections, des unions, etc. Il ne faut donc pas que PresTaf soit ciblé sur Presburger, mona ou une quelconque autre logique.
+\paragraph{Justification :} L'utilisateur aura la possibilité d'implémenter ses propres logiques, la bibliothèque doit donc accepter toutes logiques. En effet PresTaf sera une bibliothèque d'automates, permettant de minimiser un automate, de faire des intersections, des unions, etc. Il ne faut donc pas que PresTaf soit ciblé sur Presburger, mona ou une quelconque autre logique.
 
 \paragraph{Priorité :} 1\\
 
@@ -221,7 +221,7 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \subsubsection{Interfaçage Lua}
 
-\paragraph{Description :} Permet le codage des automates en Lua, ainsi que l'utilisation de chaque fonction qui seront ensuite exécutés en Java.
+\paragraph{Description :} Permet le codage des automates en Lua, ainsi que l'utilisation de chaques fonctions qui seront ensuite exécutées en Java.
 
 \paragraph{Justification :} Le lua est un langage de script simple à prendre en main et qui permet facilement d'écrire des automates et d'utiliser des fonctions.
 
@@ -233,7 +233,7 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \paragraph{Description :} Windows, MacOS, Linux
 
-\paragraph{Justification :} Comme java est un langage portable executé via la Java Virutal Machine (JVM), et que LuaJava est executé via java il embarque sa propre machine viturel, en théorie le code sera donc portable sur tous les systèmes d'exploitation. En dehors de la portabilité du code, Windows MacOs et Linux sont les principaux systèmes d'exploitation il est donc important d'avoir un code portable pour chaque machine pour facilité l'accès
+\paragraph{Justification :} Comme java est un langage portable executé via la Java Virutal Machine (JVM), et que LuaJava est executé via java il embarque sa propre machine virtuelle, en théorie le code sera donc portable sur tous les systèmes d'exploitation. En dehors de la portabilité du code, Windows MacOs et Linux sont les principaux systèmes d'exploitation, il est donc important d'avoir un code portable pour chaque machine pour faciliter l'accès.
 
 \paragraph{Priorité :} 1\\
 
@@ -241,9 +241,9 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \subsubsection{Optimisation}
 
-\paragraph{Description :} La bilbiothèque d'automate PresTaf doit être rapide à s'exécutée.
+\paragraph{Description :} La bilbiothèque d'automates PresTaf doit être rapide à s'exécuter.
 
-\paragraph{Justification :} L'utilisateur n'aura pas le temps d'attendre quelques dizaines de minutes à attendre que son automate soit généré. Il voudra obtenir son résultat rapidement.
+\paragraph{Justification :} L'utilisateur n'aura pas le temps d'attendre quelques dizaines de minutes que son automate soit généré. Il voudra obtenir son résultat rapidement.
 
 \paragraph{Priorité :} 5
 
@@ -255,7 +255,7 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \paragraph{Description :} Ensemble de fonctions qui prennent en entrée une formule arithmétique et retourne l'automate acceptant cette formule.
 
-\paragraph{Justification :} La bilbiothèque PresTaf n'implémentera pas d'elle-même une logique. Ainsi l'implémentation de la logique de Presburger en script Lua, permettra de fournir une démo à l'utilisateur. Il aurait un aperçu des bonnes pratiques à avoir, les méthodes qui se doit d'implémenter, et des fonctionnalités présentes.
+\paragraph{Justification :} La bilbiothèque PresTaf n'implémentera pas d'elle-même une logique. Ainsi l'implémentation de la logique de Presburger en script Lua, permettra de fournir une démo à l'utilisateur. Il aurait un aperçu des bonnes pratiques à avoir, les méthodes qu'il se doit d'implémenter, et des fonctionnalités présentes.
 
 \paragraph{Priorité :} 1\\
 
@@ -263,9 +263,9 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \subsubsection{Logique monadique du second ordre}
 
-\paragraph{Description :} Il s'agit d'une logique du second ordre, c'est-à-dire qu'un prédicat peut avoir en argument un autre prédicat, mais celui-ci ne peut pas avoir un troisième prédicat en argument (arité un). De plus dans le cadre de la logique monadique du second ordre les quantificateurs ne peuvent être utilisé que pour les variables des prédicats du premier ordre (de type Presburger par exemple).
+\paragraph{Description :} Il s'agit d'une logique du second ordre, c'est-à-dire qu'un prédicat peut avoir en argument un autre prédicat, mais celui-ci ne peut pas avoir un troisième prédicat en argument (arité un). De plus dans le cadre de la logique monadique du second ordre les quantificateurs ne peuvent être utilisés que pour les variables des prédicats du premier ordre (de type Presburger par exemple).
 
-\paragraph{Justification :} La logique de Presburger est moins complète que la logique Monadique, puisque la logique Monadique propose une notion de successeur, donc en implémentant la logique Monadique dans une autre bibliothèque Lua, on fournirai d'avantage de démo à l'utilisateur.
+\paragraph{Justification :} La logique de Presburger est moins complète que la logique Monadique, puisque la logique Monadique propose une notion de successeur, donc en implémentant la logique Monadique dans une autre bibliothèque Lua, on fournirait d'avantage de démo à l'utilisateur.
 
 \paragraph{Priorité :} 3\\
 
@@ -273,7 +273,7 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \subsubsection{Acceptation de formules en base -2}
 
-\paragraph{Description :} La base -2 est défini par : $ \sum\limits_{i=0}^n (-2)^i * k_i$. Par exemple $2_{decimal} = 0 * (-2)^0 + 1 * (-2)^1 \Rightarrow 2_{decimal} = -2_{base - 2}$. Pour déterminer un nombre en base -2, il suffit de determiner son écriture binaire et ensuite d'appliqué le calcule base -2. Si l'on a le nombre $10110010_{binaire}$ alors on aura en base -2 : $0 * (-2)^0 + 1 * (-2)^1 + 0 * (-2)^2 + 0 * (-2)^3 + 1 * (-2)^4 + 1 * (-2)^5 + 0 * (-2)^6 + 1 * (-2)^7 = -146_{base - 2}$
+\paragraph{Description :} La base -2 est défini par : $ \sum\limits_{i=0}^n (-2)^i * k_i$. Par exemple $2_{decimal} = 0 * (-2)^0 + 1 * (-2)^1 \Rightarrow 2_{decimal} = -2_{base - 2}$. Pour déterminer un nombre en base -2, il suffit de determiner son écriture binaire et ensuite d'appliquer le calcule base -2. Si l'on a le nombre $10110010_{binaire}$ alors on aura en base -2 : $0 * (-2)^0 + 1 * (-2)^1 + 0 * (-2)^2 + 0 * (-2)^3 + 1 * (-2)^4 + 1 * (-2)^5 + 0 * (-2)^6 + 1 * (-2)^7 = -146_{base - 2}$
 
 \paragraph{Justification :} Il serait intéressant de permettre à l'utilisateur d'utiliser cette bilbiothèque avec diverses bases, surtout la base -2.
 
@@ -335,6 +335,20 @@ Voici un exemple que nous avons testé avec l'automate initial et l'objectif.
 (M) edge[bend right] node[left]{0} (N);
 
 \end{tikzpicture}
+
+\vspace{1cm}
+
+Nous avons analysé et tenté une implémentation en python de l'algorithme de Norbert Blum, basé sur celui de John Hopcroft, qui minimise un automate en temps n log n. 
+Initialement l'algorithme divise les états en deux classes: les finaux et les non-finaux. Cet algorithme a besoin de plusieurs structures de données pour s'exécuter: 
+\begin{itemize} 
+\item Des listes doublement chaînées $L(i,a,j)$ avec $i$ et $j$ deux classes d'automates et $a$ une lettre de l'alphabet, Tels qu'il existe un automate de la classe $j$ atteint par un automate de la classe $i$ à l'aide de la lettre $a$. $L(i,a,j)$ contient aussi sa taille pour pouvoir y accéder en temps constant.  Les maillons de chaque liste contiennent d'une part, un automate contenu dans la classe $i$ et vérifiant le tuple $(i,a,j)$ et d'autre part un pointeur vers la liste $L(i,a,j)$.
+\item Un tableau $\Delta$ à deux dimensions qui contient en fonction d'un automate $p$ et d'une étiquette $a$, le pointeur vers le maillon, dans la structure $L(i,a,j)$ correspondante tel que $p$ appartient à la classe $i$, et que l'automate d'arrivée par la lettre $a$ appartienne à la classe $j$.Comme tous les automates traités sont déterministes, lorsque l'on applique $a$ à $p$, on obtient au plus un seul automate, or cet automate d'arrivée n'appartient qu'à une seule classe d'équivalence, ainsi la case [p][a], ne pointe que vers un élément d'une liste unique.   
+\item Un tableau $\Delta^{-1}$ à deux dimensions qui contient en fonction d'un état et d'une étiquette de l'alphabet, la liste des prédécesseurs de cet automate par cette étiquette.
+Ce tableau permet d'accéder plus rapidement aux prédécesseurs d'un état.
+\item Une liste $\Delta'(i,a)$, contient toutes les listes $L(i,a,j)$ quelque soit $j$.
+\item Un ensemble $K$ contenant tous les $\Delta'(i,a)$ ayant au moins deux éléments. Ainsi tous les $\Delta'(i,a)$ dans $K$ permettent une subdivision de leur classe de départ $i$, car il existe deux $j$ différents qui succèdent à $i$ par $a$. 
+\end{itemize} 
+
 
 \section{Planning}
 

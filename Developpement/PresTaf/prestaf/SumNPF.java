@@ -1,3 +1,4 @@
+/*
 //
 //  ForallExistsMarkedAutomaton.java
 //  PresTafProject
@@ -14,6 +15,7 @@ public final class SumNPF implements MarkedAutomaton
     int nbVar;
     SumPair[] parameter;
     
+*/
 /*
     static NPF eval(NPF npf0, NPF npf1)
     {
@@ -21,7 +23,8 @@ public final class SumNPF implements MarkedAutomaton
         MarkedSharedAutomaton res = MarkedSharedAutomaton.canonical(create(npf0,npf1));
         return new NPF(npf0.nbVariable,res);
     }
-*/
+*//*
+
     private ActionMarkedAutomaton(Pair[] p0, Pair[] p1)
     {
         parameter = p;
@@ -85,7 +88,9 @@ public final class SumNPF implements MarkedAutomaton
         return MarkedAutomaton.EXISTS;
     }
 
-    /* equal */
+    */
+/* equal *//*
+
     
     public boolean equals(Object o)
     {
@@ -209,7 +214,9 @@ public final class SumNPF implements MarkedAutomaton
             return res;
         }
 
-/***/
+*/
+/***//*
+
 
         Pair[] succ(int a)
         {
@@ -250,3 +257,4 @@ public final class SumNPF implements MarkedAutomaton
         }
     }
 }
+*/
