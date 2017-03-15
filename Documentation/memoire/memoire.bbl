@@ -1,11 +1,5 @@
 \begin{thebibliography}{1}
 
-\bibitem{blum1996nlogn}
-Norbert Blum.
-\newblock An o(nlogn) implementation of the standard method for minimizing
-  n-state finite automata.
-\newblock {\em Information Processing Letters}, 57(2):65--69, 1996.
-
 \bibitem{lash}
 Bernard Boigelot.
 \newblock \href{https://goo.gl/k9kT1L}{Lash toolset}.
@@ -17,9 +11,24 @@ Jean{-}Michel Couvreur.
   Conference, {CIAA} 2004, Kingston, Canada, July 22-24, 2004, Revised Selected
   Papers}, pages 310--311, 2004.
 
-\bibitem{hopcroft1971n}
-John Hopcroft.
-\newblock An/n log n algorithm for minimizing states in kf in ite automaton.
-\newblock 1971.
+\bibitem{ginsburg1966semigroups}
+Seymour Ginsburg and Edwin Spanier.
+\newblock Semigroups, presburger formulas, and languages.
+\newblock {\em Pacific journal of Mathematics}, 16(2):285--296, 1966.
+
+\bibitem{KlaEtAl:Mona}
+J.G. Henriksen, J.~Jensen, M.~J{\o}rgensen, N.~Klarlund, B.~Paige, T.~Rauhe,
+  and A.~Sandholm.
+\newblock Mona: Monadic second-order logic in practice.
+\newblock In {\em Tools and Algorithms for the Construction and Analysis of
+  Systems, First International Workshop, TACAS '95, LNCS 1019}, 1995.
+
+\bibitem{monamanual2001}
+Nils Klarlund and Anders M{\o}ller.
+\newblock {\em {MONA Version 1.4 User Manual}}.
+\newblock BRICS, Department of Computer Science, Aarhus University, January
+  2001.
+\newblock Notes Series NS-01-1. Available from \texttt{\small
+  http://www.brics.dk/mona/}. Revision of BRICS NS-98-3.
 
 \end{thebibliography}

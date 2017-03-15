@@ -100,7 +100,6 @@
 %              POUR LES ACRONYMES C'EST AU MÊME ENDROIT              %
 %--------------------------------------------------------------------%
 
-\usepackage{algorithm2e}
 
 \begin{document}
 
@@ -147,25 +146,27 @@ Lash\cite{lash} est une bibliothèque C qui résout des formules de Presburger, 
 
 Le prototype qui suit serait un fichier Lua qui se servirait de la logique $MaLogique$.
 
-\begin{lstlisting}[mathescape=true]
+\begin{lstlisting}[mathescape=true, frame=single]
 logique = require("MaLogique") // Choix de la logique
 x = logique.var('X') // Declaration d'une variable
 y = logique.var('Y')
 f = (x $\vee$ y) $\wedge$ x $\wedge$ $\neg$ y
-auto = automate(f) // Pour obtenir l'automate de la formule
-todot(auto, "res.dot") // Pour exporter l'automate vers le fichier res.dot
-// Soient des automates bAuto cAuto
-// Permet d'avoir des intersections et unions d'automates.
-resAuto = bAuto $\cap$ auto $\cup$ cAuto
+// Pour exporter l'automate
+todot(f, "f.dot")
+// Soient des formules a et b
+// Intersections et unions d'automates.
+c = a $\cap$ f $\cup$ b
 \end{lstlisting}
 
 Pour lancer ce fichier Lua il faudrait passer par un fichier jar que l'on appellera $prestaf.jar$. Pour lancer le jar et le fichier lua il faudrait faire la commande suivante :
 
-\begin{lstlisting}[mathescape=true]
+\begin{lstlisting}[mathescape=true, frame=single]
 java -jar prestaf.jar fichier.lua
 \end{lstlisting}
 
-\paragraph{Nom :} Transformation de formules arithmétiques de Presburger
+\subsection{Fonctions}
+
+\subsubsection{Transformation de formules arithmétiques de Presburger}
 
 \paragraph{Description :} Ensemble de fonctions qui prennent en entrée une formule arithmétique et retourne l'automate acceptant cette formule.
 
@@ -175,7 +176,7 @@ java -jar prestaf.jar fichier.lua
 
 \rule{\linewidth}{1pt}
 
-\paragraph{Nom :} Minimisation d'automate (Blum)
+\subsubsection{Minimisation d'automate}
 
 \paragraph{Description :} Ensemble de fonctions qui prennent un automate (fini, complet) et déterministe en entrée et retourne l'automate minimal équivalent.
 
@@ -185,7 +186,7 @@ java -jar prestaf.jar fichier.lua
 
 \rule{\linewidth}{1pt}
 
-\paragraph{Nom :} Interfaçage Lua
+\subsubsection{Interfaçage Lua}
 
 \paragraph{Description :} Permet le codage des automates en Lua, ainsi que l'utilisation de chaque fonction qui seront ensuite exécutés en Java.
 
@@ -195,7 +196,7 @@ java -jar prestaf.jar fichier.lua
 
 \rule{\linewidth}{1pt}
 
-\paragraph{Nom :} Acceptation de formules en base -2
+\subsubsection{Acceptation de formules en base -2}
 
 \paragraph{Description :} La base -2 est défini par : $ \sum\limits_{i=0}^n (-2)^i * k_i$. Par exemple $2_{decimal} = 0 * (-2)^0 + 1 * (-2)^1 \Rightarrow 2_{decimal} = -2_{base - 2}$. Pour déterminer un nombre en base -2, il suffit de determiner son écriture binaire et ensuite d'appliqué le calcule base -2. Si l'on a le nombre $10110010_{binaire}$ alors on aura en base -2 : $0 * (-2)^0 + 1 * (-2)^1 + 0 * (-2)^2 + 0 * (-2)^3 + 1 * (-2)^4 + 1 * (-2)^5 + 0 * (-2)^6 + 1 * (-2)^7 = -146_{base - 2}$
 
@@ -215,7 +216,9 @@ java -jar prestaf.jar fichier.lua
 
 \section{Besoins non fonctionnels}
 
-\paragraph{Nom :} Machine visée
+\subsection{Fonctions}
+
+\subsubsection{Machine visée}
 
 \paragraph{Description :} Windows, MacOS, Linux
 
@@ -225,7 +228,7 @@ java -jar prestaf.jar fichier.lua
 
 \rule{\linewidth}{1pt}
 
-\paragraph{Nom :} Optimisation (de PresTaf ou d'un nouveau code ?)
+\subsubsection{Optimisation}
 
 \paragraph{Description :}
 
@@ -239,16 +242,6 @@ java -jar prestaf.jar fichier.lua
 
 Implémentation de l'algorithme de Blum en Python.
 
-<<<<<<< HEAD
-=======
-\begin{algorithm}
-  \SetKwInOut{Input}{entrée}
-  \SetKwInOut{Output}{sortie}
-  \Input{Soit $M = (Q, \Sigma, \delta, q_0, F)$ un automate fini et deterministe}
-  \Output{L'automate minimal $ M' = (Q', \Sigma', \delta', q_0', F') $ equivalent à $M$}
-\end{algorithm}
-
->>>>>>> 7ddc772a4c38bccd176ca9295fbd7fe082810a75
 % Fournir les automates test -> voir à faire un automate minimal et un automate non minimal
 
 Voici un exemple que nous avons testé avec l'automate initial et l'objectif.

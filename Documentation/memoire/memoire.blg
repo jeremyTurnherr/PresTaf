@@ -3,49 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: memoire.aux
 The style file: plain.bst
 Database file #1: biblio.bib
-A bad cross reference---entry "DBLP:conf/wia/Couvreur04"
-refers to entry "DBLP:conf/wia/2004", which doesn't exist
-Warning--I didn't find a database entry for "DBLP:conf/wia/2004"
-Warning--empty journal in hopcroft1971n
-You've used 4 entries,
+You've used 5 entries,
             2118 wiz_defined-function locations,
-            520 strings with 4597 characters,
-and the built_in function-call counts, 1114 in all, are:
-= -- 109
-> -- 28
+            527 strings with 5054 characters,
+and the built_in function-call counts, 1636 in all, are:
+= -- 153
+> -- 78
 < -- 1
-+ -- 14
-- -- 8
-* -- 55
-:= -- 180
-add.period$ -- 11
-call.type$ -- 4
-change.case$ -- 16
++ -- 32
+- -- 26
+* -- 101
+:= -- 269
+add.period$ -- 15
+call.type$ -- 5
+change.case$ -- 27
 chr.to.int$ -- 0
 cite$ -- 5
-duplicate$ -- 51
-empty$ -- 106
-format.name$ -- 8
-if$ -- 239
+duplicate$ -- 64
+empty$ -- 137
+format.name$ -- 26
+if$ -- 344
 int.to.chr$ -- 0
-int.to.str$ -- 4
+int.to.str$ -- 5
 missing$ -- 3
-newline$ -- 22
-num.names$ -- 8
-pop$ -- 23
+newline$ -- 28
+num.names$ -- 10
+pop$ -- 37
 preamble$ -- 1
-purify$ -- 12
+purify$ -- 23
 quote$ -- 0
-skip$ -- 44
+skip$ -- 51
 stack$ -- 0
-substring$ -- 73
-swap$ -- 13
+substring$ -- 83
+swap$ -- 17
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 16
-warning$ -- 1
-while$ -- 13
-width$ -- 5
-write$ -- 40
-(There was 1 error message)
+type$ -- 20
+warning$ -- 0
+while$ -- 15
+width$ -- 6
+write$ -- 53
