@@ -230,31 +230,166 @@ class DeltaPrime:
 		return res
 	
 		
+#~ class Ksetashdey:
+	#~ """l'ensemble des delta prime de longueur >=2"""
+	#~ def __init__(self):
+		#~ self.K=[]
+		#~ self.indicesdispos=[]
+		#~ self.indiceafournir=0
+		#~ self.nbDeltas=0
+		#~ 
+	#~ def addDeltaPrime(self,dprime):
+		#~ dprime.Kself=self.indiceafournir
+		#~ self.indiceafournir+=1
+		#~ self.K.append(dprime)
+		#~ self.indicesdispos.append(dprime.Kself)
+		#~ self.nbDeltas+=1
+		#~ 
+	#~ def removeDeltaPrime(self,id):
+		#~ self.K[id]=None
+		#~ self.indicesdispos.remove(id)
+		#~ self.nbDeltas-=1
+		#~ 
+	#~ def get_random_delta(self):
+		#~ return self.K[choice(self.indicesdispos)]
+		#~ 
+	#~ def isEmpty(self):
+		#~ return self.nbDeltas==0
+		#~ 
+	#~ def __repr__(self):
+		#~ res="------"
+		#~ for dp in self.K:
+			#~ if dp:
+				#~ res+="\n"+str(dp)
+				#~ res+="\n------"
+		#~ return res
+		#~ 
+	#~ 
+	#~ 
+	#~ @staticmethod
+	#~ def generateAll(automata):
+		#~ classes=[set(),automata.F.copy(),automata.Q-automata.F]
+		#~ resK=Ksetashdey()
+		#~ resDelta=Delta(len(automata.A),len(automata.Q))
+		#~ resDeltaMoinsUn=DeltaMoinsUn(len(automata.Q),len(automata.A))
+		#~ reslchaine=[[[ListeDoubleChainee(x,y,z) for x in range(3)] for y in automata.A] for z in range(3)]
+		#~ resdeltaprime=[[DeltaPrime(i,a,resK) for a in automata.A] for i in automata.Q]
+		#~ 
+		#~ for t in automata.T:
+			#~ t1f=1
+			#~ t2f=1
+			#~ if automata.TabFinal[t[1]]:
+				#~ t1f=2
+			#~ if automata.TabFinal[t[2]]:
+				#~ t2f=2
+			#~ 
+			#~ mtemp=reslchaine[t2f][t[0]][t1f].add(t[1])
+			#~ if reslchaine[t2f][t[0]][t1f] not in resdeltaprime[t1f][t[0]]:
+				#~ resdeltaprime[t1f][t[0]].addListe(reslchaine[t2f][t[0]][t1f])
+				#~ if resdeltaprime[t1f][t[0]].can_be_added():
+					#~ resdeltaprime[t1f][t[0]].add_to_K(resK)
+			#~ resDelta.mat[t[1]][t[0]]=mtemp
+			#~ resDeltaMoinsUn.mat[t[0]][t[2]].append(t[1])
+		#~ print("------------------------------------")
+		#~ print(resDelta)
+		#~ print("------------------------------------")
+		#~ for i in reslchaine:
+			#~ for y in i:
+				#~ for z in y:
+					#~ if z.deb:
+						#~ print(z)
+		#~ print("------------------------------------")
+		#~ print(resDeltaMoinsUn)
+		#~ print("------------------------------------KKKKK")
+		#~ print(resK)
+#~ 
+		#~ 
+					#~ 
+		#~ input()
+		#~ return resK,resDelta,reslchaine,resDeltaMoinsUn
+		#~ 
 class Ksetashdey:
 	"""l'ensemble des delta prime de longueur >=2"""
+	class KMaillon:
+		def __init__(self,deltaPrime):
+			self.prec=None
+			self.suiv=None
+			self.deltaPrime=deltaPrime
+			
+		def setPrec(prec):
+			self.prec=prec
+			
+		def getPrec():
+			return self.prec
+			
+		def setSuiv(suiv):
+			self.suiv=suiv
+			
+		def Suiv():
+			return self.suiv
+			
+		def remove(self,maillon):
+			"""maillon est un deltaPrime"""
+			if self.deltaPrime==maillon:
+				if self.suiv!=None:
+					self.prec.suiv=self.suiv
+					self.suiv.prec=self.prec
+				else:
+					self.prec.suiv=None
+			else:
+				if self.suiv!=None:
+					self.suiv.remove(maillon)
+				else:
+					print("Not found")
+			
+			
+	
 	def __init__(self):
-		self.K=[]
-		self.indicesdispos=[]
+		self.tete=None
+		self.queue=None
+		self.nbDelta=0
 		
 	def addDeltaPrime(self,dprime):
-		dprime.Kself=len(self.K)
-		self.K.append(dprime)
-		self.indicesdispos.append(dprime.Kself)
+		d=self.KMaillon(dprime)
+		if(self.queue==None):
+			self.tete=d
+			self.queue=d
+		else:
+			self.queue.setSuiv(d)
+			d.setPrec(self.queue)
+			self.queue=d
+		self.nbDelta+=1
+		return d
 		
-	def removeDeltaPrime(self,id):
-		self.K[id]=None
-		self.indicesdispos.remove(id)
+	def removeDeltaPrime(self,maillon):
+		self.tete.remove(maillon)
+		#~ if(maillon!=self.queue):
+			#~ maillon.getSuiv().setPrec(maillon.getPrec())
+		#~ else:
+			#~ self.queue=maillon.getPrec()
+		#~ if(maillon!=self.tete):
+			#~ maillon.getPrec().setSuiv(maillon.getSuiv())
+		#~ else:
+			#~ self.tete=maillon.getSuiv()
+		self.nbDelta-=1
 		
-	def get_random_delta(self):
-		return self.K[choice(self.indicesdispos)]
+	def get_delta(self):
+		return self.tete
 		
 	def __repr__(self):
 		res="------"
-		for dp in self.K:
-			if dp:
-				res+="\n"+str(dp)
-				res+="\n------"
+	#	for dp in self.K:
+	#		if dp:
+	#			res+="\n"+str(dp)
+	#			res+="\n------"
 		return res
+		
+	def get_random_delta(self):
+		return self.tete.deltaPrime
+		
+	def isEmpty(self):
+		return self.nbDelta==0
+	
 		
 	
 	
@@ -303,6 +438,7 @@ class Ksetashdey:
 					
 		input()
 		return resK,resDelta,reslchaine,resDeltaMoinsUn
+
 		
 
 
@@ -378,13 +514,13 @@ class Automata:
 		
 		t=2
 		#~ i=1
-		first=not_exists_transitions_between_classes(Q,self.T,self.A,t)
-		while first:
+		#~ first=not_exists_transitions_between_classes(Q,self.T,self.A,t)
+		while not K.isEmpty():
 			#~ print(Q,first)
 			print(K)
 			input("1")
 			
-			dptemp=K.get_random_delta()
+			dptemp=K.get_random_delta()#un delta prime temporaire
 			l1,l2=dptemp.get_2_random_lists()
 			l1,l2=l1.listeChainee,l2.listeChainee
 			print(l1,l2)
@@ -397,7 +533,12 @@ class Automata:
 			
 			input("3")
 			choix.i=t+1
-			dptemp.removeListe(choix,K)
+			dptemp.removeListe(choix,K)#retire la plus petite liste du delta prime
+			
+			newdp=DeltaPrime(t+1,choix.symb,K)
+			newdp.addListe(choix)#ajout a la nouvelle liste dp t+1
+			if newdp.can_be_added():#inutile pour l'instant car length=1
+				newdp.add_to_K(K)
 			
 			
 			#~ i,j1,j2,symbol=find_classes_indices(Q,self.T,t)
@@ -407,9 +548,9 @@ class Automata:
 				#~ Q.append(set([trans[2] for trans in self.T if trans[0]==symbol and trans[1] in Q[i] and trans[2] in Q[j2]]))
 			#~ Q[i]=Q[i]-Q[t]
 			#~ t+=1
-			i,j,symb=first
-			
-			first=not_exists_transitions_between_classes(Q,self.T,self.A,t)
+			#~ i,j,symb=first
+			#~ 
+			#~ first=not_exists_transitions_between_classes(Q,self.T,self.A,t)
 			
 					
 		print("terminé")
