@@ -26,6 +26,13 @@ class ListeDoubleChainee:
 		def addBeginning(self,maillon):
 			self.prec=maillon
 			maillon.suiv=self
+			
+		def remove(self):
+			if self.prec!=None:
+				self.prec.suiv=self.suiv
+			if self.suiv!=None:
+				self.suiv.prec=self.prec
+			self.tete.taille-=1
 				
 		def __repr__(self):
 			res="--("+str(self.q)+")"
@@ -36,31 +43,81 @@ class ListeDoubleChainee:
 		
 	def __init__(self,i,symb,j):
 		self.taille=0#S(i,a,j)
-		self.deb=None
+		self.suiv=None
 		self.symb=symb
 		self.i=i
 		self.j=j
+		self.deltaprime=None
 		
 	def add(self,etat):
 		temp=self.Maillon(None,None,self,etat)
 		if self.taille==0:
-			self.deb=temp
+			self.suiv=temp
 		else:
-			self.deb.addBeginning(temp)
-			self.deb=temp
+			self.suiv.addBeginning(temp)
+			self.suiv=temp
 		self.taille+=1
 		return temp
 	
 	def __repr__(self):
 		res="{i "+str(self.i)+",a "+str(self.symb)+",j "+str(self.j)+"} "
 		
-		return res+str(self.deb)
+		return res+str(self.suiv)
 		
 	def __cmp__(self,o):
 		return self.taille-o.taille
 		
 	def get_len(self):
 		return self.taille
+		
+	def mise_a_jour(self,delta,deltaprime,deltamoinsun,gamma,gammaprime):
+		temp=self.suiv
+		while temp:
+			l=delta.mat[temp.q]
+			for char in range(len(l)):
+				#etape 1
+				if char!=self.symb:
+					
+					temp.remove()
+					if gamma[char][temp.tete.j].i==self.i:#i=t+1
+						gamma[char][temp.tete.j].add(temp.q)
+					else:
+						newl=ListeDoubleChainee(self.i,char,temp.tete.j)
+						newl.add(temp.q)
+						gamma[char][temp.tete.j]=newl
+						newdp=DeltaPrime.All[self.i][char]
+						if newdp==None:
+							newdp=DeltaPrime(self.i,char,K)
+						newdp.addListe(choix)#ajout a la nouvelle liste dp t+1
+						if newdp.can_be_added():
+							newdp.add_to_K(K)
+					
+			#etape 2
+			for char in range(len(l)):
+				listeEtats=deltamoinsun.mat[char][temp.q]
+				for q in listeEtats:
+					maillon=delta.mat[q][char]
+					maillon.remove()
+					if gammaprime[maillon.tete.i][char].i==self.i:#i=t+1, créer gammaprime
+						gammaprime[maillon.tete.i][char].add(maillon.q)
+					else:
+						newl=ListeDoubleChainee(maillon.tete.i,char,self.i)
+						newl.add(maillon.q)
+						gammaprime[maillon.tete.i][char]=newl
+						newdp=DeltaPrime.All[self.i][char]
+						if newdp==None:
+							newdp=DeltaPrime(self.i,char,K)
+							
+						newdp.addListe(choix)#ajout a la nouvelle liste dp t+1
+						if newdp.can_be_added():
+							newdp.add_to_K(K)
+					
+				
+				
+				
+					
+		
+		
 			
 		
 	@staticmethod
@@ -139,6 +196,7 @@ class DeltaMoinsUn:
 		
 class DeltaPrime:
 	"""liste des classes d'etats"""
+	All=None
 	class DeltaMaillon:
 		def __init__(self,prec,suiv,lchaine):
 			self.prec=prec
@@ -182,6 +240,7 @@ class DeltaPrime:
 		self.isAdded=False
 		
 		self.taille=0
+		DeltaPrime.All[i][a]=self
 		
 	def __contains__(self,o):
 		temp=self.suiv
@@ -196,6 +255,7 @@ class DeltaPrime:
 		"""tente d'ajouter la liste, retourne si ça a reussi (si len>=2"""
 		
 		maillon=self.DeltaMaillon(None,None,lchaine)
+		lchaine.deltaprime=self
 		if self.suiv==None:
 			self.suiv=maillon
 		else:
@@ -228,6 +288,10 @@ class DeltaPrime:
 			res+=str(temp)+"+"
 			temp=temp.suiv
 		return res
+		
+	@staticmethod
+	def init(automata):
+		DeltaPrime.All=[[None for i in automata.A] for y in Automata.Q]
 	
 		
 #~ class Ksetashdey:
@@ -402,6 +466,9 @@ class Ksetashdey:
 		reslchaine=[[[ListeDoubleChainee(x,y,z) for x in range(3)] for y in automata.A] for z in range(3)]
 		resdeltaprime=[[DeltaPrime(i,a,resK) for a in automata.A] for i in automata.Q]
 		
+		gamma=[[reslchaine[0][z][y] for y in range(3)] for z in automata.A]
+		gammaprime=[[reslchaine[i][a][0] for i in range(3)] for a in automata.A]
+		
 		for t in automata.T:
 			t1f=1
 			t2f=1
@@ -437,7 +504,7 @@ class Ksetashdey:
 					#~ resK.addListeChaine(z)
 					
 		input()
-		return resK,resDelta,reslchaine,resDeltaMoinsUn
+		return resK,resDelta,reslchaine,resDeltaMoinsUn,gamma,gammaprime
 
 		
 
@@ -509,8 +576,9 @@ class Automata:
 		
 	def minimisation(self):
 		"""retourne un Automate minimum en utilisant l'algo Blum"""
+		DeltaPrime.init(self)
 		Q=[set(),self.F.copy(),self.Q-self.F]
-		K,delta,chaine,deltamoinsun=Ksetashdey.generateAll(self)
+		K,delta,chaine,deltamoinsun,gamma,gammaprime=Ksetashdey.generateAll(self)
 		
 		t=2
 		#~ i=1
@@ -533,12 +601,10 @@ class Automata:
 			
 			input("3")
 			choix.i=t+1
+			choix.mise_a_jour(delta,deltaprime,deltamoinsun,gamma,gammaprime)#None=gammaprime
 			dptemp.removeListe(choix,K)#retire la plus petite liste du delta prime
 			
-			newdp=DeltaPrime(t+1,choix.symb,K)
-			newdp.addListe(choix)#ajout a la nouvelle liste dp t+1
-			if newdp.can_be_added():#inutile pour l'instant car length=1
-				newdp.add_to_K(K)
+			
 			
 			
 			#~ i,j1,j2,symbol=find_classes_indices(Q,self.T,t)
