@@ -54,7 +54,7 @@ public class TestLua{
         luaState.LdoFile("TestLuaPrestaf.lua");
 	}
 	
-	public static void main(String[] argv){//avec prestaf et import
+	public static void maintuc(String[] argv){//avec prestaf et import
 		System.out.println("import");
 		LuaState luaState = LuaStateFactory.newLuaState();
         luaState.openLibs();
@@ -66,6 +66,23 @@ public class TestLua{
         }
         System.out.println("---------");
         luaState.LdoFile("TestImport.lua");
+	}
+	
+	public static void main(String[] argv){//avec ligne commande
+		for (String s:argv){
+			System.out.println(s);
+		}
+		
+		LuaState luaState = LuaStateFactory.newLuaState();
+        luaState.openLibs();
+        try {
+            luaState.pushObjectValue(new javaaa());
+            luaState.setGlobal("prestaf");
+        } catch (LuaException e) {
+            e.printStackTrace();
+        }
+        System.out.println("---------");
+        luaState.LdoFile(argv[0]);
 	}
 	
 }

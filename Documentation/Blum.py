@@ -88,7 +88,7 @@ class ListeDoubleChainee:
 						newdp=DeltaPrime.All[self.i][char]
 						if newdp==None:
 							newdp=DeltaPrime(self.i,char,K)
-						newdp.addListe(choix)#ajout a la nouvelle liste dp t+1
+						newdp.addListe(newl)#ajout a la nouvelle liste dp t+1
 						if newdp.can_be_added():
 							newdp.add_to_K(K)
 					
@@ -108,7 +108,7 @@ class ListeDoubleChainee:
 						if newdp==None:
 							newdp=DeltaPrime(self.i,char,K)
 							
-						newdp.addListe(choix)#ajout a la nouvelle liste dp t+1
+						newdp.addListe(newl)#ajout a la nouvelle liste dp t+1
 						if newdp.can_be_added():
 							newdp.add_to_K(K)
 					
@@ -280,6 +280,15 @@ class DeltaPrime:
 		"""prend les deux premieres"""
 		return self.suiv,self.suiv.suiv
 		
+	def to_transition(self):
+		temp=self.suiv
+		res=[]
+		while temp!=None:
+			res.append((self.symb,self.i,temp.j))
+			temp=temp.suiv
+		return res
+		
+		
 		
 	def __repr__(self):
 		res="{i "+str(self.i)+",a "+str(self.symb)+"}> "
@@ -291,7 +300,27 @@ class DeltaPrime:
 		
 	@staticmethod
 	def init(automata):
-		DeltaPrime.All=[[None for i in automata.A] for y in Automata.Q]
+		DeltaPrime.All=[[None for i in automata.A] for y in automata.Q]
+		
+	@staticmethod
+	def toTransitions():
+		res=set()
+		for i in DeltaPrime.All:
+			for delta in i:
+				for transition in delta.to_transition():
+					res.add(transition)
+				
+		return res
+		
+	@staticmethod
+	def toStates():
+		res=set()
+		for i in DeltaPrime.All:
+			for delta in i:
+				res.add(delta.i)
+				
+		return res
+				
 	
 		
 #~ class Ksetashdey:
@@ -490,7 +519,7 @@ class Ksetashdey:
 		for i in reslchaine:
 			for y in i:
 				for z in y:
-					if z.deb:
+					if z.suiv:
 						print(z)
 		print("------------------------------------")
 		print(resDeltaMoinsUn)
@@ -601,7 +630,7 @@ class Automata:
 			
 			input("3")
 			choix.i=t+1
-			choix.mise_a_jour(delta,deltaprime,deltamoinsun,gamma,gammaprime)#None=gammaprime
+			choix.mise_a_jour(delta,dptemp,deltamoinsun,gamma,gammaprime)#None=gammaprime
 			dptemp.removeListe(choix,K)#retire la plus petite liste du delta prime
 			
 			
@@ -620,11 +649,12 @@ class Automata:
 			
 					
 		print("terminé")
-		print(Q)
+		#~ print(Q)
+		#~ 
+		#~ T=set([(car,s1,s2) for (car,st1,st2) in self.T for s1 in range(len(Q)) for s2 in range(len(Q)) if (s1!=s2 and st1 in Q[s1] and st2 in Q[s2])])
+		#~ Q=set([x for x in range(len(Q[1:]))])
 		
-		T=set([(car,s1,s2) for (car,st1,st2) in self.T for s1 in range(len(Q)) for s2 in range(len(Q)) if (s1!=s2 and st1 in Q[s1] and st2 in Q[s2])])
-		Q=set([x for x in range(len(Q[1:]))])
-		return Automata(Q[1:],self.A.copy(),T,self.init,self.F.copy())
+		return Automata(DeltaPrime.toStates(),self.A.copy(),DeltaPrime.to_transition(),0,1)
 
 
 

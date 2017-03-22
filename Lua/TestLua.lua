@@ -1,13 +1,14 @@
 
 print("========run1========")
 
-print(people)
+print(prestaf)
 
-print(people.Wowie)
+print(prestaf.Wowie)
 
-people:Wowie()
+prestaf:Wowie()
 
-people:Wowie_parameter(1)
+prestaf:Wowie_parameter(1)
+prestaf:Wowie_inc(1)
 
 print("-")
 
@@ -30,4 +31,4 @@ local co=coroutine.create(run)
 
 --~ print(coroutine.resume(co))
 
-run(people)
+run(prestaf)
