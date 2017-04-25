@@ -14,7 +14,7 @@ public class PresTafProject {
 
     public static void maintic (String args[]) 
     {
-    
+			PresTaf pppp=PresTaf.init(); 
             NPF res = TestFormule.sumxyz(2);
         
             System.out.println ("nbVar = " + 1 + ", Size = " + res.getNbStates()
