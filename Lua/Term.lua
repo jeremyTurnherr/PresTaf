@@ -39,7 +39,7 @@ end
 function Term.neg(self)
 	negCoef={}
 	print("-----")
-	for i=1,10 do
+	for i=1,self:nbVar() do
 		negCoef[i]=-self.coef[i]
 	end
 	print("-----")

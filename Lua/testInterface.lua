@@ -17,7 +17,7 @@ function run(pres)
 	print("-")
 	print(term.Term.size)
 	print("--")
-	print(i.neg())
+	print(i:neg():debug())
 	print("-")
 	
 	
