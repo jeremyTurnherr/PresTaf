@@ -234,7 +234,7 @@ class DeltaPrime:
 	def __init__(self,i,a,K):
 		self.i=i
 		self.symb=a
-		self.Kself=None#représente sa pos dans K
+		#~ self.Kself=None#représente sa pos dans K
 		self.suiv=None#premier elem
 		
 		self.isAdded=False

@@ -68,7 +68,7 @@ public class TestLua{
         luaState.LdoFile("TestImport.lua");
 	}
 	
-	public static void main(String[] argv){//avec ligne commande
+	public static void maintec(String[] argv){//avec ligne commande
 		for (String s:argv){
 			System.out.println(s);
 		}
@@ -83,6 +83,21 @@ public class TestLua{
         }
         System.out.println("---------");
         luaState.LdoFile(argv[0]);
+	}
+	
+	public static void main(String[] argv){//avec ligne commande
+		
+		
+		LuaState luaState = LuaStateFactory.newLuaState();
+        luaState.openLibs();
+        try {
+            luaState.pushObjectValue(new PresburgerBridge(luaState));
+            luaState.setGlobal("prestaf");
+        } catch (LuaException e) {
+            e.printStackTrace();
+        }
+        System.out.println("---------");
+        luaState.LdoFile("testInterface.lua");
 	}
 	
 }

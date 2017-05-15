@@ -66,7 +66,7 @@ public class Presburger
         }
     }
 
-    Presburger and(Presburger b)
+    public Presburger and(Presburger b)
     {
         int[] newVar = Term.merge(var,b.var);
         NPF u = addVariable(newVar);
