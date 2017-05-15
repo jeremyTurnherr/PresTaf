@@ -10,10 +10,23 @@ function getIndex(v)
 end
 
 function factor(a, v)
-    index = get
+    index = getIndex(v)
+    return Term.new(a .. "*" .. v, {index}, {a}, 0)
+end
+
+function variable(v)
+    index = getIndex(v)
+    return Term.new(v, {index}, {1}, 0)
+end
+
+function integer(a)
+    return Term.new(a, {}, {}, a)
 end
 
 Term.map = {}
 
 module.getIndex = getIndex
 module.map = map
+module.factor = factor
+module.variable = variable
+module.integer = integer
