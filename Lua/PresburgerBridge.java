@@ -2,7 +2,6 @@
 
 
 import application.*;
-import application.*;
 import java.io.*;
 import org.keplerproject.luajava.*;
 
