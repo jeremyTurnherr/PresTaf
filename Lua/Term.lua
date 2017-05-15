@@ -80,6 +80,10 @@ function Term.plus(self,t)
 	
 end
 
+function Term.__add(t1,t2)
+	return t1:plus(t2)
+end
+
 function Term.minus(self,t) 
 	plusvar=merge(self.var,t.var)
 	pluscoef={}
@@ -105,8 +109,12 @@ function Term.minus(self,t)
 		end
 		i=i+1
 	end
-	return Term.new(self.expr.." + "..t.expr,plusvar,pluscoef,self.constant-t.constant)
+	return Term.new(self.expr.." - "..t.expr,plusvar,pluscoef,self.constant-t.constant)
 	
+end
+
+function Term.__sub(t1,t2)
+	return t1:minus(t2)
 end
 	
 
@@ -172,6 +180,10 @@ end
 function factor(a, v)
     index = getIndex(v)
     return Term.new(a .. "*" .. v, {index}, {a}, 0)
+end
+
+function Term.__mul(int,t)
+	return factor(int,t.expr)
 end
 
 function variable(v)

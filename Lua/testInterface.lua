@@ -40,6 +40,11 @@ function run(pres)
 	print(term.variable("expppp"):debug())
 	print("-integer-")
 	print(term.integer(42):debug())
+	print("fainaru-")
+	local x=variable('x')
+	local y=variable('y')
+	
+	print((2*x+y):tostring())
 
 	
 	
