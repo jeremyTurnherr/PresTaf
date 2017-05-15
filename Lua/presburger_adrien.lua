@@ -19,6 +19,20 @@ function statistics(self)
     end
 end
 
+function bracket(self)
+    return Presburger.new("(" .. self.expr .. ")", self.var, self.value)
+end
+
+function convert(coef)
+    res = {}
+    for k, i in pairs(coef) do
+        res[2 * k + 1] = i
+        res[2 * k] = k
+    end
+    return res
+end
+
 local module = {}
 
 module.Presbuger = Presburger
+module.convert = convert
