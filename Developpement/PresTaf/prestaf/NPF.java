@@ -9,7 +9,7 @@ package prestaf;
 
 public final class NPF 
 {
-    static boolean simpleExists = true;
+    public static boolean simpleExists = true;
     public final int nbVariable;
     public final MarkedSharedAutomaton value;
     

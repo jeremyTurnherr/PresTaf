@@ -18,7 +18,7 @@ public class PrestafLauncher{
 			LuaState luaState = LuaStateFactory.newLuaState();
 			luaState.openLibs();
 			try {
-				luaState.pushObjectValue(PresTaf.init());
+				luaState.pushObjectValue(new PresTaf.PresTafMain());
 				luaState.setGlobal("prestaf");
 			} catch (LuaException e) {
 				e.printStackTrace();

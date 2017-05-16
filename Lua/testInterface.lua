@@ -1,6 +1,7 @@
 
 term=require('Term')
 print(prestaf)
+preburger=require('presburger')
 
 
 function printab(tab)
@@ -45,8 +46,19 @@ function run(pres)
 	local y=variable('y')
 	
 	print((2*x+y):tostring())
-
 	
+	print("-----presburger, hajime!!!-----")
+	print(prestaf:what())
+	--~ local p=equals(3*x,y)
+	--~ print(p)
+	--~ print(p:tostring())
+	--~ print(p.value:toDot())
+
+	--~ print(equals((2*x)-y,7*variable('z')).value:toDot())
+	--~ print(equals(variable("a"),integer(0)).value:toDot())
+	local pif=variable("u")
+	print(pif:tostring())
+	print(equals(variable("o"),1*integer(2)).value:toDot())
 	
 	print("ji endo")
 
