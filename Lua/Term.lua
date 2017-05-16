@@ -1,7 +1,11 @@
-local Term = {} -- the table representing the class, which will double as the metatable for the instances
-Term.__index = Term -- failed table lookups on the instances should fallback to the class table, to get methods
+local Term = {} 
+Term.__index = Term 
 
--- syntax equivalent to "MyClass.new = function..."
+
+--~ Constructeur de terme
+--~ (expression: string, var: array, coef: array, constant: integer)
+--~ 
+--~ (ce constructeur ne doit pas etre utilisé directement)
 function Term.new(expr,var,coef,constant)
   local self = setmetatable({}, Term)
   self.expr=expr
@@ -11,10 +15,13 @@ function Term.new(expr,var,coef,constant)
   return self
 end
 
+
+--~ permet d'afficher l'expression
 function Term.tostring(self)
 	return self.expr
 end
 
+--~ affiche le debuggage
 function Term.debug(self)
 	res=''
 	for k,i in pairs(self.var) do
@@ -26,7 +33,7 @@ function Term.debug(self)
 	return res.." "..tostring(self.constant)
 end
 
-
+--~ retourne le nombre de valeurs dans var
 function Term.nbVar(self)
 	Count = 0
 	for k,i in pairs(self.var) do
@@ -35,7 +42,7 @@ function Term.nbVar(self)
 	return Count
 end
 
-
+--~ retourne la negation du terme
 function Term.neg(self)
 	negCoef={}
 	
@@ -43,10 +50,14 @@ function Term.neg(self)
 		print("-"..self.coef[i])
 		negCoef[i]=-self.coef[i]
 	end
-	print("-----")
 	return Term.new("-"..self.expr,self.var,negCoef,-self.constant)
 end
 
+function Term.__min(self)
+	return self:neg()
+end
+
+--~ <<surchargé>> l'addition de deux termes
 function Term.plus(self,t) 
 	plusvar=merge(self.var,t.var)
 	pluscoef={}
@@ -55,7 +66,6 @@ function Term.plus(self,t)
 	end
 	k=1
 	i=1
-	print("--1--")
 	while i<=len(plusvar) and k<=self:nbVar() do
 		if plusvar[i]==self.var[i] then
 			pluscoef[i]=self.coef[i]
@@ -64,7 +74,6 @@ function Term.plus(self,t)
 		end
 		i=i+1
 	end
-	print("--1--")
 	
 	while i<=len(plusvar) and k<=t:nbVar() do
 		if plusvar[i]==t.var[i] then
@@ -74,7 +83,6 @@ function Term.plus(self,t)
 		end
 		i=i+1
 	end
-	print("--1--")
 	return Term.new(self.expr.." + "..t.expr,plusvar,pluscoef,self.constant+t.constant)
 	--~ return Term.new(" + ",plusvar,pluscoef,self.constant+t.constant)
 	
@@ -84,6 +92,7 @@ function Term.__add(t1,t2)
 	return t1:plus(t2)
 end
 
+--~ <<surchargé>> soustraction de deux termes
 function Term.minus(self,t) 
 	plusvar=merge(self.var,t.var)
 	pluscoef={}
@@ -128,7 +137,7 @@ function len(tab)
 	return Count
 end
 
-
+--~ fusionne les vars de deux termes
 function merge(a,b) -- deux listes de int
     lena=len(a)
     lenb=len(b)
@@ -166,6 +175,7 @@ function merge(a,b) -- deux listes de int
 	return res
 end
 
+--~ recupere le terme dans la table si il existe, sinon le crée
 function getIndex(v)
     o = Term.map[v]
     if o ~= nil then
@@ -177,20 +187,31 @@ function getIndex(v)
     end
 end
 
+--~ <<surchargé>> multiplication entre un entier et un autre terme
 function factor(a, v)
-    index = getIndex(v)
-    return Term.new(a .. "*" .. v, {index}, {a}, 0)
+	if (type(a)~="number" and type(v)~="number") then print("Warning: there should be a number for operator *") end
+	if type(a)=="number" then 
+		index = getIndex(v)
+		return Term.new(a .. "*" .. v, {index}, {a}, 0)
+	else
+		index = getIndex(a)
+		return Term.new(v .. "*" .. a, {index}, {v}, 0)
+	end
+    
 end
 
 function Term.__mul(int,t)
 	return factor(int,t.expr)
 end
 
+--~ à utiliser pour initialiser un terme avec une variable
 function variable(v)
     index = getIndex(v)
     return Term.new(v, {index}, {1}, 0)
 end
 
+
+--~ à utiliser pour initialiser un terme avec une constante entière
 function integer(a)
     return Term.new(a, {}, {}, a)
 end
