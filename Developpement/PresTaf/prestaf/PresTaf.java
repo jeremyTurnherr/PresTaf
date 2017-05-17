@@ -36,6 +36,7 @@ public class PresTaf{
 		
 		public PresTaf greater( int b, int n){
 			int[] axi=param;
+			System.out.println("tentative");
 			return new PresTaf(NPF.greater(axi,b,n));	
 		}
 		

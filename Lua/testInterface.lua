@@ -57,8 +57,8 @@ function run(pres)
 	--~ print(equals((2*x)-y,7*variable('z')).value:toDot())
 	--~ print(equals(variable("a"),integer(0)).value:toDot())
 	local pif=variable("u")
-	print(pif:tostring())
-	print(equals(variable("o"),1*integer(2)).value:toDot())
+	
+	print(greater(variable("o"),1*integer(2)).value:toDot())
 	
 	print("ji endo")
 
