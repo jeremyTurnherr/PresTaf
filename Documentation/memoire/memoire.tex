@@ -432,6 +432,96 @@ Ce tableau permet d'accéder plus rapidement aux prédécesseurs d'un état.
 
 
 \end{tikzpicture}
+\section{Exemple de fonctionnement}
+
+\section{Architecture}
+
+L'architecture de notre logiciel est composé de 4 parties:
+La première partie est la bibliothqèe Prestaf qui permet de manipuler des automates et d'éffectuer des opérations dessus. Nous avons créé une interface en java qui permet d'accéder plus simplement aux fonctions de la bibliothèques.
+La deuxieme partie est en Lua. Elle est composée des différentes bibliothèques de logique utilisant la bibliothèque Prestaf. Nous avons développé la bibliothèque Presburger.
+La troisième partie est également en Lua. Elle contient les différents fichiers des utilisateurs des bibliothèques de logique.
+La quatrième partie est en java. C'est le launcher qui permet de démarrer l'application avec une unique commande tout en permettant d'utiliser du java et du Lua.
+
+Ainsi, la première et la quatrième couche de l'application font parties de la bibliothèque Prestaf. Il y a deux sortes d'utilisateurs. En effet, une partie des utilisateurs utiliseront directement notre bibliothèque pour développer leur propre bibliothèque de logique,
+tandis que l'autre partie des utilisateurs utiliseront les bibliothèques de logique. Un utilisateur peut également être utilisateur de sa propre bibliothèque. Le premier groupe d'utilisateur travaillera essentiellement sur la 2 eme couche de l'application, 
+tandis que le second groupe travaillera sur la 3 eme couche.
+
+Pour pouvoir utiliser le code Lua en Java nous avons utilisé la bibliothèque Luajava.
+
+\begin{tikzpicture}
+
+\draw (6, 0.25) rectangle (10, 1.25);
+\draw[color=blue!25, ultra thick] (6.5, 1) -- (7.5, 1);
+\draw (8, 1) node{Java};
+\draw[color=red!25, ultra thick] (6.5, 0.5) -- (7.5, 0.5);
+\draw (8, 0.5) node{Lua};
+
+\draw[fill=blue!25] (0,0) rectangle (10,-1);
+\draw (5, -0.5) node{PrestafLauncher};
+
+\draw[->,thick] (5, -1) -- (5, -2);
+
+\draw[fill=red!25] (0, -2) rectangle (10, -3);
+\draw (5, -2.5) node{LuaInterface};
+
+\draw[fill=red!25] (0, -4) rectangle (4, -5);
+\draw[fill=red!25] (6, -4) rectangle (10, -5);
+\draw (2, -4.5) node{Logique};
+\draw (8, -4.5) node{Presburger};
+
+\draw[->,thick] (5, -3) -- (2, -4);
+\draw[->,thick] (5, -3) -- (8, -4);
+
+\draw[fill=blue!25] (0, -6) rectangle (10,-7);
+\draw (5, -6.5) node{PresTaf};
+
+\draw[->,thick] (2, -5) -- (5, -6);
+\draw[->,thick] (8, -5) -- (5, -6);
+
+\draw[color=orange!75!black] (-2, -0.5) node[align=center]{Bilbiothèque};
+\draw[color=purple!55!black] (-2, -2.5) node[align=center]{Utilisateur\\de l'outil};
+\draw[color=red!75!black] (-2, -4.5) node[align=center]{Utilisateur\\qui fait sa\\propre bibliothèque};
+\draw[color=orange!75!black] (-2, -6.5) node[align=center]{Bilbiothèque};
+
+\end{tikzpicture}
+
+\section{Description et justification du code}
+
+\subsection{Surcharge d'opérateurs}
+
+
+L'un des principaux avantages de Lua est d'être un langage de script qui permet la surcharge d'opérateur. On peut surcharger 18 opérateurs. Nous avons donc surchargé les opérateurs + - * afin de permettre à l'utilisateur d'utiliser des opérateurs à la place de fonctions pour écrire ses formules Presburger.
+Nous voulions également surcharger l'opérateur ==, cependant nous nous sommes rendus comptes que quelque soit la valeur de retour que nous mettions, elle est était toujours transformée en booléan.
+Nous avons donc choisi que cet opérateur ne retournerait pas de valeur mais placerait la valeur dans une variable, il faut donc une deuxieme fonction pour l'appeler.
+En Lua, on peut également créé un opérateur de la forme 'operateur'. Nous avons choisi de créer l'opérateur '=' qui retourne la bonne valeur.
+L'utilisateur peut donc choisir entre l'opérateur == et l'opérateur '='.
+Pour l'égalité, l'addition, la soustraction et la multiplication de Presburger, l'utilisateur peut donc utiliser la fonction associée ou utiliser l'opérateur surchargé.
+
+
+\section{Analyser la compléxité}
+
+Presburger est une surcouche de Prestaf, il est donc directement lié à la complexité de Prestaf. L'une des complexités essentielles de Prestaf est celle de la minimisation d'automate. Un automate peut en effet avoir plusieurs milliers d'états. Nous avons commencé par étudier les algorithmes d'Hopecroft et Blum qui sont en log n. La complexité de Presburger est exponentielle/expo(expo))  On sait que la complexité de Prestaf est en O(n carré)
+
+\section{Tests de validations et fonctionnement}
+
+\subsection{Test unitaires}
+
+Afin de vérifier que la validié de chacune des fonctions que nous avons écrites, nous avons comparé les versions lua et java de ces fonctions sur différents exemples en affichant l'état des variables contenus dans ces fonctions.
+
+\subsection{Test globaux}
+
+Nous avons testé la bibliothèque Presburger sur différentes formules. Pour ce faire, nous avons comparé les graphe obtenu par la nouvelle version de Presburger et l'ancienne.
+
+\section{Description des extensions possibles}
+
+\subsection{Complexité}
+
+La complexité des bibliothèques développées dépend directement de celle de Prestaf. Il serait donc intéréssant d'améliorer sa complexité.
+
+\subsection{Diversité des bibliothèques}
+
+Prestaf peut être amélioré en développant des bibliothèques de différentes logiques. Les possibilités à partir du même fichier LuaInterface seront donc augmentées.
+
 
 \appendix
 
