@@ -103,7 +103,7 @@
 
 \begin{document}
 
-\title{Mémoire intermédiaire PresTaf}
+\title{Mémoire PresTaf}
 
 \author{Bourgeois Adrien, Marbois Bryce, Roque Maxime, Turnherr Jérémy%\thanks{Si l'on veut faire des annotations.}
 \\Université UFR Collégium des Sciences et Technique d'Orléans-la-Source}
@@ -122,54 +122,43 @@
 
 \section{Résumé du projet}
 
-Notre projet s'inscrit dans la mis-à-jour de PresTaf, logiciel d'analyse de formules logique et de leur transformation en automate minimal. Nous intervenons ici dans la création d'un interfaçage Lua, ainsi qu'une reprise du code source PresTaf pour donner une version plus optimisé, plus claire et propre.\\\par
+Notre projet s'inscrit dans la mis-à-jour de PresTaf, logiciel d'analyse de formules logique et de leur transformation en automate minimal. Nous intervenons ici dans la création d'un interfaçage Lua, ainsi qu'une reprise du code source PresTaf pour donner une version plus optimisé, plus claire et propre. Qui plus est, le Lua étant un langage basé sur le C++ cela offre la possibilité à l'utilisateur de surcharger des opérateurs. Ainsi il pourra utiliser les opérateurs pour écrire simplement ses formules logiques de façon simple.\\\par
 
 Dans un second temps nous chercherons à intégrer de nouvelles logiques telle que la logique monadique ou encore l'interprétation des formules de Presburger en base -2.
 
 \section{Domaine}
 
-Le logiciel sur lequel on s'appuie pour notre travail de départ est PresTaf implementant en Java la logique \gls{presburger}\cite{ginsburg1966semigroups}. Il existe des logiciels concurrent travaillant avec d'autres logiques telle que la \gls{monadique}\cite{KlaEtAl:Mona} avec des logiciel comme Mona\cite{monamanual2001}, ou la logique arithmétique de Presburger et les d'autre logiques sur les mots infini avec Lash\cite{lash}
+Le logiciel sur lequel on s'appuie pour notre travail de départ est PresTaf implementant en Java la logique \gls{presburger}\cite{ginsburg1966semigroups}. Il existe des logiciels concurrent travaillant avec d'autres logiques telle que la \gls{monadique}\cite{KlaEtAl:Mona} avec des logiciel comme Mona\cite{monamanual2001}, ou la logique arithmétique de Presburger et les d'autre logiques sur les mots infini avec Lash\cite{lash}.
 
 \section{Analyse de l'existant}
 
-PresTaf est programme codé par M. Jean-Michel Couvreur, qui prend des formules de Presburger en entrées et les résout à l'aide d'automates minimaux. Tout d'abord il génère des automates déterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire PresTaf utilise un algorithme d'Hopcroft modifié. L'ensemble des transitions menant de l'état initial vers un état final est solution de la formule. En outre si l'état final est l'état \emph{zero} alors il n'y aucune solution et si l'état final est l'état \emph{one} alors la formule est une tautologie.\\\par
+PresTaf est un programme codé par M. Jean-Michel Couvreur, qui prend des formules de Presburger en entrées et les résout à l'aide d'automates minimaux. Tout d'abord il génère des automates déterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire PresTaf utilise un algorithme d'Hopcroft modifié. L'ensemble des transitions menant de l'état initial vers un état final est solution de la formule. En outre si l'état final est l'état \emph{zero} alors il n'y aucune solution et si l'état final est l'état \emph{one} alors la formule est une tautologie.\\\par
 
-Mona, est une bibliothèque C qui résout des formules monadique. La où PresTaf n'implémente à ce jour que la logique arithmétique de Presburger, la logique monadique pourrait être implémenter dans le futur\\\par
+Mona, est une bibliothèque C qui résout des formules monadique. La où PresTaf n'implémente à ce jour que la logique arithmétique de Presburger, la logique monadique pourrait être implémenter dans le futur.\\\par
 
-Lash\cite{lash} est une bibliothèque C qui résout des formules de Presburger, mais la différence avec PresTaf est qu'il fonctionne sur des automates infini. Cette différence induit une importante baisse de performante. En effet PresTaf pour les mêmes formules était bien plus rapide à s'executer que Lash\cite{DBLP:conf/wia/Couvreur04}\\\par
+Lash\cite{lash} est une bibliothèque C qui résout des formules de Presburger, mais la différence avec PresTaf est qu'il fonctionne sur des automates infini. Cette différence induit une importante baisse de performante. En effet PresTaf pour les mêmes formules était bien plus rapide à s'executer que Lash\cite{DBLP:conf/wia/Couvreur04}.\\\par
 
 \section{Besoins fonctionnels}
 
 \subsection{Prototype papier}
 
-Le prototype qui suit serait un fichier Lua qui se servirait de la logique $MaLogique$.
+Le prototype qui suit serait un fichier Lua qui se servirait de la logique $Presburger$ (cette logique étant elle-même codée en Lua).
 
 \begin{lstlisting}[mathescape=true, frame=single]
-logique = require("MaLogique") // Choix de la logique
-x = logique.var('X') // Declaration d'une variable
-y = logique.var('Y')
-f = (x $\vee$ y) $\wedge$ x $\wedge$ $\neg$ y
+pres = require('Presburger') // Choix de la logique
+
+local x = variable('x') // Declaration d'une variable
+local y = variable('y')
+local f = equals(y + integer(1), x)
+
 // Pour exporter l'automate
-todot(f, "f.dot")
-// Soient des formules a et b
-// Intersections et unions d'automates.
-c = a $\cap$ f $\cup$ b
+f:todot("f.dot")
 \end{lstlisting}
 
 Pour lancer ce fichier Lua il faudrait passer par un fichier jar que l'on appellera $prestaf.jar$. Pour lancer le jar et le fichier lua il faudrait faire la commande suivante :
 
 \begin{lstlisting}[mathescape=true, frame=single]
 java -jar prestaf.jar fichier.lua
-\end{lstlisting}
-
-En sortie l'utilisateur aurait un fichier dot, par exemple, si l'utilisateur se sert comme logique de l'arithmétique de Presburger et que dans son fichier lua il écrit le code suivant :
-
-\begin{lstlisting}[mathescape=true, frame=single]
-pres = require("Presburger")
-x = pres.var('X')
-y = pres.var('Y')
-f = x == y + 1
-todot(f, "f.dot")
 \end{lstlisting}
 
 Le fichier f.dot ressemblerai à :
@@ -336,88 +325,54 @@ Voici un exemple que nous avons testé avec l'automate initial et l'objectif.
 
 \end{tikzpicture}
 
-\section{Planning}
+\section{Exemple de fonctionnement}
+
+\section{Architecture}
 
 \begin{tikzpicture}
 
-%--------------------------------------------------------------------%
-%               POUR TOUT CE QUI EST ELIPSE C'EST ICI                %
-%--------------------------------------------------------------------%
+\draw (6, 0.25) rectangle (10, 1.25);
+\draw[color=blue!25, ultra thick] (6.5, 1) -- (7.5, 1);
+\draw (8, 1) node{Java};
+\draw[color=red!25, ultra thick] (6.5, 0.5) -- (7.5, 0.5);
+\draw (8, 0.5) node{Lua};
 
-\draw[fill=gray,rounded corners, gray] (4.375, 5) circle [x radius = 0.625, y radius = 0.1];
-\draw[fill=gray,rounded corners, gray] (2.625, 5) circle [x radius = 1.125, y radius = 0.1];
-\draw[fill=gray,rounded corners, gray] (1.125, 5) circle [x radius = 0.375, y radius = 0.1];
-\draw[fill=red,rounded corners, red] (7, 5) circle [x radius = 2, y radius = 0.2];
-\draw[fill=blue,rounded corners, blue] (10.25, 5) circle [x radius = 1.5, y radius = 0.2];
-\draw[fill=gray,rounded corners, gray] (7.75, 5) circle [x radius = 1.75, y radius = 0.1];
+\draw[fill=blue!25] (0,0) rectangle (10,-1);
+\draw (5, -0.5) node{PrestafLauncher};
 
-\node (x) at (1.125, 6.5) {Documentation};
-\node (y) at (2.625, 6) {LuaJava};
-\node (z) at (4.375, 6.5) {Blum};
-\node (t) at (7, 6) {PresTaf};
-\node (u) at (7.75, 6.5) {Presburger};
-\node (v) at (10.25, 6) {Mémoire};
+\draw[->,thick] (5, -1) -- (5, -2);
 
-\draw (1.125, 5.1) -- (x);
-\draw (2.625, 5.1) to[bend left] (y);
-\draw (4.375, 5.1) to[bend left] (z);
+\draw[fill=red!25] (0, -2) rectangle (10, -3);
+\draw (5, -2.5) node{LuaInterface};
 
-\draw[red] (7, 5.2) -- (t);
-\draw (7.75, 5.1) -- (u);
-\draw[blue] (10.25, 5.2) -- (v);
+\draw[fill=red!25] (0, -4) rectangle (4, -5);
+\draw[fill=red!25] (6, -4) rectangle (10, -5);
+\draw (2, -4.5) node{Logique};
+\draw (8, -4.5) node{Presburger};
 
+\draw[->,thick] (5, -3) -- (2, -4);
+\draw[->,thick] (5, -3) -- (8, -4);
 
-\draw[->, thick] (-1, 5) -- (12, 5);
-% \foreach \x in {1,...,11} {
-% 	\draw[thick](\x, 4.85) -- (\x, 5.15);
-% 	\draw(\x - 0.25, 4.9) -- (\x - 0.25, 5.1);
-% 	\draw(\x - 0.5, 4.9) -- (\x - 0.5, 5.1);
-% 	\draw(\x - 0.75, 4.9) -- (\x - 0.75, 5.1);
-% }
-% \draw(11.25, 4.9) -- (11.25, 5.1);
-% \draw(11.5, 4.9) -- (11.5, 5.1);
+\draw[fill=blue!25] (0, -6) rectangle (10,-7);
+\draw (5, -6.5) node{PresTaf};
 
-\foreach \x in {0,3,6,9}
-	\draw[thick](\x, 4.8) -- (\x, 5.2);
+\draw[->,thick] (2, -5) -- (5, -6);
+\draw[->,thick] (8, -5) -- (5, -6);
 
-\node[anchor=east] (A) at (0.75, 5.5) {Réunion (R)};
-\node at (0.75, 4.75) {10};
-
-\node (B) at (1.5, 5.5) {R};
-\node at (1.5, 4.75) {15};
-
-\node (C) at (2.75, 5.5) {R};
-\node at (2.75, 4.75) {28};
-
-\node (D) at (3.75, 5.5) {R};
-\node at (3.75, 4.75) {07};
-
-\node (E) at (4.5, 5.5) {R};
-\node at (4.5, 4.75) {14};
-
-\node (a) at (0.75, 5) {};
-\node (b) at (1.5, 5) {};
-\node (c) at (2.75, 5) {};
-\node (d) at (3.75, 5) {};
-\node (e) at (4.5, 5) {};
-
-\node[rotate=45, anchor=east] at(0, 4.5) {Février};
-\node[rotate=45, anchor=east] at(3, 4.5) {Mars};
-\node[rotate=45, anchor=east] at(6, 4.5) {Avril};
-\node[rotate=45, anchor=east] at(9, 4.5) {Mai};
-
-\draw (0.75, 5)  to[bend right] (A);
-\draw (1.5, 5) -- (B);
-\draw (2.75, 5) -- (C);
-\draw (3.75, 5) -- (D);
-\draw (4.5, 5) -- (E);
-
-\foreach \x in {a,b,c,d,e}
-	\fill(\x) circle[radius=2pt];
-
-
+\draw[color=orange!75!black] (-2, -0.5) node[align=center]{Bilbiothèque};
+\draw[color=purple!55!black] (-2, -2.5) node[align=center]{Utilisateur\\de l'outil};
+\draw[color=red!75!black] (-2, -4.5) node[align=center]{Utilisateur\\qui fait sa\\propre bibliothèque};
+\draw[color=orange!75!black] (-2, -6.5) node[align=center]{Bilbiothèque};
 
 \end{tikzpicture}
+
+\section{Description et justification du code}
+
+\section{Analyser la compléxité}
+
+\section{Tests de validations et fonctionnement}
+
+\section{Description des extensions possibles}
 
 \appendix
 
