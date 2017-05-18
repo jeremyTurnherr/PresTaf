@@ -9,8 +9,9 @@ function filltabparam(t)
 	printab(t)
 	prestaf:init_tab(len(t))
 	for pos,val in pairs(t) do
-	  prestaf:fill(k,i)
+	  prestaf:fill(pos,val)
 	end
+	print(prestaf:printab())
 
 end
 
@@ -195,9 +196,11 @@ end
 
 function convert(coef)
     res = {}
+    local k
+    local i
     for k, i in pairs(coef) do
-        res[2 * k + 1] = i
-        res[2 * k] = k
+        res[2 * k ] = i
+        res[2 * k-1] = k-1
     end
     return res
 end
@@ -206,29 +209,40 @@ end
     Check if t1 == t2
 ]]
 function equals(t1, t2)
-    t = t2:minus(t1)
+	print("-----coef---------")
+	printab(t1.coef)
+	printab(t2.coef)
+    local t = t2:minus(t1)
+    printab(t.coef)
     print(t:tostring())
-    print(convert(t.coef))
+    print("----convert------")
     filltabparam(convert(t.coef))
     print("--------------------")
-    a=prestaf:equals( -t.constant,len(t.coef))
-    print(a:tostring().."  ")
-    print(t.var)
-    --~ filltabparam(convert(t.coef))
-  
-    --~ Presburger.new("",nil,nil)
-    --~ return nil--prestaf:equals( -t.constant,len(t.coef))
-    return Presburger.new(t1:tostring() .. " = " .. t2:tostring(),t.var,a)--prestaf:equals( -t.constant,len(t.coef))
+    npf=prestaf:equals( -t.constant,len(t.coef))
+    --~ print("tab minus var")
+    --~ printab(t.var)
+    --~ print("tab minus coef")
+    --~ printab(t.coef)
+   
+    return Presburger.new(t1:tostring() .. " = " .. t2:tostring(),t.var,npf)--prestaf:equals( -t.constant,len(t.coef))
 end
+
+
+function term.Term.__eq(t1,t2)
+	return equals(t1,t2)
+end
+
+
 
 --[[
     Check if t1 != t2
 ]]
 function notEquals(t1, t2)
-    t = t2:minus(t1)
+    local t = t2:minus(t1)
+    filltabparam(convert(t.coef))
     return Presburger.new(t1:tostring() .. " != " .. t2:tostring(), 
         t.var, 
-		prestaf.notEquals(convert(t.coef), -t.constant, t.coef.length))
+		prestaf:notEquals( -t.constant, len(t.coef)))
 end
 
 --[[
@@ -236,9 +250,10 @@ end
 ]]
 function less(t1, t2)
     t = t2:minus(t1)
+    filltabparam(convert(t.coef))
     return Presburger.new(t1:tostring() .. " < " .. t2:tostring(), 
         t.var, 
-        prestaf.greater(convert(t.coef), -t.constant, t.coef.length))
+        prestaf:greater( -t.constant, len(t.coef)))
 end
 
 --[[
@@ -246,9 +261,10 @@ end
 ]]
 function lessEquals(t1, t2)
     t = t2:minus(t1)
+    filltabparam(convert(t.coef))
     return Presburger.new(t1:tostring() .. " <= " .. t2:tostring(), 
         t.var, 
-        prestaf.greaterEquals(convert(t.coef), -t.constant, t.coef.length))
+        prestaf:greaterEquals( -t.constant, len(t.coef)))
 end
 
 --[[
@@ -257,7 +273,7 @@ end
 function greater(t1, t2)
     t = t1:minus(t2)
     filltabparam(convert(t.coef))
-    temp=prestaf:greater( -t.constant, t.coef.length)
+    temp=prestaf:greater( -t.constant, len(t.coef))
     return Presburger.new(t1:tostring() .. " > " .. t2:tostring(),t.var,temp)
 end
 
@@ -266,9 +282,10 @@ end
 ]]
 function greaterEquals(t1, t2)
     t = t1:minus(t2)
+    filltabparam(convert(t.coef))
     return Presburger.new(t1:tostring() .. " .= " .. t2:tostring(), 
         t.var, 
-        prestaf.greaterEquals(convert(t.coef), -t.constant, t.coef.length))
+        prestaf:greaterEquals(-t.constant, len(t.coef)))
 end
 
 function getNbStates(self)

@@ -10,11 +10,20 @@ public class PresTaf{
 			
 		){}
 		
+		public String printab(){
+			String res="[";
+			for (int i:param){
+				res+=i+" ,";
+			}
+			return res+"]";
+		}
+		
 		public void init_tab(int size){
 			param=new int[size];
 		}
 		
 		public void fill(int luapos,int val){
+			System.out.println((luapos-1)+":::"+val);
 			param[luapos-1]=val;
 		}
 		
@@ -25,12 +34,16 @@ public class PresTaf{
 		public PresTaf equals( int b, int n) {
 			int[] axi=param;
 			System.out.println("tentative");
+			System.out.println(printab());
+			
 			
 			return new PresTaf(NPF.equals(axi,b,n));
 			//~ return null;
 		}
 		
-		public PresTaf notEquals(int[] axi, int b, int n){
+		public PresTaf notEquals(int b, int n){
+			int[] axi=param;
+			System.out.println("tentative");
 			return new PresTaf(NPF.notEquals(axi,b,n));
 		}
 		
@@ -40,15 +53,21 @@ public class PresTaf{
 			return new PresTaf(NPF.greater(axi,b,n));	
 		}
 		
-		public PresTaf greaterEquals(int[] axi, int b, int n) {
+		public PresTaf greaterEquals( int b, int n) {
+			int[] axi=param;
+			System.out.println("tentative");
 			return new PresTaf(NPF.greaterEquals(axi,b,n));	
 		}
 		
-		public PresTaf less(int[] axi, int b, int n){
+		public PresTaf less(int b, int n){
+			int[] axi=param;
+			System.out.println("tentative");
 			return new PresTaf(NPF.less(axi,b,n));	
 		}
 		
-		public PresTaf lessEquals(int[] axi, int b, int n){
+		public PresTaf lessEquals( int b, int n){
+			int[] axi=param;
+			System.out.println("tentative");
 			return new PresTaf(NPF.lessEquals(axi,b,n));	
 		}
 		
@@ -62,7 +81,7 @@ public class PresTaf{
 	}
 	
 	public String tostring(){
-		return "wow"+npf;
+		return npf+"";
 	}
 	
 	

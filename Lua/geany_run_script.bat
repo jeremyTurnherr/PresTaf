@@ -1,4 +1,4 @@
-./commandes
+./dot
 
 pause
 del "%0"

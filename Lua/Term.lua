@@ -1,3 +1,5 @@
+--~ presburger=require('presburger')
+
 local Term = {} 
 Term.__index = Term 
 
@@ -64,25 +66,32 @@ function Term.plus(self,t)
 	for i=1,len(plusvar) do
 		pluscoef[i]=0
 	end
+	local k
+	local i
 	k=1
 	i=1
 	while i<=len(plusvar) and k<=self:nbVar() do
-		if plusvar[i]==self.var[i] then
-			pluscoef[i]=self.coef[i]
+		if plusvar[i]==self.var[k] then
+			pluscoef[i]=self.coef[k]
 			k=k+1
 			
 		end
 		i=i+1
 	end
 	
+	k=1
+	i=1
+	
 	while i<=len(plusvar) and k<=t:nbVar() do
-		if plusvar[i]==t.var[i] then
-			pluscoef[i]=pluscoef[i]+t.coef[i]
+		if plusvar[i]==t.var[k] then
+			pluscoef[i]=pluscoef[i]+t.coef[k]
 			k=k+1
 			
 		end
 		i=i+1
 	end
+	--~ local temp={1,1}
+	--~ return Term.new(self.expr.." + "..t.expr,plusvar,temp,self.constant+t.constant)
 	return Term.new(self.expr.." + "..t.expr,plusvar,pluscoef,self.constant+t.constant)
 	--~ return Term.new(" + ",plusvar,pluscoef,self.constant+t.constant)
 	
@@ -96,28 +105,41 @@ end
 function Term.minus(self,t) 
 	plusvar=merge(self.var,t.var)
 	pluscoef={}
+	local k
+	local i
 	for i=1,len(plusvar) do
 		pluscoef[i]=0
 	end
+	--~ print(len(plusvar).."......."..len(pluscoef))
+	--~ print(printab(pluscoef))
 	k=1
 	i=1
 	while i<=len(plusvar) and k<=self:nbVar() do
-		if plusvar[i]==self.var[i] then
-			pluscoef[i]=self.coef[i]
+		if plusvar[i]==self.var[k] then
+			pluscoef[i]=self.coef[k]
 			k=k+1
 			
 		end
 		i=i+1
 	end
 	
+	k=1
+	i=1
+	
 	while i<=len(plusvar) and k<=t:nbVar() do
-		if plusvar[i]==t.var[i] then
-			pluscoef[i]=pluscoef[i]-t.coef[i]
+		if plusvar[i]==t.var[k] then
+			pluscoef[i]=pluscoef[i]-t.coef[k]
 			k=k+1
 			
 		end
 		i=i+1
 	end
+	--~ printab(t.coef)
+	--~ printab(self.coef)
+	--~ print("vvvvv")
+	--~ printab(plusvar)
+	--~ printab(pluscoef)
+	--~ print("vvvvv")
 	return Term.new(self.expr.." - "..t.expr,plusvar,pluscoef,self.constant-t.constant)
 	
 end
@@ -191,22 +213,25 @@ end
 function factor(a, v)
 	if (type(a)~="number" and type(v)~="number") then print("Warning: there should be a number for operator *") end
 	if type(a)=="number" then 
-		index = getIndex(v)
-		return Term.new(a .. "*" .. v, {index}, {a}, 0)
+		index = getIndex(v.expr)
+		return Term.new(a .. "*" .. v.expr, {index}, {a}, 0)
+		--~ return Term.new(a.."*"..v.expr,v.var,{a}, 0)
 	else
-		index = getIndex(a)
-		return Term.new(v .. "*" .. a, {index}, {v}, 0)
+		index = getIndex(a.expr)
+		return Term.new(v .. "*" .. a.expr, {index}, {v}, 0)
+		--~ return Term.new(v.."*"..a.expr,a.var,{v}, 0)
 	end
     
 end
 
 function Term.__mul(int,t)
-	return factor(int,t.expr)
+	return factor(int,t)
 end
 
 --~ à utiliser pour initialiser un terme avec une variable
 function variable(v)
     index = getIndex(v)
+    --~ print("index: "..index)
     return Term.new(v, {index}, {1}, 0)
 end
 
@@ -215,6 +240,11 @@ end
 function integer(a)
     return Term.new(a, {}, {}, a)
 end
+
+
+
+
+
 
 
 Term.size=0
