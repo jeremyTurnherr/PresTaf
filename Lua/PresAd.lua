@@ -234,7 +234,7 @@ end
 ]]
 function greaterEquals(t1, t2)
     t = t1:minus(t2)
-    return Presburger.new(t1:tostring() .. " .= " .. t2:tostring(), 
+    return Presburger.new(t1:tostring() .. " >= " .. t2:tostring(), 
         t.var, 
         -- NPF.greaterEquals(convert(t.coef), -t.constant, t.coef.length))
 end

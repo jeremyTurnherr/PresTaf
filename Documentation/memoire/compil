@@ -1,6 +1,0 @@
-pdflatex memoire.tex
-makeglossaries memoire.glo
-bibtex memoire
-pdflatex memoire.tex
-pdflatex memoire.tex
-clear
