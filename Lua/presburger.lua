@@ -6,12 +6,11 @@ term = require("Term")
 
 
 function filltabparam(t)
-	printab(t)
+
 	prestaf:init_tab(len(t))
 	for pos,val in pairs(t) do
 	  prestaf:fill(pos,val)
 	end
-	print(prestaf:printab())
 
 end
 
@@ -37,7 +36,6 @@ function Presburger.new(expr, var, value)
 end
 
 function Presburger.tostring(self)
-	print("print")
 	return self.expr
 end
 
@@ -105,7 +103,6 @@ end
     And gives the capacity to specify more constraint on a formula. Like : 2x - y = 3 && y < 2
 ]]
 function Presburger.And(self, b)
-    print("I am here")
     newVar = term.merge(self.var, b.var)
     u = self:addVariable(newVar)
     v = b:addVariable(newVar)
@@ -165,16 +162,54 @@ function table.copy(org, srcPos, desPos, dest, endPos)
 end
 
 --[[
+    Rewrite of java function : Array.BinarySearch
+]]
+function table.binsearch(tab,i)
+	local mini=1
+	local maxi=len(tab)
+	if (tab[1]==i) then
+		return 1
+	end
+	while (mini<maxi) do
+ 
+    	local moitie=math.floor((mini+maxi)/2)
+    	if tab[moitie]==i then
+        	return moitie
+     	else if tab[moitie]<i then
+				mini=moitie
+			else
+				maxi=moitie-1
+			end
+   
+		end
+
+	end
+	--~ return 1
+	return -1
+end
+
+
+--[[
     Check if the variable v exists
 ]]
-function Presburger.E(self, i, v)
-    pos = table.binsearch(self.var, i)
-    if pos < 0 or pos >= len(self.var) then
-        return Presburger.new("A." .. v .. " " .. self.expr, self.var, self.value)
+function Presburger.E(self,var)
+	print("wowieeeee")
+	printab(self.var)
+	print(getIndex(var.expr))
+	print("wowieeeee")
+    pos = table.binsearch(self.var, getIndex(var.expr))
+    print("wowieeeee")
+    if pos-1 < 0 or pos-1 >= len(self.var) then
+		print(pos.."  ---")
+        return Presburger.new("E." .. var.expr .. " " .. self.expr, self.var, self.value)
     else
-	newVar = {}
+		print("wowieeeee")
+		newVar = {}
+		print("wowieeeee")
         table.copy(self.var, 0, 0, newVar, pos)
+        print("wowieeeee")
         table.copy(self.var, pos + 1, pos, newVar, len(self.var) - 1 - pos)
+        print("wowieeeee")
         return Presburger.new("E." .. v .. " " .. expr, newVar, value:exists(pos))
     end
 end
@@ -182,15 +217,17 @@ end
 --[[
     Check if all values are v
 ]]
-function Presburger.A(self, i, v)
-    pos = table.binsearch(self.var, i)
+function Presburger.A(self, var)
+	print("yyyyyyyac")
+    pos = table.binsearch(self.var, getIndex(var.expr))
+    print("yyyyyyyac")
     if pos < 0 or pos >= len(self.var) then
-        return Presburger.new("A." .. v .. " " .. self.expr, self.var, self.value)
+        return Presburger.new("A." .. var.expr .. " " .. self.expr, self.var, self.value)
     else
 		newVar = {}
         table.copy(self.var, 0, 0, newVar, pos)
         table.copy(self.var, pos + 1, pos, newVar, len(self.var) - 1 - pos)
-        return Presburger.new("A." .. v .. " " .. expr, newVar, value:forall(pos))
+        return Presburger.new("A." .. var.expr .. " " .. expr, newVar, value:forall(pos))
     end
 end
 
@@ -219,18 +256,26 @@ function equals(t1, t2)
     filltabparam(convert(t.coef))
     print("--------------------")
     npf=prestaf:equals( -t.constant,len(t.coef))
-    --~ print("tab minus var")
-    --~ printab(t.var)
-    --~ print("tab minus coef")
-    --~ printab(t.coef)
    
     return Presburger.new(t1:tostring() .. " = " .. t2:tostring(),t.var,npf)--prestaf:equals( -t.constant,len(t.coef))
 end
 
+--~ term.Term.setmetatable(0, {  
+	--~ __call = function(a, op)
+				--~ if op == '=' then 
+					--~ return function(b) 
+							--~ return equals(a,b) 
+						--~ end
+				--~ else print("nope")
+				--~ end
+			--~ end
+--~ })
 
-function term.Term.__eq(t1,t2)
-	return equals(t1,t2)
-end
+
+
+
+
+
 
 
 
@@ -301,15 +346,96 @@ function getNbOutputAutomata(self)
 end
 
 function Presburger.todot(self,file)
-	print("trying to save")
 	local f = io.open(file, "w")
-	print("trying to save")
 	io.output(f)
-	print("trying to save")
 	io.write(self.value:toDot())
-	print("trying to save")
     io.close(f)   
 end
+
+function result(self)
+	return Presburger.Result
+end
+
+Presburger.Result=nil
+
+
+
+
+
+--[[
+    Terms operators override
+]]
+
+term.Term.__call = function(t1, op)
+				if op == '=' then 
+					print("tente ça")
+					return function(t2) 
+							print("tente ça")
+							return equals(t1,t2) 
+						end
+				
+				end
+				if op == '!=' then 
+					return function(t2) 
+							return notEquals(t1,t2) 
+						end
+				
+				end
+				if op == '<' then 
+					return function(t2) 
+							return less(t1,t2) 
+						end
+				
+				end
+				if op == '<=' then 
+					return function(t2) 
+							return lessEquals(t1,t2) 
+						end
+				
+				end
+				if op == '>' then 
+					return function(t2) 
+							return greater(t1,t2) 
+						end
+				
+				end
+				if op == '>=' then 
+					return function(t2) 
+							return greaterEquals(t1,t2) 
+						end
+				
+				end
+				
+				
+			end
+
+--[[
+    Presburger operators override
+]]
+
+Presburger.__call = function(p, op)
+				if op == 'A' then 
+					return function(term) 
+							return p:A(term) 
+						end
+				
+				end
+				if op == 'E' then 
+					return function(term) 
+							return p:E(term) 
+						end
+				
+				end
+				if op == '!' then 
+					return p:Not()
+				
+				end
+				
+				
+				
+			end
+
+
 
 local module = {}
 
@@ -324,5 +450,7 @@ module.greaterEquals = greaterEquals
 module.getNbStates = getNbStates
 module.getNbSharedAutomata = getNbSharedAutomata
 module.getNbOutputAutomata = getNbOutputAutomata
+module.result=result
+
 
 return module
