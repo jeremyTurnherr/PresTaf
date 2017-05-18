@@ -63,7 +63,8 @@ function run(pres)
 	local pif=variable("u")
 	
 	
-	print(greaterEquals(pif,integer(3)).value:toDot())
+	--~ print(equals(pif,t+integer(1)).value:toDot())
+	equals(pif,t+integer(1)):todot("testsave.txt")
 	--~ print((pif==integer(3)).value:toDot())
 	
 	print("ji endo")

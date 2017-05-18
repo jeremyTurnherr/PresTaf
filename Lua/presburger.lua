@@ -300,6 +300,17 @@ function getNbOutputAutomata(self)
     return sefl.value:getNbOutputAutomata()
 end
 
+function Presburger.todot(self,file)
+	print("trying to save")
+	local f = io.open(file, "w")
+	print("trying to save")
+	io.output(f)
+	print("trying to save")
+	io.write(self.value:toDot())
+	print("trying to save")
+    io.close(f)   
+end
+
 local module = {}
 
 module.Presbuger = Presburger
