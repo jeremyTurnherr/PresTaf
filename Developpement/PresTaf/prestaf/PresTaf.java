@@ -33,7 +33,7 @@ public class PresTaf{
 			isFinal[state]=fin;
 		}
 		
-		public PresTaf createAutomaton(int initial){
+		public SimpleMarkedAutomaton createAutomaton(int initial){
 			return new SimpleMarkedAutomaton(initial,succ,isFinal);
 			//~ return null;
 		}
