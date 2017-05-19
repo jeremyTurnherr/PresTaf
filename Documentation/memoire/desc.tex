@@ -2,10 +2,31 @@
 
 \subsection{Surcharge d'opérateurs}
 
-L'un des principaux avantages de Lua est d'être un langage de script, basé sur le C++ et donc qui permet la surcharge d'opérateur, 18 au total. Nous avons donc surchargé les opérateurs $+$ $-$ $*$ afin de permettre à l'utilisateur d'utiliser des opérateurs à la place de fonctions pour écrire ses formules Presburger. Ceci donne une écriture plus mathématiques, plus fluide. Et surtout ça permet d'avoir une écriture stable et universelle.\\\par
+L'un des principaux avantages de Lua est d'être un langage de script, basé sur le C++, et donc qui permet la surcharge d'opérateur, 18 au total. Nous avons donc surchargé les opérateurs $+$ $-$ $*$ afin de permettre à l'utilisateur d'utiliser des opérateurs à la place de fonctions pour écrire ses formules Presburger. Ceci donne une écriture plus mathématiques, plus fluide. Et surtout ça permet d'avoir une écriture stable et universelle.\\\par
 
 Nous voulions également surcharger l'opérateur $==$, cependant au fil de nos expérimentations, comme Lua est un langage typé dynamiquement, nous n'avons aucun contrôle sur le type de retour. Or pour un opérateur comme l'opérateur $==$ ou $~=$ Lua oblige que le retour soit booléen, et ainsi nous n'avons pas pu se servir de l'opérateur $==$ tel que nous le voulions.\\\par
  
 Nous avons donc choisi que cet opérateur ne retournerait pas de valeur mais placerait la valeur dans une variable, il faut donc une deuxieme fonction pour l'appeler.\\\par
 
-En Lua, on peut également créé un opérateur pérsonalisé de la forme $'operateur'$. Nous avons choisi de créer l'opérateur $'='$ qui retourne le bon type. L'utilisateur peut donc choisir entre l'opérateur $==$, ce qui lui rajoute une étape de récupération de la variable, et l'opérateur $'='$.
+En Lua, on peut également créer un opérateur pérsonalisé de la forme $'operateur'$. Nous avons choisi de créer l'opérateur $'='$ qui retourne le bon type. L'utilisateur peut donc choisir entre l'opérateur $==$, ce qui lui rajoute une étape de récupération de la variable, et l'opérateur $'='$.
+
+\subsection{L’interface java}
+
+Afin de pouvoir utiliser les fonctionnalités de la bibliothèque prestaf dans un fichier lua, il faut passer par la bibliothèque luajava, qui permet de récupérer un objet java dans le cadre d’exécution d’un fichier lua. Il a donc fallu créer une classe java qui permet d’interfacer les fonctions de création d’automates afin de pouvoir accéder à ces fonctions dans le lua. Cette classe, appelée ‘PresTaf’, est donc séparée en deux parties. 
+La première interface est celle qui est directement accessible depuis le lua à travers l’objet lua “prestaf”. Cette partie permet d’effectuer des opérations d’égalité (les opérations $=$,$!=$,$<$,$<=$,$>$,$>=$) sur des termes afin d’obtenir une première version des automates associés (ou NPF) de la bibliothèque prestaf. Cet automate, représentant la formule, est ensuite retourné au lua sous forme d’une deuxième interface. Il est également possible de de créer un automate directement en précisant l’état initial, le tableau des successeurs et la liste des états finaux sous forme d’un tableau de booléens.
+
+La deuxième interface correspond aux fonctions qui permettent de manipuler uniquement un automate associé à une formule. Cette partie est envoyée par la première partie après une opération d’égalité. Cette partie permet d’effectuer des opérations sur les automates telles que les opérations logiques (et, ou, équivalence, implication) ou l’utilisation des quantifieurs (pour tout, il existe). On peut également obtenir une représentation en dot de cet automate.
+
+\subsection{La bibliothèque presburger Lua}
+
+La bibliothèque Presburger écrite en Lua contient tous les éléments nécessaires pour écrire une formule de presburger en lua et obtenir l’automate associé. Elle possède les mêmes fonctionnalités que la version précédemment écrite en java. Cette bibliothèque est composé de deux objets lua:
+Term: Cet objet permet de construire des variables et des entiers et d’effectuer des opérations élémentaires dessus telles que l’addition, la multiplication et la soustraction. Ces opérateurs ont été surchargé afin d’améliorer la visibilité des formules. Ces opérations construisent une terme en suivant une arborescence. Par exemple, avec le terme “2*x+y” on obtient l’arborescence suivante:
+
+Presburger: Cet objet utilise deux termes et une opération de comparaison pour se construire.
+Lors de son instanciation, l’objet va convertir les termes en des tableaux reconnus par la bibliothèque prestaf, puis se servir de cette bibliothèque afin de récupérer l’automate associé. il est ensuite possible d’effectuer des opérations supplémentaires sur ces formules et d’en obtenir un affichage et une représentation dot. 
+Pour chaque opérateur existant, des opérateurs ont été créés afin de pouvoir avoir une meilleure lisibilité du code. En effet, lua permet de créer des opérateurs personnalisés en exploitant la fonction \_\_call des métatables. Ces opérateurs doivent être précisés en tant que string. Ces surcharges d’opérateurs permettent à l’utilisateur de la bibliothèque presburger écrite en lua d’avoir plusieurs façons d’écrire une même formule, ce qui lui permet de choisir celle qu’il préfère en fonction de sa convenance. 
+ [image arbre de maxime]
+
+\subsection{Le programme principal}
+
+Le programme principale se lance avec une chaine de caractère représentant le fichier lua à lancer. Ici, la bibliothèque luajava est utilisée afin d’envoyer une instance de l’interface java dans l’environnement lua, puis le fichier lua est exécuté.
