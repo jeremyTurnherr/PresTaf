@@ -11,7 +11,7 @@ end
 function fillsuccparam(succ)
 
 	prestaf:init_succ(len(succ),len(succ[1]))
-	for postate,state in pairs(b) do
+	for postate,state in pairs(succ) do
 		for posletter,t in pairs(state) do
 			prestaf:fillsucc(postate,posletter,t)
 		end

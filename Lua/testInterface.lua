@@ -48,6 +48,8 @@ local x=variable('x')
 local w=variable('w')
 local r=variable('r')
 
+local nope=createAutomaton(0,{{0,1,2},{1,2,0},{2,0,1}},{false,false,false})
+
 
 --~ local res=_E(r,_A(x,_A(y,_E(z,(y+(2*x)-(3*z)+w-q)'='(17*r)))))
 local res=(((y)'='(integer(1)))'->'((x)'='(integer(1))))

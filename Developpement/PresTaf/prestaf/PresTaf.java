@@ -26,11 +26,11 @@ public class PresTaf{
 		}
 		
 		public void fillsucc(int state,int letter,int t){
-			succ[state][letter]=t;
+			succ[state-1][letter-1]=t;
 		}
 		
 		public void fillfinal(int state,boolean fin){
-			isFinal[state]=fin;
+			isFinal[state-1]=fin;
 		}
 		
 		public SimpleMarkedAutomaton createAutomaton(int initial){
