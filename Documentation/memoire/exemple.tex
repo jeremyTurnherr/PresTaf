@@ -21,3 +21,77 @@ Grâce à PresTaf, il est possible de passer aisément d'une logique a une autre
 \end{tikzpicture}
 
 Si on associe un ensemble de variables a des booléens, cet automate permet de trouver si une variable est un singleton. Par extension on peut donc passer de la logique Monadique a la logique Presburger grâce à cet automate.
+
+
+\begin{lstlisting}[mathescape=true, frame=single]
+pres = require('Presburger')
+
+local x = variable('x')
+local y = variable('y')
+
+local f = x '=' 2 * y 
+
+f:todot("f.dot")
+\end{lstlisting}
+
+Le ficher f.dot est le suivant :
+
+\vspace{0.5cm}
+
+\begin{tikzpicture}
+
+\node[circle,draw,accepting] (A) at (0, 4.5)    {$q_0$};
+\node[circle,draw,accepting] (B) at (-1.5, 3)   {$q_1$};
+\node[circle,draw]           (C) at (-1.5, 1.5) {$q_2$};
+\node[circle,draw,accepting] (D) at (0, 0)      {$zero$};
+
+\path[->] (0, 5.5) edge (A)
+(A) edge [bend right] node[above]{0} (B)
+(B) edge [bend right] node[right]{0} (A)
+(B) edge [bend right] node[left]{1}  (C)
+(C) edge [bend right] node[right]{1} (B)
+(C) edge [bend right] node[above]{0} (D)
+(A) edge [bend left]  node[right]{1} (D);
+\end{tikzpicture}
+
+Le résultat obtenus avec l'ancienne version de PresTaf est bien entendu la même. En revanche le Lua contient une différence majeure. Si l'on écrit le script suivant :
+
+\begin{lstlisting}[mathescape=true, frame=single]
+pres = require('Presburger')
+
+local x = variable('x')
+local y = variable('y')
+
+local f = y '=' 2 * x 
+
+f:todot("f.dot")
+\end{lstlisting}
+
+Le fichier générer sera différent : \vspace{0.5cm}
+
+\begin{tikzpicture}
+
+\node[circle,draw,accepting] (A) at (0, 4.5)    {$q_0$};
+\node[circle,draw,accepting] (B) at (-1.5, 3)   {$q_4$};
+\node[circle,draw]           (C) at (1, 3)      {$q_3$};
+\node[circle,draw]           (D) at (1.5, 1.5)  {$q_1$};
+\node[circle,draw]           (E) at (1, 0)      {$q_5$};
+\node[circle,draw]           (F) at (3, 0)      {$q_2$};
+\node[circle,draw,accepting] (G) at (0, -1.5)   {$zero$};
+
+\path[->] (0, 5.5) edge (A)
+(A) edge [bend right] node[above]{0} (B)
+(B) edge [bend right] node[right]{0} (A)
+(A) edge              node[left] {1} (C)
+(F) edge [bend right] node[right]{1} (A)
+(C) edge [bend right] node[left]{1} (G)
+(C) edge              node[right]{0} (D)
+(D) edge [bend left] node[right]{1} (E)
+(E) edge [bend left] node[left]{1} (D)
+(B) edge             node[left]{1} (G)
+(D) edge             node[above]{0} (F)
+(F) edge             node[below]{0} (G)
+(E) edge             node[below]{0} (G);
+\end{tikzpicture}
+
+Ce qui permet de traiter les variables dans l'ordre désiré, ce qui laisse une plus grande marge de man\oe{}uvre.
