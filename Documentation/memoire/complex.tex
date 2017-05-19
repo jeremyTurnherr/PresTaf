@@ -1,0 +1,11 @@
+\section{Analyser la compléxité}
+
+\subsection{PresTaf}
+
+\subsubsection{Minimisation d'automate}
+
+Presburger est une surcouche de Prestaf, il est donc directement lié à la complexité de Prestaf. L'une des complexités essentielles de Prestaf est celle de la minimisation d'automate. Un automate peut en effet avoir plusieurs milliers d'états. Nous avons commencé par étudier l'algorithme d'Hopcroft et une révision de Blum qui est en $O(nlog(n))$. On sait que la complexité de Prestaf est en $O(n^2)$.
+
+\subsection{Presburger}
+
+D'après Derek C. Oppen\cite{oppen1978222pn} la complexité de Presburger est une triple exponentiel défini par la borne supérieure suivante : $O(2^{2^{2^{pn}}})$, où $p$ est une constante $p > 1$ et $n$ est la taille de l'entrée.

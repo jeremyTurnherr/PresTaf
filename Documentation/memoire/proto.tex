@@ -1,0 +1,56 @@
+\section{Prototypes et tests préparatoires}
+
+\subsection{Blum}
+
+Voici un exemple que nous avons testé avec l'automate initial et l'objectif.
+
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.5cm,
+                    semithick]
+
+\node[circle,draw]           (A) at (2.25, 7.5) {$q_0$};
+\node[circle,draw]           (B) at (2.25, 6)   {$q_1$};
+\node[circle,draw]           (C) at (1.5, 4.5)  {$q_2$};
+\node[circle,draw]           (D) at (3, 4.5)    {$q_3$};
+\node[circle,draw]           (E) at (1.5, 3)    {$q_4$};
+\node[circle,draw]           (F) at (3, 3)      {$q_5$};
+\node[circle,draw]           (G) at (0, 1.5)    {$q_6$};
+\node[circle,draw,accepting] (H) at (1.5, 1.5)  {$q_7$};
+\node[circle,draw,accepting] (I) at (3, 1.5)    {$q_8$};
+\node[circle,draw]           (J) at (4.5, 1.5)  {$q_9$};
+\node[circle,draw,accepting] (K) at (0, 0)      {$q_{10}$};
+\node[circle,draw,accepting] (L) at (4.5, 0)    {$q_{11}$};
+
+\node at (6, 3.75) {$\Longrightarrow$};
+
+\node[circle,draw]           (M) at (7.5, 1.5)       {$q_4$};
+\node[circle,draw,accepting] (N) at (9, 0)           {$q_5$};
+\node[circle,draw]           (O) at (9, 3)           {$q_3$};
+\node[circle,draw]           (P) [above of=O]        {$q_2$};
+\node[circle,draw]           (Q) [above of=P]        {$q_1$};
+\node[circle,draw]           (R) [above of=Q]        {$q_0$};
+
+\node at (2.25, 9) {Automate initial};
+\node at (9, 9) {Automate minimal};
+
+\path[->] (A) edge [right] node{0} (B)
+(B) edge [bend right] node[above]{1} (C)
+(B) edge [bend left] node[above]{0} (D)
+(C) edge [left] node{0} (E)
+(D) edge [right] node{0} (F)
+(E) edge [bend right] node[above]{1} (G)
+(E) edge [right] node{0} (H)
+(F) edge [bend left] node[above]{1} (J)
+(F) edge [left] node{0} (I)
+(G) edge [left] node{0} (K)
+(J) edge [right] node{0} (L)
+(2.25, 8.5) edge (A)
+(9, 8.5) edge (R)
+(R) edge[right] node{0} (Q)
+(Q) edge[bend right] node[left]{1} (P)
+(Q) edge[bend left] node[right]{0} (P)
+(P) edge[left] node{0} (O)
+(O) edge[left] node{0} (N)
+(O) edge[bend right] node[left]{1} (M)
+(M) edge[bend right] node[left]{0} (N);
+
+\end{tikzpicture}
