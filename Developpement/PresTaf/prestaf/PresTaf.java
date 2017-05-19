@@ -1,7 +1,7 @@
 package prestaf;
 
 public class PresTaf{
-<<<<<<< HEAD
+
 	
 	public static class PresTafMain{
 		
@@ -34,8 +34,8 @@ public class PresTaf{
 		}
 		
 		public PresTaf createAutomaton(int initial){
-			//~ return new PresTaf(new NPF(0,(MarkedSharedAutomaton)(new SimpleMarkedAutomaton(initial,succ,isFinal))));
-			return null;
+			return new SimpleMarkedAutomaton(initial,succ,isFinal);
+			//~ return null;
 		}
 		
 		public String printab(){
@@ -143,7 +143,7 @@ public class PresTaf{
         return npf.value == MarkedSharedAutomaton.one;
     }
     
-    public PresTaf not()
+    public PresTaf Not()
     {
         return new PresTaf(new NPF(npf.nbVariable, npf.value.not()));
     }
@@ -192,94 +192,25 @@ public class PresTaf{
 		return npf.deapth();
 	}
 	
-	public int getNbStates()
-=======
-	private static PresTaf instance;
-	
-	private PresTaf(){
-		}
-	
-	
-	public static PresTaf init(){
-		if(instance==null){
-			instance=new PresTaf();
-		}
-		return instance;
-	}
-	
-	
-    public NPF addVariable(NPF npf,int v, int modulo){
-		return npf.addVariable(v,modulo);
-	}
-	
-    public NPF addVariable(NPF npf,int v)
-    {
-        return npf.addVariable(v);
-    }
-    
-     
-    public NPF addVariable(NPF npf,boolean[] tab){
-		return npf.addVariable(tab);
-	}
-	
-	
-	public NPF equals(int[] axi, int b, int n) {
-		return NPF.equals(axi,b,n);
-	}
-	
-	public NPF notEquals(int[] axi, int b, int n){
-		return NPF.notEquals(axi,b,n);
-	}
-	
-	public NPF greater(int[] axi, int b, int n){
-		return NPF.greater(axi,b,n);	
-	}
-	
-	public NPF greaterEquals(int[] axi, int b, int n) {
-		return NPF.greaterEquals(axi,b,n);	
-	}
-	
-	public NPF less(int[] axi, int b, int n){
-		return NPF.less(axi,b,n);	
-	}
-	
-	public NPF lessEquals(int[] axi, int b, int n){
-		return NPF.lessEquals(axi,b,n);	
-	}
-	
-	public int deapth(NPF npf){
-		return npf.deapth();
-	}
-	
-	public int getNbStates(NPF npf)
->>>>>>> 68108cfd04ff7b1c3f738838c48a6c03b03e22ca
-    {
+	public int getNbStates(){
 		return npf.getNbStates();
     }
     
-<<<<<<< HEAD
+
      public int getNbSharedAutomata()
-=======
-     public int getNbSharedAutomata(NPF npf)
->>>>>>> 68108cfd04ff7b1c3f738838c48a6c03b03e22ca
+
     {
         return npf.getNbSharedAutomata();
     }
 
-<<<<<<< HEAD
     public int getNbOutputAutomata()
-=======
-    public int getNbOutputAutomata(NPF npf)
->>>>>>> 68108cfd04ff7b1c3f738838c48a6c03b03e22ca
+
     {
         return npf.getNbOutputAutomata();
     } 
-    
-<<<<<<< HEAD
+
     public String toDot()
-=======
-    public String toDot(NPF npf)
->>>>>>> 68108cfd04ff7b1c3f738838c48a6c03b03e22ca
+
     {
         return npf.toDot();
     }
