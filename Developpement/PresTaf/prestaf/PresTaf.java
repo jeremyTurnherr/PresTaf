@@ -24,17 +24,13 @@ public class PresTaf{
 		}
 		
 		public void fill(int luapos,int val){
-			System.out.println((luapos-1)+":::"+val);
 			param[luapos-1]=val;
 		}
 		
-		public void what(){
-			System.out.println("wat");
-		}
+		
 		
 		public PresTaf equals( int b, int n) {
 			int[] axi=param;
-			System.out.println("tentative");
 			System.out.println(printab());
 			
 			
@@ -44,31 +40,26 @@ public class PresTaf{
 		
 		public PresTaf notEquals(int b, int n){
 			int[] axi=param;
-			System.out.println("tentative");
 			return new PresTaf(NPF.notEquals(axi,b,n));
 		}
 		
 		public PresTaf greater( int b, int n){
 			int[] axi=param;
-			System.out.println("tentative");
 			return new PresTaf(NPF.greater(axi,b,n));	
 		}
 		
 		public PresTaf greaterEquals( int b, int n) {
 			int[] axi=param;
-			System.out.println("tentative");
 			return new PresTaf(NPF.greaterEquals(axi,b,n));	
 		}
 		
 		public PresTaf less(int b, int n){
 			int[] axi=param;
-			System.out.println("tentative");
 			return new PresTaf(NPF.less(axi,b,n));	
 		}
 		
 		public PresTaf lessEquals( int b, int n){
 			int[] axi=param;
-			System.out.println("tentative");
 			return new PresTaf(NPF.lessEquals(axi,b,n));	
 		}
 		

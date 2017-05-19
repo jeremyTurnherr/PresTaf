@@ -108,7 +108,7 @@ public class Presburger
     {
         int pos = Arrays.binarySearch(var,i);
         if (pos<0 || pos >=var.length)
-            return new Presburger("A." + v + " " + expr, var, value);
+            return new Presburger("E." + v + " " + expr, var, value);
         else {
             int[] newVar = new int[var.length-1];
             System.arraycopy(var,0,newVar,0,pos);

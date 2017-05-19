@@ -29,7 +29,6 @@ function Term.debug(self)
 	for k,i in pairs(self.var) do
 		if not( i ==0 )then
 			res=res..self.coef[k].."* V"..self.var[k].." + "
-			--~ res=res.."* V"..i.." + "
 		end
 	end
 	return res.." "..tostring(self.constant)
@@ -90,10 +89,7 @@ function Term.plus(self,t)
 		end
 		i=i+1
 	end
-	--~ local temp={1,1}
-	--~ return Term.new(self.expr.." + "..t.expr,plusvar,temp,self.constant+t.constant)
 	return Term.new(self.expr.." + "..t.expr,plusvar,pluscoef,self.constant+t.constant)
-	--~ return Term.new(" + ",plusvar,pluscoef,self.constant+t.constant)
 	
 end
 
@@ -110,8 +106,6 @@ function Term.minus(self,t)
 	for i=1,len(plusvar) do
 		pluscoef[i]=0
 	end
-	--~ print(len(plusvar).."......."..len(pluscoef))
-	--~ print(printab(pluscoef))
 	k=1
 	i=1
 	while i<=len(plusvar) and k<=self:nbVar() do
@@ -134,12 +128,6 @@ function Term.minus(self,t)
 		end
 		i=i+1
 	end
-	--~ printab(t.coef)
-	--~ printab(self.coef)
-	--~ print("vvvvv")
-	--~ printab(plusvar)
-	--~ printab(pluscoef)
-	--~ print("vvvvv")
 	return Term.new(self.expr.." - "..t.expr,plusvar,pluscoef,self.constant-t.constant)
 	
 end
@@ -215,11 +203,9 @@ function factor(a, v)
 	if type(a)=="number" then 
 		index = getIndex(v.expr)
 		return Term.new(a .. "*" .. v.expr, {index}, {a}, 0)
-		--~ return Term.new(a.."*"..v.expr,v.var,{a}, 0)
 	else
 		index = getIndex(a.expr)
 		return Term.new(v .. "*" .. a.expr, {index}, {v}, 0)
-		--~ return Term.new(v.."*"..a.expr,a.var,{v}, 0)
 	end
     
 end
@@ -240,7 +226,6 @@ end
 function integer(a)
     return Term.new(a, {}, {}, a)
 end
-
 
 
 
