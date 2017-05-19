@@ -29,6 +29,7 @@
 \usepackage{amssymb}%
 \usepackage{graphicx}
 \usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{tikz}
 \usetikzlibrary{calc,arrows,automata,positioning}
@@ -160,12 +161,24 @@
 
 \appendix
 
+%\section{Manuel utilisateur}
+
+%Pour implémenter sa propre logique il est nécessaire de suivre une certaine démarche. La démarche sera expliqué avec la logique de Presburger
+
+%\subsection{Fonctions à implémenter}
+
+%Tout d'abord, une logique est un objet Lua qui sera traduit en objet Java pour PresTaf. Pour ce faire vous devrez d'abord créer votre classe Term :
+
+%\lstinputlisting[basicstyle=\tiny]{Term.lua}
+
+%Enfin créez votre logique
+
+%\lstinputlisting[basicstyle=\tiny]{presburger.lua}
+
 \printglossaries
 
 \bibliography{biblio}{}
 \addcontentsline{toc}{section}{Références}
 \bibliographystyle{plain}
-
-% \section{Premi\`ere annexe}
 
 \end{document}

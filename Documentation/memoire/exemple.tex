@@ -100,17 +100,20 @@ Le fichier générer sera différent : \vspace{0.5cm}
 (E) edge             node[below]{0} (G);
 \end{tikzpicture}
 
-Ce qui permet de traiter les variables dans l'ordre désiré, ce qui laisse une plus grande marge de man\oe{}uvre.
+Ce qui permet de traiter les variables dans l'ordre désiré, ce qui laisse une plus grande marge de man\oe{}uvre.\\\par
 
-Pour utiliser la bibliothèque Presburger l'utilisateur doit utiliser la fonction $require()$ de lua pour appeler les fichiers Term et Presburger.
-Il existe les fonctions $variable(chaine)$ et $integer(nombre)$ qui permettent de créer respectivement une variable et un nombre. Ces deux élements peuvent ensuite manipulés à l'aide de plusieurs fonctions qui implémentent la logique de Presburger.
-La pluspart de ces fonctions peuvent être également appelées directement par des opérateurs surchargés, de manière à ce que l'utilisateur puisse avoir une écriture plus lisible et concise pour écrire de très longue formules Presburger.
-On trouve ainsi avec les opérateurs:
- - les opérations $factor()$ *, $plus()$ + et $minus()$ -,
- - les quantificateurs $\_A()$ 'A' et $\_E()$ 'E',
- - les comparateurs $equals()$ '=', $not\_Equals()$ !=, $greater()$ >, $greaterEquals()$ >=, $lessEquals()$ <=,$less()$ <,
- - les opérateurs logiques $and()$ \&\&, $or()$ ||, $not()$, $equiv()$ <->  et $imply()$ -> .
-Voici un exemple d'utilisation pour la formule 6x+4=1\\
+Pour utiliser la bibliothèque Presburger l'utilisateur doit utiliser la fonction $require()$ de lua pour appeler les fichiers Term et Presburger.\\\par
+
+Il existe les fonctions $variable(chaine)$ et $integer(nombre)$ qui permettent de créer respectivement une variable et un nombre. Ces deux élements peuvent ensuite être manipulés à l'aide de plusieurs fonctions qui implémentent la logique de Presburger.\\\par
+
+La plupart de ces fonctions peuvent être également appelées directement par des opérateurs surchargés, de manière à ce que l'utilisateur puisse avoir une écriture plus lisible et concise pour écrire de très longue formules Presburger. On trouve ainsi avec les opérateurs:
+\begin{itemize}
+ \item les opérations $factor()$ *, $plus()$ + et $minus()$ -,
+ \item les quantificateurs $\_A()$ 'A' et $\_E()$ 'E',
+ \item les comparateurs $equals()$ $'='$, $not\_Equals()$ $!=$, $greater()$ $>$, $greaterEquals()$ $>=$, $lessEquals()$ $<=$,$less()$ $<$,
+ \item les opérateurs logiques $and()$ $\&\&$, $or()$ $||$, $not()$, $equiv()$ $<->$  et $imply()$ $->$ .
+\end{itemize}
+Voici un exemple d'utilisation pour la formule $6x + 4 = 1$\\
  
 \begin{lstlisting}[mathescape=true, frame=single]
 pres = require('Presburger')
