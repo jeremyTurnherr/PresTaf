@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/PresTaf.iml" filepath="$PROJECT_DIR$/.idea/PresTaf.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/PresTaf.iml" filepath="$PROJECT_DIR$/PresTaf.iml" />
+>>>>>>> 68108cfd04ff7b1c3f738838c48a6c03b03e22ca
     </modules>
   </component>
 </project>

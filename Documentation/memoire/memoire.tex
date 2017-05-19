@@ -78,7 +78,7 @@
 	name=Arithmétique de Presburger
 }
 {
-	L'arithmétique de Presburger à été introduite par Moj\.{z}esz Presburger en 1929. Cette arithmétique du premier ordre dispose de deux constante 0 et 1 ainsi qu'un symbole binaire +. Ce langage est limité aux entiers naturels et est défini par les lois suivante :
+	L'arithmétique de Presburger à été introduite par Moj\.{z}esz Presburger en 1929. Cette arithmétique du premier ordre dispose de deux constantes 0 et 1 ainsi qu'un symbole binaire +. Ce langage est limité aux entiers naturels et est défini par les lois suivantes :
 	\begin{enumerate}
 		\item $\forall x, \neg(0 = x + 1)$
 		\item $\forall x, \forall y, x + 1 = y + 1 \rightarrow x = y $
@@ -92,7 +92,7 @@
 \longnewglossaryentry{monadique}{
 	name=Logique monadique du second ordre
 } {
-	aussi connu sous le nom de \emph{Monadic Second Order} ou \emph{MSO}, est notamment utilisé dans un autre programme de M.Couvreur : VeriTaf. VeriTaf permet de vérifier des formules CTL (Computation Tree Logic) et des forumules LTL (Linear Temporal Logic)
+	aussi connu sous le nom de \emph{Monadic Second Order} ou \emph{MSO}, est notamment utilisé dans un autre programme de M.Couvreur : VeriTaf. VeriTaf permet de vérifier des formules CTL (Computation Tree Logic) et des formules LTL (Linear Temporal Logic)
 }
 
 %--------------------------------------------------------------------%
@@ -186,13 +186,13 @@ Le fichier f.dot ressemblerai à :
 
 \subsection{Fonctions}
 
-La priorité des fonctions varie de 1 à 5, du plus important au moins important,sachant que la priorité 5 correspond à une fonctionnalité optionnelle.
+La priorité des fonctions varie de 1 à 5, du plus important au moins important, sachant que la priorité 5 correspond à une fonctionnalité optionnelle.
 
 \subsubsection{Bilbiothèque d'automate générique}
 
 \paragraph{Description :} La bibliothèque PresTaf est générique et doit accepter toutes sortes d'automates.
 
-\paragraph{Justification :} L'utilisateur aura la possibilité d'implémenter ses propres logiques, la bibliothèque doit donc accepter toutes logiques. En effet PresTaf sera une bibliothèque d'automate, permettant de minimiser un automate, de faire des interesections, des unions, etc. Il ne faut donc pas que PresTaf soit ciblé sur Presburger, mona ou une quelconque autre logique.
+\paragraph{Justification :} L'utilisateur aura la possibilité d'implémenter ses propres logiques, la bibliothèque doit donc accepter toutes logiques. En effet PresTaf sera une bibliothèque d'automates, permettant de minimiser un automate, de faire des intersections, des unions, etc. Il ne faut donc pas que PresTaf soit ciblé sur Presburger, mona ou une quelconque autre logique.
 
 \paragraph{Priorité :} 1\\
 
@@ -210,7 +210,7 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \subsubsection{Interfaçage Lua}
 
-\paragraph{Description :} Permet le codage des automates en Lua, ainsi que l'utilisation de chaque fonction qui seront ensuite exécutés en Java.
+\paragraph{Description :} Permet le codage des automates en Lua, ainsi que l'utilisation de chaques fonctions qui seront ensuite exécutées en Java.
 
 \paragraph{Justification :} Le lua est un langage de script simple à prendre en main et qui permet facilement d'écrire des automates et d'utiliser des fonctions.
 
@@ -222,7 +222,7 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \paragraph{Description :} Windows, MacOS, Linux
 
-\paragraph{Justification :} Comme java est un langage portable executé via la Java Virutal Machine (JVM), et que LuaJava est executé via java il embarque sa propre machine viturel, en théorie le code sera donc portable sur tous les systèmes d'exploitation. En dehors de la portabilité du code, Windows MacOs et Linux sont les principaux systèmes d'exploitation il est donc important d'avoir un code portable pour chaque machine pour facilité l'accès
+\paragraph{Justification :} Comme java est un langage portable executé via la Java Virutal Machine (JVM), et que LuaJava est executé via java il embarque sa propre machine virtuelle, en théorie le code sera donc portable sur tous les systèmes d'exploitation. En dehors de la portabilité du code, Windows MacOs et Linux sont les principaux systèmes d'exploitation, il est donc important d'avoir un code portable pour chaque machine pour faciliter l'accès.
 
 \paragraph{Priorité :} 1\\
 
@@ -230,9 +230,9 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \subsubsection{Optimisation}
 
-\paragraph{Description :} La bilbiothèque d'automate PresTaf doit être rapide à s'exécutée.
+\paragraph{Description :} La bilbiothèque d'automates PresTaf doit être rapide à s'exécuter.
 
-\paragraph{Justification :} L'utilisateur n'aura pas le temps d'attendre quelques dizaines de minutes à attendre que son automate soit généré. Il voudra obtenir son résultat rapidement.
+\paragraph{Justification :} L'utilisateur n'aura pas le temps d'attendre quelques dizaines de minutes que son automate soit généré. Il voudra obtenir son résultat rapidement.
 
 \paragraph{Priorité :} 5
 
@@ -244,7 +244,7 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \paragraph{Description :} Ensemble de fonctions qui prennent en entrée une formule arithmétique et retourne l'automate acceptant cette formule.
 
-\paragraph{Justification :} La bilbiothèque PresTaf n'implémentera pas d'elle-même une logique. Ainsi l'implémentation de la logique de Presburger en script Lua, permettra de fournir une démo à l'utilisateur. Il aurait un aperçu des bonnes pratiques à avoir, les méthodes qui se doit d'implémenter, et des fonctionnalités présentes.
+\paragraph{Justification :} La bilbiothèque PresTaf n'implémentera pas d'elle-même une logique. Ainsi l'implémentation de la logique de Presburger en script Lua, permettra de fournir une démo à l'utilisateur. Il aurait un aperçu des bonnes pratiques à avoir, les méthodes qu'il se doit d'implémenter, et des fonctionnalités présentes.
 
 \paragraph{Priorité :} 1\\
 
@@ -252,9 +252,9 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \subsubsection{Logique monadique du second ordre}
 
-\paragraph{Description :} Il s'agit d'une logique du second ordre, c'est-à-dire qu'un prédicat peut avoir en argument un autre prédicat, mais celui-ci ne peut pas avoir un troisième prédicat en argument (arité un). De plus dans le cadre de la logique monadique du second ordre les quantificateurs ne peuvent être utilisé que pour les variables des prédicats du premier ordre (de type Presburger par exemple).
+\paragraph{Description :} Il s'agit d'une logique du second ordre, c'est-à-dire qu'un prédicat peut avoir en argument un autre prédicat, mais celui-ci ne peut pas avoir un troisième prédicat en argument (arité un). De plus dans le cadre de la logique monadique du second ordre les quantificateurs ne peuvent être utilisés que pour les variables des prédicats du premier ordre (de type Presburger par exemple).
 
-\paragraph{Justification :} La logique de Presburger est moins complète que la logique Monadique, puisque la logique Monadique propose une notion de successeur, donc en implémentant la logique Monadique dans une autre bibliothèque Lua, on fournirai d'avantage de démo à l'utilisateur.
+\paragraph{Justification :} La logique de Presburger est moins complète que la logique Monadique, puisque la logique Monadique propose une notion de successeur, donc en implémentant la logique Monadique dans une autre bibliothèque Lua, on fournirait d'avantage de démo à l'utilisateur.
 
 \paragraph{Priorité :} 3\\
 
@@ -262,7 +262,7 @@ La priorité des fonctions varie de 1 à 5, du plus important au moins important
 
 \subsubsection{Acceptation de formules en base -2}
 
-\paragraph{Description :} La base -2 est défini par : $ \sum\limits_{i=0}^n (-2)^i * k_i$. Par exemple $2_{decimal} = 0 * (-2)^0 + 1 * (-2)^1 \Rightarrow 2_{decimal} = -2_{base - 2}$. Pour déterminer un nombre en base -2, il suffit de determiner son écriture binaire et ensuite d'appliqué le calcule base -2. Si l'on a le nombre $10110010_{binaire}$ alors on aura en base -2 : $0 * (-2)^0 + 1 * (-2)^1 + 0 * (-2)^2 + 0 * (-2)^3 + 1 * (-2)^4 + 1 * (-2)^5 + 0 * (-2)^6 + 1 * (-2)^7 = -146_{base - 2}$
+\paragraph{Description :} La base -2 est défini par : $ \sum\limits_{i=0}^n (-2)^i * k_i$. Par exemple $2_{decimal} = 0 * (-2)^0 + 1 * (-2)^1 \Rightarrow 2_{decimal} = -2_{base - 2}$. Pour déterminer un nombre en base -2, il suffit de determiner son écriture binaire et ensuite d'appliquer le calcule base -2. Si l'on a le nombre $10110010_{binaire}$ alors on aura en base -2 : $0 * (-2)^0 + 1 * (-2)^1 + 0 * (-2)^2 + 0 * (-2)^3 + 1 * (-2)^4 + 1 * (-2)^5 + 0 * (-2)^6 + 1 * (-2)^7 = -146_{base - 2}$
 
 \paragraph{Justification :} Il serait intéressant de permettre à l'utilisateur d'utiliser cette bilbiothèque avec diverses bases, surtout la base -2.
 
@@ -329,6 +329,18 @@ Voici un exemple que nous avons testé avec l'automate initial et l'objectif.
 
 \section{Architecture}
 
+L'architecture de notre logiciel est composé de 4 parties:
+La première partie est la bibliothqèe Prestaf qui permet de manipuler des automates et d'éffectuer des opérations dessus. Nous avons créé une interface en java qui permet d'accéder plus simplement aux fonctions de la bibliothèques.
+La deuxieme partie est en Lua. Elle est composée des différentes bibliothèques de logique utilisant la bibliothèque Prestaf. Nous avons développé la bibliothèque Presburger.
+La troisième partie est également en Lua. Elle contient les différents fichiers des utilisateurs des bibliothèques de logique.
+La quatrième partie est en java. C'est le launcher qui permet de démarrer l'application avec une unique commande tout en permettant d'utiliser du java et du Lua.
+
+Ainsi, la première et la quatrième couche de l'application font parties de la bibliothèque Prestaf. Il y a deux sortes d'utilisateurs. En effet, une partie des utilisateurs utiliseront directement notre bibliothèque pour développer leur propre bibliothèque de logique,
+tandis que l'autre partie des utilisateurs utiliseront les bibliothèques de logique. Un utilisateur peut également être utilisateur de sa propre bibliothèque. Le premier groupe d'utilisateur travaillera essentiellement sur la 2 eme couche de l'application, 
+tandis que le second groupe travaillera sur la 3 eme couche.
+
+Pour pouvoir utiliser le code Lua en Java nous avons utilisé la bibliothèque Luajava.
+
 \begin{tikzpicture}
 
 \draw (6, 0.25) rectangle (10, 1.25);
@@ -368,11 +380,40 @@ Voici un exemple que nous avons testé avec l'automate initial et l'objectif.
 
 \section{Description et justification du code}
 
+\subsection{Surcharge d'opérateurs}
+
+
+L'un des principaux avantages de Lua est d'être un langage de script qui permet la surcharge d'opérateur. On peut surcharger 18 opérateurs. Nous avons donc surchargé les opérateurs + - * afin de permettre à l'utilisateur d'utiliser des opérateurs à la place de fonctions pour écrire ses formules Presburger.
+Nous voulions également surcharger l'opérateur ==, cependant nous nous sommes rendus comptes que quelque soit la valeur de retour que nous mettions, elle est était toujours transformée en booléan.
+Nous avons donc choisi que cet opérateur ne retournerait pas de valeur mais placerait la valeur dans une variable, il faut donc une deuxieme fonction pour l'appeler.
+En Lua, on peut également créé un opérateur de la forme 'operateur'. Nous avons choisi de créer l'opérateur '=' qui retourne la bonne valeur.
+L'utilisateur peut donc choisir entre l'opérateur == et l'opérateur '='.
+Pour l'égalité, l'addition, la soustraction et la multiplication de Presburger, l'utilisateur peut donc utiliser la fonction associée ou utiliser l'opérateur surchargé.
+
+
 \section{Analyser la compléxité}
+
+Presburger est une surcouche de Prestaf, il est donc directement lié à la complexité de Prestaf. L'une des complexités essentielles de Prestaf est celle de la minimisation d'automate. Un automate peut en effet avoir plusieurs milliers d'états. Nous avons commencé par étudier les algorithmes d'Hopecroft et Blum qui sont en log n. La complexité de Presburger est exponentielle/expo(expo))  On sait que la complexité de Prestaf est en O(n carré)
 
 \section{Tests de validations et fonctionnement}
 
+\subsection{Test unitaires}
+
+Afin de vérifier que la validié de chacune des fonctions que nous avons écrites, nous avons comparé les versions lua et java de ces fonctions sur différents exemples en affichant l'état des variables contenus dans ces fonctions.
+
+\subsection{Test globaux}
+
+Nous avons testé la bibliothèque Presburger sur différentes formules. Pour ce faire, nous avons comparé les graphe obtenu par la nouvelle version de Presburger et l'ancienne.
+
 \section{Description des extensions possibles}
+
+\subsection{Complexité}
+
+La complexité des bibliothèques développées dépend directement de celle de Prestaf. Il serait donc intéréssant d'améliorer sa complexité.
+
+\subsection{Diversité des bibliothèques}
+
+Prestaf peut être amélioré en développant des bibliothèques de différentes logiques. Les possibilités à partir du même fichier LuaInterface seront donc augmentées.
 
 \appendix
 
