@@ -128,14 +128,17 @@ public class PresTaf{
         return new PresTaf(npf.addVariable(v));
     }
     
+    		         /**
+	* @return Sate numbers of the automata
+	*/
      
     public PresTaf addVariable(){
 		return new PresTaf(npf.addVariable(param));
 	}
 	
 	/**
-	
-	* @return vrai (true) si l'automate ne reconnait rien (false) sinon
+	*
+	* @return true if automata recognize nothing
 	*/
 	
 	public boolean isZero()
@@ -145,7 +148,7 @@ public class PresTaf{
     
     	/**
 	
-	* @return vrai (true) si l'automate ne reconnait tout (false) sinon
+	* @return true if automata recognize all
 	*/
 
     public boolean isOne()
@@ -153,16 +156,32 @@ public class PresTaf{
         return npf.value == MarkedSharedAutomaton.one;
     }
     
+    /**
+	*
+	* @return PresTaf which contains the new NPF for the not operation on the automata
+	*/
+    
     public PresTaf Not()
     {
         return new PresTaf(new NPF(npf.nbVariable, npf.value.not()));
     }
+    
+       /**
+	* @param p p contains the automata for the Or operation
+	* @return PresTaf which contains the new NPF for the Or operation on the automatas
+	*/
 
     public PresTaf Or(PresTaf p)
     {
         assert (npf.nbVariable == p.npf.nbVariable);
         return new PresTaf(new NPF(npf.nbVariable, npf.value.or(p.npf.value)));
     }
+    
+         /**
+	* @param p p contains the automata for the And operation
+	* @return PresTaf which contains the new NPF for the And operation on the automatas
+	*/
+
 
     public PresTaf And(PresTaf p)
     {
@@ -170,6 +189,12 @@ public class PresTaf{
         assert (npf.nbVariable == p.npf.nbVariable);
         return new PresTaf(new NPF(npf.nbVariable, npf.value.and(p.npf.value)));
     }
+        
+         /**
+	* @param p p contains the automata for the imply operation
+	* @return PresTaf which contains the new NPF for the imply operation on the automatas
+	*/
+
     
 
     public PresTaf imply(PresTaf p)
@@ -177,35 +202,57 @@ public class PresTaf{
         assert (npf.nbVariable == p.npf.nbVariable);
         return new PresTaf(new NPF(npf.nbVariable, npf.value.imply(p.npf.value)));
     }
+    
+         /**
+	* @param p p contains the automata for the equivalent operation
+	* @return PresTaf which contains the new NPF for the equivalent operation on the automatas
+	*/
+
     public PresTaf equiv(PresTaf p)
     {
         assert (npf.nbVariable == p.npf.nbVariable);
         return new PresTaf(new NPF(npf.nbVariable, npf.value.equiv(p.npf.value)));
     }
 
-    
+         /**
+	* @param v the index of the variable to valuate
+	* @return PresTaf which contains the new NPF which has 1 state, one if can be true, zero else
+	*/
+
 
     public PresTaf exists(int v)
     {
         return new PresTaf(npf.exists(v));
     }
 
-
+         /**
+	* @param v the index of the variable to valuate
+	* @return PresTaf which contains the new NPF which has 1 state, one if always true, zero else
+	*/
 
     public PresTaf forall(int v)
     {
         return new PresTaf(npf.forall(v));
     }
 	
+	         /**
+	* @return Deapth of the automata
+	*/
 	
 	public int deapth(){
 		return npf.deapth();
 	}
 	
+		         /**
+	* @return Sate numbers of the automata
+	*/
 	public int getNbStates(){
 		return npf.getNbStates();
     }
     
+    		         /**
+	* @return  Numbers of the shared automata
+	*/
 
      public int getNbSharedAutomata()
 
@@ -218,6 +265,10 @@ public class PresTaf{
     {
         return npf.getNbOutputAutomata();
     } 
+    
+    		         /**
+	* @return to print the automata in graphviz
+	*/
 
     public String toDot()
 
