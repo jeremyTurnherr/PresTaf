@@ -1,0 +1,31 @@
+\section{Besoins non fonctionnels}
+
+\subsection{Fonctions}
+
+\subsubsection{Transformation de formules arithmétiques de Presburger}
+
+\paragraph{Description :} Ensemble de fonctions qui prennent en entrée une formule arithmétique et retourne l'automate acceptant cette formule.
+
+\paragraph{Justification :} La bilbiothèque PresTaf n'implémentera pas d'elle-même une logique. Ainsi l'implémentation de la logique de Presburger en script Lua, permettra de fournir une démo à l'utilisateur. Il aurait un aperçu des bonnes pratiques à avoir, les méthodes qu'il se doit d'implémenter, et des fonctionnalités présentes.
+
+\paragraph{Priorité :} 1\\
+
+\rule{\linewidth}{1pt}
+
+\subsubsection{Logique monadique du second ordre}
+
+\paragraph{Description :} Il s'agit d'une logique du second ordre, c'est-à-dire qu'un prédicat peut avoir en argument un autre prédicat, mais celui-ci ne peut pas avoir un troisième prédicat en argument (arité un). De plus dans le cadre de la logique monadique du second ordre les quantificateurs ne peuvent être utilisés que pour les variables des prédicats du premier ordre (de type Presburger par exemple).
+
+\paragraph{Justification :} La logique de Presburger est moins complète que la logique Monadique, puisque la logique Monadique propose une notion de successeur, donc en implémentant la logique Monadique dans une autre bibliothèque Lua, on fournirait d'avantage de démo à l'utilisateur.
+
+\paragraph{Priorité :} 3\\
+
+\rule{\linewidth}{1pt}
+
+\subsubsection{Acceptation de formules en base -2}
+
+\paragraph{Description :} La base -2 est défini par : $ \sum\limits_{i=0}^n (-2)^i * k_i$. Par exemple $2_{decimal} = 0 * (-2)^0 + 1 * (-2)^1 \Rightarrow 2_{decimal} = -2_{base - 2}$. Pour déterminer un nombre en base -2, il suffit de determiner son écriture binaire et ensuite d'appliquer le calcule base -2. Si l'on a le nombre $10110010_{binaire}$ alors on aura en base -2 : $0 * (-2)^0 + 1 * (-2)^1 + 0 * (-2)^2 + 0 * (-2)^3 + 1 * (-2)^4 + 1 * (-2)^5 + 0 * (-2)^6 + 1 * (-2)^7 = -146_{base - 2}$
+
+\paragraph{Justification :} Il serait intéressant de permettre à l'utilisateur d'utiliser cette bilbiothèque avec diverses bases, surtout la base -2.
+
+\paragraph{Priorité :} 5

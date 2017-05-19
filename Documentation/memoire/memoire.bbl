@@ -31,4 +31,9 @@ Nils Klarlund and Anders M{\o}ller.
 \newblock Notes Series NS-01-1. Available from \texttt{\small
   http://www.brics.dk/mona/}. Revision of BRICS NS-98-3.
 
+\bibitem{oppen1978222pn}
+Derek~C Oppen.
+\newblock A 222pn upper bound on the complexity of presburger arithmetic.
+\newblock {\em Journal of Computer and System Sciences}, 16(3):323--332, 1978.
+
 \end{thebibliography}

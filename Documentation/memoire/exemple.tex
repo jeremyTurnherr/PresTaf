@@ -1,0 +1,23 @@
+\section{Exemple de fonctionnement}
+
+\subsection{Un logiciel souple}
+
+Grâce à PresTaf, il est possible de passer aisément d'une logique a une autre. Nous pouvons par exemple créer simplement l'automate reconnait {x |x est une puissance de 2}. En effet, l'automate minimal n'a que 3 états.
+
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.5cm,
+                    semithick]
+
+\node[circle,draw]           (A) at (2.25, 7.5) {$q_0$};
+\node[circle,draw,accepting]           (B) at (2.25, 6)   {$q_1$};
+\node[circle,draw]           (C) at (1.5, 4.5)  {$q_2$};
+
+\path[->] (A) edge [loop above] node{0} (A)
+(A) edge [bend right] node[above left]{1} (B)
+(B) edge [loop above] node[above]{0} (B)
+(B) edge [bend right] node[above]{1} (C)
+(1.5, 7.5) edge (A)
+;
+
+\end{tikzpicture}
+
+Si on associe un ensemble de variables a des booléens, cet automate permet de trouver si une variable est un singleton. Par extension on peut donc passer de la logique Monadique a la logique Presburger grâce à cet automate.
