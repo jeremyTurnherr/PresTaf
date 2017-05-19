@@ -1,0 +1,21 @@
+digraph system { 
+I -> C0I0
+C0I0 [label=A0]
+C0I0->one [label=0]
+C0I0->C1I0 [label=1]
+C1I0 [label=1]
+C1I0->C2I1 [label=0]
+C1I0->C3I1 [label=1]
+C3I0 [label=A2]
+C3I0->C3I1 [label=0]
+C3I0->C2I1 [label=1]
+C3I1 [label=A3]
+C3I1->C3I0 [label=0]
+C3I1->one [label=1]
+C2I0 [label=4]
+C2I0->C2I1 [label=0]
+C2I0->C2I1 [label=1]
+C2I1 [label=5]
+C2I1->C2I0 [label=0]
+C2I1->one [label=1]
+}
