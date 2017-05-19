@@ -1,3 +1,5 @@
+all : compute
+
 compute: 
 	pdflatex memoire.tex
 	makeglossaries memoire.glo
