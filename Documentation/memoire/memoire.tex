@@ -3,7 +3,7 @@
 
 %------------------------------------------------------------
 %
-\documentclass{article}%
+\documentclass[12pt]{article}%
 %Options -- Point size:  10pt (default), 11pt, 12pt
 %        -- Paper size:  letterpaper (default), a4paper, a5paper, b5paper
 %                        legalpaper, executivepaper
@@ -35,6 +35,7 @@
 \usepackage{tkz-graph}
 \usepackage{cite}
 \usepackage{listings}
+\usepackage{fancyhdr}
 \usepackage{xcolor}
 \usepackage{hyperref}
 \hypersetup{     
@@ -100,25 +101,38 @@
 %              POUR LES ACRONYMES C'EST AU MÊME ENDROIT              %
 %--------------------------------------------------------------------%
 
+\renewcommand{\headrulewidth}{1pt}
+\fancyhead[C]{} 
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\large{\textbf{PresTaf}}}
+
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[C]{} 
+\fancyfoot[L]{\textbf{\today}}
+\fancyfoot[R]{\textbf{page \thepage}}
 
 \begin{document}
+\pagestyle{empty}
 
-\title{Mémoire PresTaf}
-
-\author{Bourgeois Adrien, Marbois Bryce, Roque Maxime, Turnherr Jérémy%\thanks{Si l'on veut faire des annotations.}
-\\Université UFR Collégium des Sciences et Technique d'Orléans-la-Source}
-\date{\today}
-\maketitle
-
-% \begin{abstract}
-
-% \end{abstract}
+\begin{titlepage}
+\begin{center}
+\noindent{\huge \textbf{Mémoire PresTaf}}\\
+\vspace{2cm}
+{\Large Bourgeois Adrien, Marbois Bryce, Roque Maxime, Turnherr Jérémy
+\\Université UFR Collégium des Sciences et Technique
+\\Orléans-la-Source}\\
+\vfill
+{\large\today}
+\end{center}
+\end{titlepage}
 
 \clearpage
 
 \tableofcontents
 
 \cleardoublepage
+
+\pagestyle{fancy}
 
 \input{resume}
 
