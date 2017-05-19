@@ -8,9 +8,9 @@ L'architecture de notre logiciel est composée de 4 couches:
 	\item Le Java. C'est le launcher qui permet de démarrer l'application avec une unique commande tout en permettant d'utiliser du java et du Lua.
 \end{enumerate}
 
-Ainsi, la première et quatrième couches de l'application font parties de la bibliothèque Prestaf. Il y a deux sortes d'utilisateurs. En effet, une partie des utilisateurs utiliseront directement notre bibliothèque pour développer leur propre bibliothèque de logique, tandis que l'autre partie des utilisateurs utiliseront les bibliothèques de logique. Un utilisateur peut également être utilisateur de sa propre bibliothèque. Le premier groupe d'utilisateur travaillera essentiellement sur la 2 eme couche de l'application, tandis que le second groupe travaillera sur la 3 eme couche.\par
+Ainsi, la première et quatrième couches de l'application font parties de la bibliothèque Prestaf. Il y a deux sortes d'utilisateurs. En effet, une partie des utilisateurs utiliseront directement notre bibliothèque pour développer leur propre bibliothèque de logique, tandis que l'autre partie des utilisateurs utiliseront les bibliothèques de logique. Un utilisateur peut également être utilisateur de sa propre bibliothèque. Le premier groupe d'utilisateur travaillera essentiellement sur la 2 eme couche de l'application, tandis que le second groupe travaillera sur la 3 eme couche.\\\par
 
-Pour pouvoir utiliser le code Lua en Java nous avons utilisé la bibliothèque LuaJava.\\
+Lua et Java n'étant normalement pas compatible, pour pouvoir interfacé Lua et Java il nous a fallu utilisé une librairie : LuaJava. Cette bibliothèque permet au Java d'executé du Lua et d'altérer sa pile, en ajoutant et modifiant des variables.\\
 
 \begin{figure}[h]
 \begin{tikzpicture}

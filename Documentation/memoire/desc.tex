@@ -2,8 +2,10 @@
 
 \subsection{Surcharge d'opérateurs}
 
-L'un des principaux avantages de Lua est d'être un langage de script qui permet la surcharge d'opérateur. On peut en sucharger 18. Nous avons donc surchargé les opérateurs $+$ $-$ $*$ afin de permettre à l'utilisateur d'utiliser des opérateurs à la place de fonctions pour écrire ses formules Presburger.\par
-Nous voulions également surcharger l'opérateur $==$, cependant nous nous sommes rendus comptes que quelque soit la valeur de retour que nous mettions, elle est était toujours transformée en booléen.
-Nous avons donc choisi que cet opérateur ne retournerait pas de valeur mais placerait la valeur dans une variable, il faut donc une deuxieme fonction pour l'appeler.\par
-En Lua, on peut également créé un opérateur de la forme $'operateur'$. Nous avons choisi de créer l'opérateur $'='$ qui retourne la bonne valeur. L'utilisateur peut donc choisir entre l'opérateur $==$ et l'opérateur $'='$.\par
-Pour l'égalité, l'addition, la soustraction et la multiplication de Presburger, l'utilisateur peut donc utiliser la fonction associée ou utiliser l'opérateur surchargé.
+L'un des principaux avantages de Lua est d'être un langage de script, basé sur le C++ et donc qui permet la surcharge d'opérateur, 18 au total. Nous avons donc surchargé les opérateurs $+$ $-$ $*$ afin de permettre à l'utilisateur d'utiliser des opérateurs à la place de fonctions pour écrire ses formules Presburger. Ceci donne une écriture plus mathématiques, plus fluide. Et surtout ça permet d'avoir une écriture stable et universelle.\\\par
+
+Nous voulions également surcharger l'opérateur $==$, cependant au fil de nos expérimentations, comme Lua est un langage typé dynamiquement, nous n'avons aucun contrôle sur le type de retour. Or pour un opérateur comme l'opérateur $==$ ou $~=$ Lua oblige que le retour soit booléen, et ainsi nous n'avons pas pu se servir de l'opérateur $==$ tel que nous le voulions.\\\par
+ 
+Nous avons donc choisi que cet opérateur ne retournerait pas de valeur mais placerait la valeur dans une variable, il faut donc une deuxieme fonction pour l'appeler.\\\par
+
+En Lua, on peut également créé un opérateur pérsonalisé de la forme $'operateur'$. Nous avons choisi de créer l'opérateur $'='$ qui retourne le bon type. L'utilisateur peut donc choisir entre l'opérateur $==$, ce qui lui rajoute une étape de récupération de la variable, et l'opérateur $'='$.
