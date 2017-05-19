@@ -13,7 +13,7 @@ public class PresTaf{
 		public PresTafMain(
 			
 		){}
-		
+
 		public void init_succ(int alphabetSize,int netats){
 			succ=new int[netats][];
 			for (int i=0;i<netats;i++){
@@ -133,10 +133,20 @@ public class PresTaf{
 		return new PresTaf(npf.addVariable(param));
 	}
 	
+	/**
+	
+	* @return vrai (true) si l'automate ne reconnait rien (false) sinon
+	*/
+	
 	public boolean isZero()
     {
         return npf.value == MarkedSharedAutomaton.zero;
     }
+    
+    	/**
+	
+	* @return vrai (true) si l'automate ne reconnait tout (false) sinon
+	*/
 
     public boolean isOne()
     {

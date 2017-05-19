@@ -2,9 +2,10 @@
 
 \subsection{Test unitaires}
 
-Afin de vérifier la validité de chacune des fonctions écrites, nous avons comparé les resultats des versions Lua et Java.
+Afin de vérifier la validité de chacune des fonctions écrites, nous avons comparé les resultats des versions Lua et Java. Les exceptions Lua et Java ne sont pas converties par l'autre langage. Ainsi lorsque le programme rencontre une erreur dans la partie java ou la partie Lua, il ne retourne aucune exception. Nous avons donc dû effectuer de nombreux affichages dans les différentes fonctions pour pouvoir suivre l'execution du programme et savoir quelles fonctions provoquait l'erreur. 
 
 \subsection{Test globaux}
 
-Nous avons testé la bibliothèque Presburger sur différentes formules. Pour ce faire, nous avons comparé les graphes obtenus par la nouvelle version de Presburger et l'ancienne.
+La complexité de Prestaf peut atteindre $O(2^{2^{2^{pn}}})$ pour les quantificateurs. Il est donc très difficile de tester des grandes formules. De plus, le nombre d'état peut facilement devenir très important, les graphes générés deviennent alors illisibles.
+Nous avons donc choisi de tester l'application sur des formules contenant peu de variables, afin de pouvoir comparer les graphes obtenus par la nouvelle version de Presburger et l'ancienne.
 

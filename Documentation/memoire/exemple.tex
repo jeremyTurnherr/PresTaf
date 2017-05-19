@@ -2,31 +2,6 @@
 
 \subsection{Un logiciel souple}
 
-Grâce à PresTaf, il est possible de passer aisément d'une logique a une autre. Nous pouvons par exemple créer simplement l'automate reconnaissant le langage $L = \{x | x = 2^n, n \in \mathbb{N} \}$. En effet, l'automate minimal n'a que 3 états.
-
-\begin{figure}[h]
-
-\centering
-
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.5cm,
-                    semithick]
-
-\node[circle,draw]           (A) at (0, 0) {$q_0$};
-\node[circle,draw,accepting] (B) at (2.5, 0)   {$q_1$};
-\node[circle,draw]           (C) at (5, 0)  {$q_2$};
-
-\path[->] (A) edge [loop above] node{0} (A)
-(A) edge node[above]{1} (B)
-(B) edge [loop above] node{0} (B)
-(B) edge node[above]{1} (C)
-(-1, 0) edge (A)
-;
-
-\end{tikzpicture}
-\caption{Automate corréspondant à $x = 2^n$}
-\end{figure}
-
-Si on associe un ensemble de variables a des booléens, cet automate permet de trouver si une variable est un singleton. Par extension on peut donc passer de la logique Monadique a la logique Presburger grâce à cet automate.
 
 
 \begin{lstlisting}[mathescape=true, frame=single]
@@ -121,5 +96,41 @@ local x = variable('x')
 local f=(6*x+integer(4))'='(integer(1))
 f:todot("f.dot")
 \end{lstlisting}
+
+Pour exprimer qu'une formule est toujours vraie ou fausse, PresTaf renvoit respectivement les états one et zero.
+\begin{figure}[h]
+\begin{lstlisting}[mathescape=true, frame=single]
+pres = require('Presburger')
+local x = variable('x')
+local f=(_E(x,(x)'='(integer(1)))
+f:todot("f.dot")
+\end{lstlisting}
+
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.5cm,
+                    semithick]
+
+\node[circle,draw]           (A) at (0, 0) {$One$};
+
+\end{tikzpicture}
+\caption{Formule toujours vraie}
+\end{figure}
+
+
+\begin{lstlisting}[mathescape=true, frame=single]
+pres = require('Presburger')
+local x = variable('x')
+local f=(_A(x,(x)'='(integer(1)))
+f:todot("f.dot")
+\end{lstlisting}
+
+\begin{figure}[h]
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.5cm,
+                    semithick]
+
+\node[circle,draw]           (A) at (2, 2) {$Zero$};
+
+\end{tikzpicture}
+\caption{Formule toujours fausse}
+\end{figure}
 
 

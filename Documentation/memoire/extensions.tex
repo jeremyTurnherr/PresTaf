@@ -1,9 +1,41 @@
 \section{Description des extensions possibles}
 
+\subsection{Gestion des erreurs}
+
+Dans la partie 11.1 nous avons expliqué qu'aucune erreur n'était renvoyée. Il serait donc nécessaire de reprendre tout le code de la bibliothèque PresTaf et de Presburger pour afficher directement les erreurs sous forme de chaine de caractères. Cependant, cela implique de prévoir pour chaque fonctions, la plus part des erreurs possibles. De plus, si l'utilisateur appelle une fonction avec les mauvais paramètre, il n'y aurait pas d'affichage
+
+
 \subsection{Complexité}
 
-Il y a toujours deux compléxités : celle de la bibliothèque logique implémenté, et celle de PresTaf.
+Pour améliorer la complexité de Presburger, il est nécessaire d'améliorer celle de la bibliothèque Prestaf. Cependant, les algorithmes utilisés utilisent nombreux tableaux et on été déja pensés pour optimiser le temps d'execution. Il est donc difficile d'améliorer la complexité de PresTaf.
 
 \subsection{Diversité des bibliothèques}
 
-PresTaf peut être amélioré en développant des bibliothèques de différentes logiques. Les possibilités à partir du même fichier LuaInterface seront donc augmentées.
+Grâce à PresTaf, il est possible de passer aisément d'une logique a une autre. Nous pouvons par exemple créer simplement l'automate reconnaissant le langage $L = \{x | x = 2^n, n \in \mathbb{N} \}$. En effet, l'automate minimal n'a que 3 états.
+
+\begin{figure}[h]
+
+\centering
+
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.5cm,
+                    semithick]
+
+\node[circle,draw]           (A) at (0, 0) {$q_0$};
+\node[circle,draw,accepting] (B) at (2.5, 0)   {$q_1$};
+\node[circle,draw]           (C) at (5, 0)  {$q_2$};
+
+\path[->] (A) edge [loop above] node{0} (A)
+(A) edge node[above]{1} (B)
+(B) edge [loop above] node{0} (B)
+(B) edge node[above]{1} (C)
+(-1, 0) edge (A)
+;
+
+\end{tikzpicture}
+\caption{Automate corréspondant à $x = 2^n$}
+\end{figure}
+
+Si on associe un ensemble de variables a des booléens, cet automate permet de trouver si une variable est un singleton. Par extension on peut donc passer de la logique Monadique a la logique Presburger grâce à cet automate.
+
+
+L'objectif du logiciel PresTaf est de permettre de manipuler plusieurs bibliohtèques logiques à partir du même logiciel grâce à la bibliothèque prestaf qui permet de manipuler des automates. Notre mission était de permettre aux utilisateurs de développer simplement de nombreuses extensions.PresTaf ne doit donc pas se limiter à la logique Presburger et devrait être enrichit en développant de nouvelles bibliothèques de différentes logiques telles que la logique monadique. 
