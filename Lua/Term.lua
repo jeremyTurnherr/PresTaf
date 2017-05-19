@@ -48,7 +48,6 @@ function Term.neg(self)
 	negCoef={}
 	
 	for i=1,(self:nbVar()) do
-		print("-"..self.coef[i])
 		negCoef[i]=-self.coef[i]
 	end
 	return Term.new("-"..self.expr,self.var,negCoef,-self.constant)

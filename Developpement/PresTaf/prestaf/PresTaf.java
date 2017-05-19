@@ -6,9 +6,36 @@ public class PresTaf{
 		
 		int[] param;
 		
+		int[][] succ;
+		boolean [] isFinal;
+		
 		public PresTafMain(
 			
 		){}
+		
+		public void init_succ(int alphabetSize,int netats){
+			succ=new int[netats][];
+			for (int i=0;i<netats;i++){
+				succ[i]=new int[alphabetSize];
+			}
+		}
+		
+		public void init_final(int netats){
+			isFinal=new boolean[netats];
+		}
+		
+		public void fillsucc(int state,int letter,int t){
+			succ[state][letter]=t;
+		}
+		
+		public void fillfinal(int state,boolean fin){
+			isFinal[state]=fin;
+		}
+		
+		public PresTaf createAutomaton(int initial){
+			//~ return new PresTaf(new NPF(0,(MarkedSharedAutomaton)(new SimpleMarkedAutomaton(initial,succ,isFinal))));
+			return null;
+		}
 		
 		public String printab(){
 			String res="[";
@@ -30,7 +57,6 @@ public class PresTaf{
 		
 		public PresTaf equals( int b, int n) {
 			int[] axi=param;
-			System.out.println(printab());
 			
 			
 			return new PresTaf(NPF.equals(axi,b,n));
@@ -67,6 +93,22 @@ public class PresTaf{
 	
 	NPF npf;
 	
+	/*passage de paramètres*/
+	
+	boolean[] param;
+	
+	
+	public void init_tab(int size){
+		param=new boolean[size];
+	}
+	
+	public void fill(int luapos,boolean val){
+		param[luapos-1]=val;
+	}
+	//--
+		
+	
+	
 	public PresTaf(NPF n){
 		npf=n;
 	}
@@ -86,8 +128,8 @@ public class PresTaf{
     }
     
      
-    public PresTaf addVariable(boolean[] tab){
-		return new PresTaf(npf.addVariable(tab));
+    public PresTaf addVariable(){
+		return new PresTaf(npf.addVariable(param));
 	}
 	
 	public boolean isZero()
@@ -105,14 +147,15 @@ public class PresTaf{
         return new PresTaf(new NPF(npf.nbVariable, npf.value.not()));
     }
 
-    public PresTaf or(PresTaf p)
+    public PresTaf Or(PresTaf p)
     {
         assert (npf.nbVariable == p.npf.nbVariable);
         return new PresTaf(new NPF(npf.nbVariable, npf.value.or(p.npf.value)));
     }
 
-    public PresTaf and(PresTaf p)
+    public PresTaf And(PresTaf p)
     {
+		System.out.println("keskese");
         assert (npf.nbVariable == p.npf.nbVariable);
         return new PresTaf(new NPF(npf.nbVariable, npf.value.and(p.npf.value)));
     }
@@ -131,26 +174,16 @@ public class PresTaf{
 
     
 
-    public PresTaf exists(boolean[] tab)
+    public PresTaf exists(int v)
     {
-        assert (npf.nbVariable % tab.length == 0 );
-
-        int nbRemove = 0;
-        for (int i=0; i<tab.length; i++)
-            if (tab[i])
-                nbRemove ++;
-        
-        return new PresTaf(new NPF( (npf.nbVariable/tab.length) * (tab.length-nbRemove),npf.value.exists(tab)));
+        return new PresTaf(npf.exists(v));
     }
 
 
 
     public PresTaf forall(int v)
     {
-        if (NPF.simpleExists)
-            return new PresTaf(npf.forall1(v));
-        else
-            return new PresTaf(npf.forall2(v));
+        return new PresTaf(npf.forall(v));
     }
 	
 	

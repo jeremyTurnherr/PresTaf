@@ -1,6 +1,7 @@
 
 term=require('Term')
 preburger=require('presburger')
+automaton=require('Automaton')
 
 
 function printab(tab)
@@ -37,16 +38,20 @@ end
 
 print("-----presburger, hajime!!!-----")
 	
-local t=variable("y")
-local pif=variable("u")
+--~ local t=variable("y")
+--~ local pif=variable("u")
 
---~ local res=equals(t,integer(1)):E(t)
-local res=(t)'!='(integer(1))
---~ local n=res:A(t)
-res:todot("testdot.txt")
---~ local hmmm=(pif==integer(1))
---~ result():todot("testdot.txt")
---~ :todot("testsave.txt")
+--~ local res=((t)'='(integer(2)))'||'((t)'='(integer(3)))
+--~ res:todot("testdot.txt")
+local y=variable('y')
+local x=variable('x')
+local w=variable('w')
+local r=variable('r')
+
+
+--~ local res=_E(r,_A(x,_A(y,_E(z,(y+(2*x)-(3*z)+w-q)'='(17*r)))))
+local res=(((y)'='(integer(1)))'->'((x)'='(integer(1))))
+res:todot('testdot.txt')
 
 print("ji endo")
 

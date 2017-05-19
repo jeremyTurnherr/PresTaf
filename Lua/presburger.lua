@@ -14,6 +14,15 @@ function filltabparam(t)
 
 end
 
+function fillbooleanparam(npf,b)
+
+	npf:init_tab(len(b))
+	for pos,val in pairs(b) do
+	  npf:fill(pos,val)
+	end
+
+end
+
 function printab(tab)
 	res="{"
 	for k,i in pairs(tab) do
@@ -79,23 +88,30 @@ end
     For example, 2x - y = 3, if the user wants to add a variable 'z' he will use the method
 ]]
 function Presburger.addVariable(self, v)
-    lenvar = len(self.var)
-    lenv = len(v)
+    local lenvar = len(self.var)
+    local lenv = len(v)
+    local b
+    local i
+    local k
     if lenvar == lenv then
         return self.value
     else
         b = {}
-        for i = 1, i <= lenv do
+        for i = 1, lenv do
             b[i] = true
         end
-        k = 0
-        for i = 1, i <= lenv and k <= lenvar do
-            if v[i] == var[k] then
+        k = 1
+        i=1
+        
+        while i <= lenv and k <= lenvar do
+            if v[i] == self.var[k] then
                 b[i] = false
                 k = k + 1
             end
+            i=i+1
         end
-        return self.value:addVariable(b)
+        fillbooleanparam(self.value,b)
+        return self.value:addVariable()
     end
 end
 
@@ -154,10 +170,9 @@ end
 --[[
     Rewrite of java function : System.arraycopy
 ]]
-function table.copy(org, srcPos, desPos, dest, endPos)
-    if desPos <= endPos and srcPos <= len(org) then
-        dest[desPos] = org[srcPos]
-        table.insert(t, table.copy(org, srcPos + 1, desPos + 1, dest, endPos))
+function table.copy(orig, srcPos, dest, desPos, endPos)
+    for i=srcPos,endPos do
+        dest[desPos-srcPos+i]=orig[i]
     end
 end
 
@@ -188,47 +203,51 @@ function table.binsearch(tab,i)
 	return -1
 end
 
+function table.search(tab,val)
+	for i,k in pairs(tab) do
+		if k==val then return i end
+	end
+	return -1
+end
+
 
 --[[
     Check if the variable v exists
 ]]
 function Presburger.E(self,var)
-	print("wowieeeee")
-	printab(self.var)
-	print(getIndex(var.expr))
-	print("wowieeeee")
-    pos = table.binsearch(self.var, getIndex(var.expr))
-    print("wowieeeee")
+    pos = table.search(self.var, getIndex(var.expr))
     if pos-1 < 0 or pos-1 >= len(self.var) then
-		print(pos.."  ---")
+		
         return Presburger.new("E." .. var.expr .. " " .. self.expr, self.var, self.value)
     else
-		print("wowieeeee")
 		newVar = {}
-		print("wowieeeee")
-        table.copy(self.var, 0, 0, newVar, pos)
-        print("wowieeeee")
-        table.copy(self.var, pos + 1, pos, newVar, len(self.var) - 1 - pos)
-        print("wowieeeee")
-        return Presburger.new("E." .. v .. " " .. expr, newVar, value:exists(pos))
+        table.copy(self.var, 1, newVar, 1, pos)
+        table.copy(self.var, pos + 1, pos, newVar, len(self.var) -  pos)
+        return Presburger.new("E." .. var.expr .. " " .. self.expr, newVar, self.value:exists(pos))
     end
+end
+
+function _E(t, pres)
+	return pres:E(t)
 end
 
 --[[
     Check if all values are v
 ]]
 function Presburger.A(self, var)
-	print("yyyyyyyac")
-    pos = table.binsearch(self.var, getIndex(var.expr))
-    print("yyyyyyyac")
-    if pos < 0 or pos >= len(self.var) then
+    pos = table.search(self.var, getIndex(var.expr))
+    if pos-1 < 0 or pos-1 >= len(self.var) then
         return Presburger.new("A." .. var.expr .. " " .. self.expr, self.var, self.value)
     else
 		newVar = {}
-        table.copy(self.var, 0, 0, newVar, pos)
+        table.copy(self.var, 1,  newVar,1, pos)
         table.copy(self.var, pos + 1, pos, newVar, len(self.var) - 1 - pos)
-        return Presburger.new("A." .. var.expr .. " " .. expr, newVar, value:forall(pos))
+        return Presburger.new("A." .. var.expr .. " " .. self.expr, newVar, self.value:forall(pos))
     end
+end
+
+function _A(t, pres)
+	return pres:A(t)
 end
 
 function convert(coef)
@@ -246,34 +265,12 @@ end
     Check if t1 == t2
 ]]
 function equals(t1, t2)
-	print("-----coef---------")
-	printab(t1.coef)
-	printab(t2.coef)
     local t = t2:minus(t1)
-    printab(t.coef)
-    print(t:tostring())
-    print("----convert------")
     filltabparam(convert(t.coef))
-    print("--------------------")
     npf=prestaf:equals( -t.constant,len(t.coef))
    
     return Presburger.new(t1:tostring() .. " = " .. t2:tostring(),t.var,npf)--prestaf:equals( -t.constant,len(t.coef))
 end
-
---~ term.Term.setmetatable(0, {  
-	--~ __call = function(a, op)
-				--~ if op == '=' then 
-					--~ return function(b) 
-							--~ return equals(a,b) 
-						--~ end
-				--~ else print("nope")
-				--~ end
-			--~ end
---~ })
-
-
-
-
 
 
 
@@ -367,10 +364,8 @@ Presburger.Result=nil
 ]]
 
 term.Term.__call = function(t1, op)
-				if op == '=' then 
-					print("tente ça")
+				if op == '=' or op == '==' then 
 					return function(t2) 
-							print("tente ça")
 							return equals(t1,t2) 
 						end
 				
@@ -405,6 +400,18 @@ term.Term.__call = function(t1, op)
 						end
 				
 				end
+				if op == 'A' then 
+					return function(pres) 
+							return pres:A(t1) 
+						end
+				
+				end
+				if op == 'E' then 
+					return function(pres) 
+							return pres:E(t1) 
+						end
+				
+				end
 				
 				
 			end
@@ -430,6 +437,31 @@ Presburger.__call = function(p, op)
 					return p:Not()
 				
 				end
+				if op == '&&' then 
+					return function(p2) 
+							return p:And(p2) 
+						end
+				
+				end
+				
+				if op == '||' then 
+					return function(p2) 
+							return p:Or(p2) 
+						end
+				
+				end
+				if op == '->' then 
+					return function(p2) 
+							return p:imply(p2) 
+						end
+				
+				end
+				if op == '<->' then 
+					return function(p2) 
+							return p:equiv(p2) 
+						end
+				
+				end
 				
 				
 				
@@ -451,6 +483,8 @@ module.getNbStates = getNbStates
 module.getNbSharedAutomata = getNbSharedAutomata
 module.getNbOutputAutomata = getNbOutputAutomata
 module.result=result
+module._A=_A
+module._E=_E
 
 
 return module
