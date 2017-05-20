@@ -6,6 +6,12 @@ Afin de vérifier la validité de chacune des fonctions écrites, nous avons com
 
 \subsection{Test globaux}
 
-La complexité de Prestaf peut atteindre $O(2^{2^{2^{pn}}})$ pour les quantificateurs. Il est donc très difficile de tester des grandes formules. De plus, le nombre d'état peut facilement devenir très important, les graphes générés deviennent alors illisibles.
+La complexité de Prestaf peut atteindre $O(2^{2^{2^{pn}}})$ pour les quantificateurs. Il est donc très difficile de tester des grandes formules. De plus, le nombre d'état peut facilement devenir très important comme présenté dans la figure \ref{image1}. Les graphes générés deviennent alors illisibles.
 Nous avons donc choisi de tester l'application sur des formules contenant peu de variables, afin de pouvoir comparer les graphes obtenus par la nouvelle version de Presburger et l'ancienne.
+\begin{figure}
 
+\includegraphics[scale=0.5]{graphe.png}
+
+\caption{Graphe généré pour $3w+x-y=z$}
+\label{image1}
+\end{figure}
