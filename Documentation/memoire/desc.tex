@@ -12,7 +12,7 @@ En Lua, on peut également créer un opérateur personnalisé de la forme $'oper
 
 \subsection{L’interface java}
 
-Afin de pouvoir utiliser les fonctionnalités de la bibliothèque PresTaf dans un fichier lua, il faut passer par la bibliothèque luajava, qui permet de récupérer un objet java dans le cadre d'exécution d’un fichier lua. Il a donc fallu créer une classe java qui permet d’interfacer les fonctions de création d’automates afin de pouvoir accéder à ces fonctions dans le lua. Cette classe, appelée 'PresTaf', est donc séparée en deux parties.\\\par 
+Afin de pouvoir utiliser les fonctionnalités de la bibliothèque PresTaf dans un fichier lua, il faut passer par la bibliothèque luajava, qui permet de récupérer un objet java dans le cadre d'exécution d’un fichier lua. Il a donc fallu créer une classe java qui permet d’interfacer les fonctions de création d’automates afin de pouvoir accéder à ces fonctions dans le lua. \clearpage Cette classe, appelée 'PresTaf', est donc séparée en deux parties.\\\par 
 
 La première interface est celle qui est directement accessible depuis le lua à travers l’objet lua "prestaf". Cette partie permet d’effectuer des opérations d’égalité (les opérations $=$, $!=$, $<$, $<=$, $>$, $>=$) sur des termes afin d’obtenir une première version des automates associés (ou NPF) de la bibliothèque PresTaf. Cet automate, représentant la formule, est ensuite retourné au lua sous forme d’une deuxième interface. Il est également possible de créer un automate directement en précisant l’état initial, le tableau des successeurs et la liste des états finaux sous forme d’un tableau de booléens.\\\par
 

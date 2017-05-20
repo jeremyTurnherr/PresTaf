@@ -48,7 +48,7 @@ local f = y '=' 2 * x
 
 f:todot("f.dot")
 \end{lstlisting}
-
+\clearpage
 Le fichier généré sera différent : \vspace{0.5cm}
 
 \begin{tikzpicture}
@@ -133,8 +133,8 @@ f:todot("f.dot")
 \end{tikzpicture}
 \caption{Formule toujours fausse}
 \end{figure}
-
-\subsection{ Developpement d’une bibliothèque logique}
+\clearpage
+\subsection{Developpement d’une bibliothèque logique}
 
 Pour créer une nouvelle bibliothèque qui implémente une logique en utilisant l’interface PresTaf, il est nécessaire de créer des fonctions ou des métatables lua afin de contenir et de pouvoir modifier les différentes informations, notamment les coefficients des variables et objectifs. Dans l’exemple des termes de Presburger, la métatable lua Term contient ces informations en tant qu’attribut (var pour les numéros de variable, coef pour les coefficients associés et constant pour la constante objectif).\par
 

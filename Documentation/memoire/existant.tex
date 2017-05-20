@@ -2,7 +2,7 @@
 
 PresTaf est un programme codé par M. Jean-Michel Couvreur, qui prend des formules de Presburger en entrées et les résout à l'aide d'automates minimaux. Tout d'abord il génère des automates déterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire PresTaf utilise un algorithme d'Hopcroft modifié. L'ensemble des transitions menant de l'état initial vers un état final est solution de la formule. En outre si l'état final est l'état \emph{zero} alors il n'y a aucune solution et si l'état final est l'état \emph{one} alors la formule est une tautologie.\\\par
 
-Mona, est une bibliothèque C qui résout des formules monadiques. La où PresTaf n'implémente à ce jour que la logique arithmétique de Presburger, la logique monadique pourrait être implémentée dans le futur.\\\par
+\clearpage Mona, est une bibliothèque C qui résout des formules monadiques. La où PresTaf n'implémente à ce jour que la logique arithmétique de Presburger, la logique monadique pourrait être implémentée dans le futur.\\\par
 
 Lash\cite{lash} est une bibliothèque C qui résout des formules de Presburger mais à la différence de PresTaf, il fonctionne sur des automates infinis. Cette différence induit une importante baisse de performances. En effet pour les mêmes formules, PresTaf était bien plus rapide à s'executer que Lash\cite{DBLP:conf/wia/Couvreur04}.\\\par
 
