@@ -2,12 +2,12 @@
 
 PresTaf est un programme codé par M. Jean-Michel Couvreur, qui prend des formules de Presburger en entrées et les résout à l'aide d'automates minimaux. Tout d'abord il génère des automates déterministes et finis mais non minimaux. Il faut donc les minimiser, et pour se faire PresTaf utilise un algorithme d'Hopcroft modifié. L'ensemble des transitions menant de l'état initial vers un état final est solution de la formule. En outre si l'état final est l'état \emph{zero} alors il n'y aucune solution et si l'état final est l'état \emph{one} alors la formule est une tautologie.\\\par
 
-Mona, est une bibliothèque C qui résout des formules monadique. La où PresTaf n'implémente à ce jour que la logique arithmétique de Presburger, la logique monadique pourrait être implémentée dans le futur.\\\par
+Mona, est une bibliothèque C qui résout des formules monadiques. La où PresTaf n'implémente à ce jour que la logique arithmétique de Presburger, la logique monadique pourrait être implémentée dans le futur.\\\par
 
 Lash\cite{lash} est une bibliothèque C qui résout des formules de Presburger mais à la différence de PresTaf, il fonctionne sur des automates infinis. Cette différence induit une importante baisse de performances. En effet pour les mêmes formules, PresTaf était bien plus rapide à s'executer que Lash\cite{DBLP:conf/wia/Couvreur04}.\\\par
 
-Prenons une formule simple, comme $x = y$. Dans cette formule il y a deux variables qui vont devoir être lu simultanément en partans du bit de poids faible, mais imaginons la bibliothèque Prestaf comme une machine de Turing à une seule bande uni-infini. D'instinct on souhaiterai lire deux par deux les bits mais ce n'est pas ce que fait la bibliothèque, à la place c'est comme si la bande alternait les bits de $x$ avec ceux de $y$.\\\par
-Prenons par exemple $x = 100110$ et $y = 101$, pour commencer Prestaf ajoute autant de 0 devant que nécessaire pour que $x$ et $y$ fasse la même taille, donc on a $y'=000101$ pour plus de lisibilité je vais noté les bits correspondant à $x$ comme ceci : $b_x$ et respectivement $b_y$. Ainsi la bande construite sera la suivante :
+Prenons une formule simple, comme $x = y$. Dans cette formule, deux variables seront lu simultanément en partant du bit de poids faible, mais imaginons la bibliothèque Prestaf comme une machine de Turing à une seule bande uni-infini. D'instinct, on souhaiterai lire deux par deux les bits mais ce n'est pas ce que fait la bibliothèque, à la place c'est comme si la bande alternait les bits de $x$ avec ceux de $y$.\\\par
+Prenons par exemple $x = 100110$ et $y = 101$, pour commencer Prestaf ajoute autant de 0 devant que nécessaire pour que $x$ et $y$ fassent la même taille, donc on a $y'=000101$ pour plus de lisibilité je vais noter les bits correspondant à $x$ comme ceci : $b_x$ et respectivement $b_y$. Ainsi la bande construite sera la suivante :
 
 \begin{figure}[h]
 \begin{tikzpicture}
@@ -44,7 +44,7 @@ Prenons par exemple $x = 100110$ et $y = 101$, pour commencer Prestaf ajoute aut
 \caption{Bande d'entrée, avec la tête de lecture en $0_x$}
 \end{figure}
 
-Comparons maintenant les automates produit par cette formule tels qu'il serait dessiner en lisant deux à deux et en lisant selon cette bande uni-infini. \clearpage
+Comparons maintenant les automates produits par cette formule tels qu'ils seraient dessinés en lisant les bits deux à deux selon cette bande uni-infini. \clearpage
 
 \begin{figure}[h]
 
@@ -75,9 +75,9 @@ Comparons maintenant les automates produit par cette formule tels qu'il serait d
 \end{tikzpicture}
 
 
-\caption{À gauche l'automate "instictif", à droite l'automate produit par PresTaf}
+\caption{À gauche l'automate "instinctif", à droite l'automate produit par PresTaf}
 \end{figure}
 
-Le nombre d'état s'en voit bien entendu multiplié, comme on ne lit pas simultanément les bits. Revenons-en à notre bande $x = 100110$ et $y = 101$, ici bien entendu les nombres ne sont pas égaux, si sur l'automate de gauche le résultat est immédiat, pour l'automate de droite il va d'abord se déplacé dessus avant d'arrivé en 0. Cette écriture en "alternance" peut rendre rapidement les automates très grands, et peu lisible, cependant ceci permet un alphabet unique de taille 2.\\\par
+Le nombre d'état s'en voit multiplié, comme on ne lit pas simultanément les bits. Revenons-en à notre bande $x = 100110$ et $y = 101$, ici, les nombres ne sont pas égaux. Si sur l'automate de gauche le résultat est immédiat, pour l'automate de droite il va d'abord se déplacer dessus avant d'arriver en 0. Cette écriture en "alternance" peut rendre rapidement les automates très grands, et peu lisibles, cependant ceci permet un alphabet unique de taille 2.\\\par
 
-En effet avec l'exemple à deux variables, si l'on lisait les bits simultanément on aurait l'alphabet suivant : $\Sigma = \{00, 01, 10, 11\}$, pour une formule à trois variables on aurait $|\Sigma| = 8$, et ainsi de suite, en lisant chaque bits simultanément on aura un alphabet de taille exponentiel en la taille de l'entrée. Si l'on à $n$ variables, on aurai $|\Sigma| = 2^n$. En prenant un tel alphabet, la minimisation d'automate serait beaucoup plus complexe, plus longue et plus couteuse en espace. Qui plus est, en ayant un alphabet unique ceci facilite grandement les prédictions en espace et en mémoire. Tandis qu'un alphabet a taille variables ajoute un paramètre de compléxité qui n'est pas désiré.
+En effet avec l'exemple à deux variables, si nous lisions les bits simultanément on aurait l'alphabet suivant : $\Sigma = \{00, 01, 10, 11\}$, pour une formule à trois variables nous aurions $|\Sigma| = 8$, et ainsi de suite. Ceci nous donnerais un alphabet de taille exponentielle en la taille de l'entrée. Si nous avions $n$ variables, nous aurions $|\Sigma| = 2^n$. En prenant un tel alphabet, la minimisation d'automate serait beaucoup plus complexe, plus longue et plus couteuse en espace. Qui plus est, en ayant un alphabet unique ceci facilite grandement les prédictions en espace et en mémoire. Tandis qu'un alphabet a taille variables ajoute un paramètre de compléxité qui n'est pas désiré.
