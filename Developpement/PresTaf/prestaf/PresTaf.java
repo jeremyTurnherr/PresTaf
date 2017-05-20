@@ -14,24 +14,54 @@ public class PresTaf{
 			
 		){}
 
+			/**
+			 * Function used to initialize the java 2 dimensional array in order to pass the array of successors
+		* @param alphabetSize the alphabet size
+		* @param netats the number of states
+		*/
+
 		public void init_succ(int alphabetSize,int netats){
 			succ=new int[netats][];
 			for (int i=0;i<netats;i++){
 				succ[i]=new int[alphabetSize];
 			}
 		}
+
+		/**
+			 * Function used to initialize the java boolean array in order to pass the array of final states
+		* @param netats the number of states
+		*/
 		
 		public void init_final(int netats){
 			isFinal=new boolean[netats];
 		}
+
+		/**
+			 * Function used fill one index of the successor array (use this after initializing the array)
+		* @param state the index of state
+		* @param letter the letter of the transition
+		* @param t the state successor of the transition
+		*/
 		
 		public void fillsucc(int state,int letter,int t){
 			succ[state-1][letter-1]=t;
 		}
+
+		/**
+			 * Function used fill one index of the final states array (use this after initializing the array)
+		* @param state the index of state
+		* @param fin if the state is final or not
+		*/
 		
 		public void fillfinal(int state,boolean fin){
 			isFinal[state-1]=fin;
 		}
+
+		/**
+			 * Function used to get the automaton associated with the arrays of successors and final states previously filled
+		* @param initial the index of the initial state
+		* @return an automaton
+		*/
 		
 		public SimpleMarkedAutomaton createAutomaton(int initial){
 			return new SimpleMarkedAutomaton(initial,succ,isFinal);
@@ -45,44 +75,87 @@ public class PresTaf{
 			}
 			return res+"]";
 		}
+		/**
+			 * Function used initialize the java array corresponding to the variables and the coefficients
+		* @param size the size of the array, corresponding to two times the number of variables
+		*/
 		
 		public void init_tab(int size){
 			param=new int[size];
 		}
+
+		/**
+			 * Function used fill one index of the variable/coefficient array (use this after initializing the array)
+		* @param luapos the position of the value in the lua table
+		* @param val the index of the variable or the coefficient
+		*/
 		
 		public void fill(int luapos,int val){
 			param[luapos-1]=val;
 		}
 		
-		
+		/**
+		* @param b the constant
+		* @param n the number of states
+		* @return PresTaf which contains the new NPF for the equals operation using the array of variables previously filled
+		*/
 		
 		public PresTaf equals( int b, int n) {
 			int[] axi=param;
 			
 			
 			return new PresTaf(NPF.equals(axi,b,n));
-			//~ return null;
 		}
+
+		/**
+		* @param b the constant
+		* @param n the number of states
+		* @return PresTaf which contains the new NPF for the not equals operation using the array of variables previously filled
+		*/
 		
 		public PresTaf notEquals(int b, int n){
 			int[] axi=param;
 			return new PresTaf(NPF.notEquals(axi,b,n));
 		}
+
+		/**
+		* @param b the constant
+		* @param n the number of states
+		* @return PresTaf which contains the new NPF for the greater operation using the array of variables previously filled
+		*/
 		
 		public PresTaf greater( int b, int n){
 			int[] axi=param;
 			return new PresTaf(NPF.greater(axi,b,n));	
 		}
+
+		/**
+		* @param b the constant
+		* @param n the number of states
+		* @return PresTaf which contains the new NPF for the greater equals operation using the array of variables previously filled
+		*/
 		
 		public PresTaf greaterEquals( int b, int n) {
 			int[] axi=param;
 			return new PresTaf(NPF.greaterEquals(axi,b,n));	
 		}
+
+		/**
+		* @param b the constant
+		* @param n the number of states
+		* @return PresTaf which contains the new NPF for the less operation using the array of variables previously filled
+		*/
 		
 		public PresTaf less(int b, int n){
 			int[] axi=param;
 			return new PresTaf(NPF.less(axi,b,n));	
 		}
+
+		/**
+		* @param b the constant
+		* @param n the number of states
+		* @return PresTaf which contains the new NPF for the less equals operation using the array of variables previously filled
+		*/
 		
 		public PresTaf lessEquals( int b, int n){
 			int[] axi=param;
@@ -98,10 +171,20 @@ public class PresTaf{
 	
 	boolean[] param;
 	
-	
+	/**
+			 * Function used to initialize the java array in order to pass the array of variables
+		* @param size the number of variables
+		*/
+		
 	public void init_tab(int size){
 		param=new boolean[size];
 	}
+
+	/**
+			 * Function used fill one index of the variables array (use this after initializing the array)
+		* @param luapos the position of the variable in the lua table
+		* @param val if the variable already exists
+		*/
 	
 	public void fill(int luapos,boolean val){
 		param[luapos-1]=val;
@@ -122,6 +205,8 @@ public class PresTaf{
     public PresTaf addVariable(int v, int modulo){
 		return new PresTaf(npf.addVariable(v,modulo));
 	}
+
+	
 	
     public PresTaf addVariable(int v)
     {
@@ -129,7 +214,7 @@ public class PresTaf{
     }
     
     		         /**
-	* @return Sate numbers of the automata
+	* @return new PresTaf containing the npf value with the variables of another npf added. the variables correspond to the param array previously filled
 	*/
      
     public PresTaf addVariable(){
