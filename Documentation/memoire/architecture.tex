@@ -10,7 +10,7 @@ L'architecture de notre logiciel est composée de 4 couches:
 
 Ainsi, la première et quatrième couches de l'application font parties de la bibliothèque Prestaf. Il y a deux sortes d'utilisateurs. En effet, une partie des utilisateurs utiliseront directement notre bibliothèque pour développer leur propre bibliothèque de logique, tandis que l'autre partie des utilisateurs utiliseront les bibliothèques de logique. Un utilisateur peut également être utilisateur de sa propre bibliothèque. Le premier groupe d'utilisateur travaillera essentiellement sur la 2\textsuperscript{ème} couche de l'application, tandis que le second groupe travaillera sur la 3\textsuperscript{ème} couche.\\\par
 
-Lua et Java n'étant normalement pas compatible, pour pouvoir interfacé Lua et Java il nous a fallu utilisé une librairie : LuaJava. Cette bibliothèque permet au Java d'executé du Lua et d'altérer sa pile, en ajoutant et modifiant des variables.\\
+Lua et Java n'étant normalement pas compatible, pour pouvoir interfacer Lua et Java il nous a fallu utiliser une librairie : LuaJava. Cette bibliothèque permet au Java d'executer du Lua et d'altérer sa pile, en ajoutant et modifiant des variables.\\
 
 \begin{figure}[h]
 \begin{tikzpicture}
@@ -43,10 +43,10 @@ Lua et Java n'étant normalement pas compatible, pour pouvoir interfacé Lua et 
 \draw[->,thick] (1.25, -5) -- (3.5, -6);
 \draw[->,thick] (5.75, -5) -- (3.5, -6);
 
-\draw[color=orange!75!black] (-2, -0.5) node[align=center]{Bilbiothèque};
+\draw[color=orange!75!black] (-2, -0.5) node[align=center]{Bibliothèque};
 \draw[color=purple!55!black] (-2, -2.5) node[align=center]{Utilisateur\\de l'outil};
 \draw[color=red!75!black] (-2, -4.5) node[align=center]{Utilisateur\\qui fait sa\\propre bibliothèque};
-\draw[color=orange!75!black] (-2, -6.5) node[align=center]{Bilbiothèque};
+\draw[color=orange!75!black] (-2, -6.5) node[align=center]{Bibliothèque};
 
 \end{tikzpicture}
 \caption{Architecture type de PresTaf et son utilisation}
