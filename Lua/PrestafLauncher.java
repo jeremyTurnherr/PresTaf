@@ -24,7 +24,10 @@ public class PrestafLauncher{
 				e.printStackTrace();
 			}
 			System.out.println("---------");
-			luaState.LdoFile(argv[0]);
+			if (0!=luaState.LdoFile(argv[0])){
+				System.out.println("execution failed");
+				System.out.println(luaState.toString(-1));
+			}
 		}
 	}
 	
