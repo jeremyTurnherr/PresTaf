@@ -1,4 +1,4 @@
-\section{Exemple de fonctionnement}
+\section{Fonctionnement}
 
 \subsection{Utilisation de Presburger}
 
@@ -84,10 +84,10 @@ Il existe les fonctions $variable(chaine)$ et $integer(nombre)$ qui permettent d
 
 La plupart de ces fonctions peuvent être également appelées directement par des opérateurs surchargés, de manière à ce que l'utilisateur puisse avoir une écriture plus lisible et concise pour de très longue formules Presburger. On trouve ainsi avec les opérateurs:
 \begin{itemize}
- \item les opérations $factor()$, $plus()$ et $minus()$,(*,+,-)
- \item les quantificateurs $\_A()$ et $\_E()$,('A','E')
- \item les comparateurs $equals()$, $not\_Equals()$, $greater()$,\\$greaterEquals()$, $lessEquals()$, $less()$,( $'='$, $!=$, $>$, $>=$, $<=$, $<=$, $<$)
- \item les opérateurs logiques $and()$, $or()$, $not()$, $equiv()$ et $imply()$.( $\&\&$, $||$, $<->$, $->$)
+ \item les opérations $factor()$, $plus()$ et $minus()$, \{*,+,-\}
+ \item les quantificateurs $\_A()$ et $\_E()$,{'A','E'}
+ \item les comparateurs $equals()$, $not\_Equals()$, $greater()$,\\$greaterEquals()$, $lessEquals()$, $less()$,\{ $'='$, $!=$, $>$, $>=$, $<=$, $<=$, $<$\}
+ \item les opérateurs logiques $and()$, $or()$, $not()$, $equiv()$ et $imply()$.\{ $\&\&$, $||$, $<->$, $->$\}
 \end{itemize}
 Voici un exemple d'utilisation pour la formule $6x + 4 = 1$\\
  
@@ -136,7 +136,7 @@ f:todot("f.dot")
 
 \subsection{ Developpement d’une bibliothèque logique}
 
-Pour créer une nouvelle bibliothèque qui implémente une logique en utilisant l’interface prestaf, il est nécessaire de créer des fonctions ou des métatables lua afin de contenir et de pouvoir modifier les différentes informations, notamment les coefficients des variables et objectif. Dans l’exemple des termes de presburger, la métatable lua Term contient ces informations en tant qu’attribut (var pour les numéros de variable, coef pour les coefficients associés et constant pour la constante objectif).\par
+Pour créer une nouvelle bibliothèque qui implémente une logique en utilisant l’interface PresTaf, il est nécessaire de créer des fonctions ou des métatables lua afin de contenir et de pouvoir modifier les différentes informations, notamment les coefficients des variables et objectifs. Dans l’exemple des termes de Presburger, la métatable lua Term contient ces informations en tant qu’attribut (var pour les numéros de variable, coef pour les coefficients associés et constant pour la constante objectif).\par
 
 Il est important de noter qu’il n’est pas nécessaire d’avoir l’indice des variables pour créer un automate. En effet, les indices des variables peuvent correspondre aux indices de leurs coefficients.\par
 
@@ -144,4 +144,4 @@ Ensuite il suffit de créer les opérations élémentaires que l’on souhaite e
 
 Enfin, pour générer l’automate, il faut appeler les opérations de comparaisons de la bibliothèque prestaf afin d’obtenir l’automate associé à la formule que l’on a écrite. Il est possible d’effectuer des opérations supplémentaires sur cet automate comme d'appliquer des opérateurs logiques sur deux formules.\\\par
 
-Il est également possible de créer entièrement un automate en précisant l’état initial, une liste de booléens représentant les états finaux et le tableau des successeurs en fonction des lettres de l’alphabet. pour cela il faut passer par le fichier ‘Automaton.lua’ ou la fonction associée est présente.
+Il est également possible de créer entièrement un automate en précisant l’état initial, une liste de booléens représentant les états finaux et le tableau des successeurs en fonction des lettres de l’alphabet. Pour cela, il faut passer par le fichier ‘Automaton.lua’ ou la fonction associée est présente.
