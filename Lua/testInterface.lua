@@ -43,16 +43,16 @@ print("-----presburger, hajime!!!-----")
 
 --~ local res=((t)'='(integer(2)))'||'((t)'='(integer(3)))
 --~ res:todot("testdot.txt")
-local y=variable('y')
-local x=variable('x')
 local w=variable('w')
-local r=variable('r')
+local x=variable('x')
+local y=variable('y')
+local z=variable('z')
 
-local nope=createAutomaton(0,{{0,1,2},{1,2,0},{2,0,1}},{false,false,false})
+--~ local nope=createAutomaton(0,{{0,1,2},{1,2,0},{2,0,1}},{false,false,false})
 
 
 --~ local res=_E(r,_A(x,_A(y,_E(z,(y+(2*x)-(3*z)+w-q)'='(17*r)))))
-local res=(((y)'='(integer(1)))'->'((x)'='(integer(1))))
+local res=((((3*w)+x)-y)'='(z))
 res:todot('testdot.txt')
 
 print("ji endo")
