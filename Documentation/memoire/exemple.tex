@@ -78,7 +78,7 @@ Le fichier généré sera différent : \vspace{0.5cm}
 
 Ce qui permet de traiter les variables dans l'ordre désiré, ce qui laisse une plus grande marge de man\oe{}uvre.\\\par
 
-Pour utiliser la bibliothèque Presburger l'utilisateur doit utiliser la fonction $require()$ de lua pour appeler les fichiers Term et Presburger.\\\par
+Pour utiliser la bibliothèque Presburger l'utilisateur doit l'importer la fonction $require()$ de lua pour pouvoir appeler les fichiers Term et Presburger.\\\par
 
 Il existe les fonctions $variable(chaine)$ et $integer(nombre)$ qui permettent de créer respectivement une variable et un nombre. Ces deux élements peuvent ensuite être manipulés à l'aide de plusieurs fonctions qui implémentent la logique de Presburger.\\\par
 
@@ -142,6 +142,6 @@ Il est important de noter qu’il n’est pas nécessaire d’avoir l’indice d
 
 Ensuite il suffit de créer les opérations élémentaires que l’on souhaite effectuer sur la logique que l’on veut implémenter. Ces opérations doivent impacter la liste des coefficients des variables ou la constante.\par
 
-Enfin, pour générer l’automate, il suffit d’appeler les opérations de comparaisons de la bibliothèque prestaf afin d’obtenir l’automate associé à la formule que l’on a écrite. Il est possible d’effectuer des opérations supplémentaires sur cet automate comme les opérateurs logiques.\\\par
+Enfin, pour générer l’automate, il faut appeler les opérations de comparaisons de la bibliothèque prestaf afin d’obtenir l’automate associé à la formule que l’on a écrite. Il est possible d’effectuer des opérations supplémentaires sur cet automate comme d'appliquer des opérateurs logiques sur deux formules.\\\par
 
 Il est également possible de créer entièrement un automate en précisant l’état initial, une liste de booléens représentant les états finaux et le tableau des successeurs en fonction des lettres de l’alphabet. pour cela il faut passer par le fichier ‘Automaton.lua’ ou la fonction associée est présente.
