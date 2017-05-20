@@ -28,6 +28,7 @@
 \usepackage{amsfonts}%
 \usepackage{amssymb}%
 \usepackage{graphicx}
+\usepackage{subfigure}
 \usepackage[francais]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -86,8 +87,8 @@
 		\item $\forall x, \forall y, x + 1 = y + 1 \rightarrow x = y $
 		\item $\forall x, x + 0 = x$
 		\item $\forall x, \forall y, x + (y + 1) = (x + y) + 1$
-		\item $\forall P(x, y_1, \ldots, y_n) \in$ Formule du premier ordre, 
-		$\forall y_1 \ldots \forall y_n [(P(0, y_1, \ldots,y_n) \vee \forall x(P(x, y_1, \ldots, y_n) \rightarrow P(x + 1, y_1, \ldots, y_n))) \rightarrow \forall y P(y, y_1, \ldots, y_n)]$
+		\item $\forall P(x, y_1, \ldots, y_n) \in$ Formule du premier ordre,\\
+		$\forall y_1 \ldots \forall y_n [(P(0, y_1, \ldots,y_n) \vee \forall x(P(x, y_1, \ldots, y_n) \rightarrow \\P(x + 1, y_1, \ldots, y_n))) \rightarrow \forall y P(y, y_1, \ldots, y_n)]$
 	\end{enumerate}
 }
 
@@ -117,7 +118,9 @@
 
 \begin{titlepage}
 \begin{center}
-\noindent{\huge \textbf{Mémoire PresTaf}}\\
+\noindent{\Huge \textbf{PresTaf}}\\
+\vspace{0.5cm}
+%\noindent{\LARGE \textbf{Une bibliothèque d'automate}}\\
 \vspace{2cm}
 {\Large Bourgeois Adrien, Marbois Bryce, Roque Maxime, Turnherr Jérémy
 \\Université UFR Collégium des Sciences et Technique

@@ -1,7 +1,5 @@
 \section{Analyser la compléxité}
 
-
-
 \subsection{Minimisation d'automate}
 
 Presburger utilise le noyau PresTaf, il est donc directement lié à la complexité de PresTaf. L'une des complexités essentielles de Prestaf est celle de la minimisation d'automate. Un automate peut en effet avoir plusieurs milliers d'états. Nous avons commencé par étudier l'algorithme d'Hopcroft et une révision de Blum qui sont en $O(nlog(n))$. L'algorithme de minimisation d'automate utilisé dans PresTaf s'inspire également d'Hopcroft en utilisant exclusivement des tableaux. La complexité de cet algorithme est donc $O(nlog(n))$. 
@@ -9,5 +7,3 @@ Presburger utilise le noyau PresTaf, il est donc directement lié à la complexi
 \subsection{Quantificateur}
 
 La pluspart des opérations de PresTaf sont exécutées en temps polynomial, cependant lors du calcul d'un quantificateur, la complexité devient une triple exponentielle $O(2^{2^{2^{pn}}})$ selon Derek C. Oppen\cite{oppen1978222pn} où $p$ est une constante $p > 1$ et $n$ est la taille de l'entrée. En effet, l'évaluation d'un quantificateur nécessite de déterminiser l'automate.
-
-

@@ -21,26 +21,28 @@ La deuxième interface correspond aux fonctions qui permettent de manipuler uniq
 \subsection{La bibliothèque presburger Lua}
 
 La bibliothèque Presburger écrite en Lua contient tous les éléments nécessaires pour écrire une formule de presburger en lua et obtenir l’automate associé. Elle possède les mêmes fonctionnalités que la version précédemment écrite en java. Cette bibliothèque est composé de deux objets lua:
+
 \begin{itemize}
-\item Term: Cet objet permet de construire des variables et des entiers et d’effectuer des opérations élémentaires dessus telles que l’addition, la multiplication et la soustraction. Ces opérateurs ont été surchargé afin d’améliorer la visibilité des formules. Ces opérations construisent une terme en suivant une arborescence. Par exemple, avec le terme $2x + y$ on obtient l’arborescence suivante:
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}
-\node (A) at (0, 0) {$+$};
-\node (B) at (-1, -1) {$*$};
-\node (C) at (1, -1) {$y$};
-\node (D) at (-2, -2) {$2$};
-\node (E) at (0, -2) {$x$};
+	\item Term: Cet objet permet de construire des variables et des entiers et d’effectuer des opérations élémentaires dessus telles que l’addition, la multiplication et la soustraction. Ces opérateurs ont été surchargé afin d’améliorer la visibilité des formules. Ces opérations construisent une terme en suivant une arborescence. Par exemple, avec le terme $2x + y$ on obtient l’arborescence suivante:
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}
+		\node (A) at (0, 0) {$+$};
+		\node (B) at (-1, -1) {$*$};
+		\node (C) at (1, -1) {$y$};
+		\node (D) at (-2, -2) {$2$};
+		\node (E) at (0, -2) {$x$};
 
-\draw (A) -- (B);
-\draw (A) -- (C);
-\draw (B) -- (D);
-\draw (B) -- (E);
-\end{tikzpicture}
-\end{figure}
+		\draw (A) -- (B);
+		\draw (A) -- (C);
+		\draw (B) -- (D);
+		\draw (B) -- (E);
+		\end{tikzpicture}
+	\end{figure}
 
-\item Presburger: Cet objet utilise deux termes et une opération de comparaison pour se construire.
-Lors de son instanciation, l’objet va convertir les termes en des tableaux reconnus par la bibliothèque prestaf, puis se servir de cette bibliothèque afin de récupérer l’automate associé. il est ensuite possible d’effectuer des opérations supplémentaires sur ces formules et d’en obtenir un affichage et une représentation dot.
+	\item Presburger: Cet objet utilise deux termes et une opération de comparaison pour se construire.
+	Lors de son instanciation, l’objet va convertir les termes en des tableaux reconnus par la bibliothèque prestaf, puis se servir de cette bibliothèque afin de récupérer l’automate associé. il est ensuite possible d’effectuer des opérations supplémentaires sur ces formules et d’en obtenir un affichage et une représentation dot.
+
 \end{itemize}
 
 Pour chaque opérateur existant, des opérateurs ont été créés afin de pouvoir avoir une meilleure lisibilité du code. En effet, lua permet de créer des opérateurs personnalisés en exploitant la fonction $\_\_call$ des métatables. Ces opérateurs doivent être précisés en tant que string. Ces surcharges d’opérateurs permettent à l’utilisateur de la bibliothèque presburger écrite en lua d’avoir plusieurs façons d’écrire une même formule, ce qui lui permet de choisir celle qu’il préfère en fonction de sa convenance. 
