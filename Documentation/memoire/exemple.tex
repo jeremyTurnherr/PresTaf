@@ -1,6 +1,6 @@
 \section{Exemple de fonctionnement}
 
-\subsection{Un logiciel souple}
+\subsection{Utilisation de Presburger}
 
 
 
@@ -133,4 +133,11 @@ f:todot("f.dot")
 \caption{Formule toujours fausse}
 \end{figure}
 
+\subsection{ Developpement d’une bibliothèque logique}
 
+Pour créer une nouvelle bibliothèque qui implémente une nouvelle logique en utilisant l’interface prestaf, il est nécessaire de créer des fonctions ou des métatables lua afin de contenir et de pouvoir modifier les différentes informations, notamment les coefficients des variables et objectif. Dans l’exemple des termes de presburger, la métatable lua Term contient ces informations en tant qu’attribut (var pour les numéros de variable, coef pour les coefficients associés et constant pour la constante objectif).
+Il est important de noter qu’il n’est pas nécessaire d’avoir l’indice des variables pour créer un automate. En effet, les indices des variables peuvent correspondre aux indices de leurs coefficients.
+Ensuite il suffit de créer les opérations élémentaires que l’on souhaite effectuer sur la logique que l’on veut implémenter. Ces opérations doivent impacter la liste des coefficients des variables ou la constante.
+Enfin, pour générer l’automate, il suffit d’appeler les opérations de comparaisons de la bibliothèque prestaf afin d’obtenir l’automate associé à la formule que l’on a écrite. Il est possible d’effectuer des opérations supplémentaires sur cet automate comme les opérateurs logiques.
+
+Il est également possible de créer entièrement un automate en précisant l’état initial, une liste de booléens représentant les états finaux et le tableau des successeurs en fonction des lettres de l’alphabet. pour cela il faut passer par le fichier ‘Automaton.lua’ ou la fonction associée est présente.
