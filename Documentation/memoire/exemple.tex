@@ -49,7 +49,7 @@ local f = y '=' 2 * x
 f:todot("f.dot")
 \end{lstlisting}
 
-Le fichier générer sera différent : \vspace{0.5cm}
+Le fichier généré sera différent : \vspace{0.5cm}
 
 \begin{tikzpicture}
 
@@ -86,7 +86,7 @@ La plupart de ces fonctions peuvent être également appelées directement par d
 \begin{itemize}
  \item les opérations $factor()$ *, $plus()$ + et $minus()$ -,
  \item les quantificateurs $\_A()$ 'A' et $\_E()$ 'E',
- \item les comparateurs $equals()$ $'='$, $not\_Equals()$ $!=$, $greater()$ $>$, $greaterEquals()$ $>=$, $lessEquals()$ $<=$,$less()$ $<$,
+ \item les comparateurs $equals()$ $'='$, $not\_Equals()$ $!=$, $greater()$ $>$,\\$greaterEquals()$ $>=$, $lessEquals()$ $<=$,$less()$ $<$,
  \item les opérateurs logiques $and()$ $\&\&$, $or()$ $||$, $not()$, $equiv()$ $<->$  et $imply()$ $->$ .
 \end{itemize}
 Voici un exemple d'utilisation pour la formule $6x + 4 = 1$\\
@@ -110,7 +110,7 @@ f:todot("f.dot")
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.5cm,
                     semithick]
 
-\node[circle,draw]           (A) at (0, 0) {$One$};
+\node[circle,draw,accepting]           (A) at (0, 0) {$one$};
 
 \end{tikzpicture}
 \caption{Formule toujours vraie}
@@ -128,7 +128,7 @@ f:todot("f.dot")
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.5cm,
                     semithick]
 
-\node[circle,draw]           (A) at (2, 2) {$Zero$};
+\node[circle,draw,accepting]           (A) at (2, 2) {$zero$};
 
 \end{tikzpicture}
 \caption{Formule toujours fausse}
@@ -136,9 +136,12 @@ f:todot("f.dot")
 
 \subsection{ Developpement d’une bibliothèque logique}
 
-Pour créer une nouvelle bibliothèque qui implémente une logique en utilisant l’interface prestaf, il est nécessaire de créer des fonctions ou des métatables lua afin de contenir et de pouvoir modifier les différentes informations, notamment les coefficients des variables et objectif. Dans l’exemple des termes de presburger, la métatable lua Term contient ces informations en tant qu’attribut (var pour les numéros de variable, coef pour les coefficients associés et constant pour la constante objectif).
-Il est important de noter qu’il n’est pas nécessaire d’avoir l’indice des variables pour créer un automate. En effet, les indices des variables peuvent correspondre aux indices de leurs coefficients.
-Ensuite il suffit de créer les opérations élémentaires que l’on souhaite effectuer sur la logique que l’on veut implémenter. Ces opérations doivent impacter la liste des coefficients des variables ou la constante.
-Enfin, pour générer l’automate, il suffit d’appeler les opérations de comparaisons de la bibliothèque prestaf afin d’obtenir l’automate associé à la formule que l’on a écrite. Il est possible d’effectuer des opérations supplémentaires sur cet automate comme les opérateurs logiques.
+Pour créer une nouvelle bibliothèque qui implémente une logique en utilisant l’interface prestaf, il est nécessaire de créer des fonctions ou des métatables lua afin de contenir et de pouvoir modifier les différentes informations, notamment les coefficients des variables et objectif. Dans l’exemple des termes de presburger, la métatable lua Term contient ces informations en tant qu’attribut (var pour les numéros de variable, coef pour les coefficients associés et constant pour la constante objectif).\par
+
+Il est important de noter qu’il n’est pas nécessaire d’avoir l’indice des variables pour créer un automate. En effet, les indices des variables peuvent correspondre aux indices de leurs coefficients.\par
+
+Ensuite il suffit de créer les opérations élémentaires que l’on souhaite effectuer sur la logique que l’on veut implémenter. Ces opérations doivent impacter la liste des coefficients des variables ou la constante.\par
+
+Enfin, pour générer l’automate, il suffit d’appeler les opérations de comparaisons de la bibliothèque prestaf afin d’obtenir l’automate associé à la formule que l’on a écrite. Il est possible d’effectuer des opérations supplémentaires sur cet automate comme les opérateurs logiques.\\\par
 
 Il est également possible de créer entièrement un automate en précisant l’état initial, une liste de booléens représentant les états finaux et le tableau des successeurs en fonction des lettres de l’alphabet. pour cela il faut passer par le fichier ‘Automaton.lua’ ou la fonction associée est présente.
