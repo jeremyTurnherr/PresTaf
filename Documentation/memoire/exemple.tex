@@ -2,6 +2,7 @@
 
 \subsection{Utilisation de Presburger}
 
+Si l'on souhaite connaitre l'automate qui reconnait $L = \{x | x = 2*y, y \in \mathbb{N} \}$ on peut l'écrire la façon suivante avec PresTaf.\\
 
 
 \begin{lstlisting}[mathescape=true, frame=single]
@@ -15,7 +16,7 @@ local f = x '=' 2 * y
 f:todot("f.dot")
 \end{lstlisting}
 
-Le ficher f.dot est le suivant :
+Le ficher f.dot obtenu est le suivant :
 
 \vspace{0.5cm}
 
@@ -33,9 +34,9 @@ Le ficher f.dot est le suivant :
 (C) edge [bend right] node[right]{1} (B)
 (C) edge [bend right] node[above]{0} (D)
 (A) edge [bend left]  node[right]{1} (D);
-\end{tikzpicture}
+\end{tikzpicture}\\
 
-Le résultat obtenus avec l'ancienne version de PresTaf est bien entendu la même. En revanche le Lua contient une différence majeure. Si l'on écrit le script suivant :
+On obtient le même résultat si on entre cette formule dans l'ancienne application Presburger. En revanche le Lua contient une différence majeure. En effet, si l'utilisateur écrit le script suivant :
 
 \begin{lstlisting}[mathescape=true, frame=single]
 pres = require('Presburger')
@@ -135,7 +136,7 @@ f:todot("f.dot")
 
 \subsection{ Developpement d’une bibliothèque logique}
 
-Pour créer une nouvelle bibliothèque qui implémente une nouvelle logique en utilisant l’interface prestaf, il est nécessaire de créer des fonctions ou des métatables lua afin de contenir et de pouvoir modifier les différentes informations, notamment les coefficients des variables et objectif. Dans l’exemple des termes de presburger, la métatable lua Term contient ces informations en tant qu’attribut (var pour les numéros de variable, coef pour les coefficients associés et constant pour la constante objectif).
+Pour créer une nouvelle bibliothèque qui implémente une logique en utilisant l’interface prestaf, il est nécessaire de créer des fonctions ou des métatables lua afin de contenir et de pouvoir modifier les différentes informations, notamment les coefficients des variables et objectif. Dans l’exemple des termes de presburger, la métatable lua Term contient ces informations en tant qu’attribut (var pour les numéros de variable, coef pour les coefficients associés et constant pour la constante objectif).
 Il est important de noter qu’il n’est pas nécessaire d’avoir l’indice des variables pour créer un automate. En effet, les indices des variables peuvent correspondre aux indices de leurs coefficients.
 Ensuite il suffit de créer les opérations élémentaires que l’on souhaite effectuer sur la logique que l’on veut implémenter. Ces opérations doivent impacter la liste des coefficients des variables ou la constante.
 Enfin, pour générer l’automate, il suffit d’appeler les opérations de comparaisons de la bibliothèque prestaf afin d’obtenir l’automate associé à la formule que l’on a écrite. Il est possible d’effectuer des opérations supplémentaires sur cet automate comme les opérateurs logiques.
