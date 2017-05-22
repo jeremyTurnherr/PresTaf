@@ -270,7 +270,6 @@ public class PresTaf{
 
     public PresTaf And(PresTaf p)
     {
-		System.out.println("keskese");
         assert (npf.nbVariable == p.npf.nbVariable);
         return new PresTaf(new NPF(npf.nbVariable, npf.value.and(p.npf.value)));
     }

@@ -36,23 +36,30 @@ end
 
 --~ run(prestaf)
 
-print("-----presburger, hajime!!!-----")
-	
---~ local t=variable("y")
---~ local pif=variable("u")
 
---~ local res=((t)'='(integer(2)))'||'((t)'='(integer(3)))
---~ res:todot("testdot.txt")
-local w=variable('w')
-local x=variable('x')
-local y=variable('y')
-local z=variable('z')
+local c1=variable("c1")
+local c2=variable("c2")
+local c3=variable("c3")
+local b1=variable("b1")
+local b2=variable("b2")
+local b3=variable("b3")
 
---~ local nope=createAutomaton(0,{{0,1,2},{1,2,0},{2,0,1}},{false,false,false})
+local constraintC=(((c1)'<'(integer(3)))"&&"((c2)'<'(integer(3)))"&&"((c3)'<'(integer(3))))
+local constraintB=(((b1)'<'(integer(3)))"&&"((b2)'<'(integer(3)))"&&"((b3)'<'(integer(3))))
+
+local jaune=(c1)'='(integer(0))
+local cafe=(b3)'='(integer(2))
+local vert=(c3)'='(integer(1))
+
+local tempconstraint=(jaune)'&&'(cafe)'&&'(vert)
+local tempconstraint=(tempconstraint)'&&'(((b1+b2)'='(integer(3)))'||'((b2+b3)'='(integer(3))))
 
 
---~ local res=_E(r,_A(x,_A(y,_E(z,(y+(2*x)-(3*z)+w-q)'='(17*r)))))
-local res=((((3*w)+x)-y)'='(z))
+
+local constraint=(constraintB)'&&'(constraintC)'&&'(tempconstraint)'&&'((c1)'!='(c2))'&&'((c1)'!='(c3))'&&'((c2)'!='(c3))'&&'((b1)'!='(b2))'&&'((b1)'!='(b3))'&&'((b2)'!='(b3))
+
+
+local res=(constraint)'&&'((b1+b2+b3)'='(c1+c2+c3))
 res:todot('testdot.txt')
 
 print("ji endo")
