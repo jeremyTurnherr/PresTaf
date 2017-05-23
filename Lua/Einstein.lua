@@ -60,7 +60,7 @@ local constraint=(constraintB)'&&'(constraintC)'&&'(tempconstraint)'&&'((c1)'!='
 
 
 local res=(constraint)'&&'((b1+b2+b3)'='(c1+c2+c3))
-res:todot('testdot.txt')
+res:todot('testdot.dot')
 
 print("ji endo")
 
