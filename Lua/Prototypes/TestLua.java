@@ -1,5 +1,5 @@
 
-
+/*
 import org.keplerproject.luajava.*;
 
 
@@ -23,3 +23,4 @@ public class TestLua{
 	}
 	
 }
+*/

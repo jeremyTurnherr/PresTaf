@@ -1,12 +1,12 @@
 
-
+/*
 
 import application.*;
 import java.io.*;
 import org.keplerproject.luajava.*;
 
 
-class PresburgerBridge{
+public class PresburgerBridge{
 	
 	Presburger p;
 	LuaState state;
@@ -97,9 +97,10 @@ class PresburgerBridge{
 
     
 	
-	
+
 	
 	
 	
 }
 
+*/

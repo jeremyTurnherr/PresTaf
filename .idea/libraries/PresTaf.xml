@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="PresTaf">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Documentation/PresTaf.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

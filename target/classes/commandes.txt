@@ -1,0 +1,3 @@
+javac -cp .;luajava... prog.java #pareil pour la commande java
+javac -cp .;luajava-1.1.jar;../Documentation/PresTaf.jar  TestLua.java #pour la version avec prestaf
+javac -cp .;luajava-1.1.jar;../Developpement/PresTaf  PrestafLauncher.java #pour la version avec prestaf modifiable

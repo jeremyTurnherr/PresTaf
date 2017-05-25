@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Developpement/Developpement.iml" filepath="$PROJECT_DIR$/Developpement/Developpement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/prestaf.iml" filepath="$PROJECT_DIR$/prestaf.iml" />
+    </modules>
+  </component>
+</project>
